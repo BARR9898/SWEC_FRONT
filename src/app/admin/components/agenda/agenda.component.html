@@ -1,0 +1,58 @@
+  <div class="row d-flex justify-content-center" *ngIf="proximas_citas" style="height: 100%!important;">
+    <mat-card >
+
+      <div class="row d-flex justify-content-center">
+        <span class="title">Proximas Citas</span>
+      </div>
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-10">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Paciente</th>
+                <th scope="col">Cita</th>
+                <th scope="col">Estatus</th>
+                <th scope="col">Expediente</th>
+                <th scope="col">Asistencia</th>
+
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cita of proximas_citas;index as i">
+                <td>{{cita.paciente}}</td>
+                <td>{{cita.ultima_cita}}</td>
+                <td *ngIf="cita.asistencia == true" class="asistencia_status_indicador">Asistió</td>
+                <td *ngIf="cita.asistencia == false" class="asistencia_status_indicador">Faltó</td>
+                <td *ngIf="(cita.asistencia != false) && (cita.asistencia != true)" class="asistencia_status_indicador" >Pendiente</td>
+                <td>
+                  <button mat-mini-fab  class="bg-primary" [routerLink]="['/admin/expedientes/detalle',cita.id_expediente]">
+                    <mat-icon class="text-white">visibility</mat-icon>
+                  </button>
+                </td>
+                <td class="row d-flex justify-content-between">
+                  <div class="col-6">
+                    <button mat-mini-fab  class="bg-success" (click)="marcarAsistencia(i,true)">
+                      <mat-icon class="text-white">done</mat-icon>
+                    </button>
+                  </div>
+                  <div class="col-6">
+                    <button mat-mini-fab  class="bg-danger" (click)="marcarAsistencia(i,false)">
+                      <mat-icon class="text-white">close</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-start align-items-center">
+        <div class="col-4 d-flex justify-content-center">
+          <span id="citas_restantes">{{proximas_citas.length}} citas restantes.</span>
+
+        </div>
+      </div>
+
+    </mat-card>
+  </div>

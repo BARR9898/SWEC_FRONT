@@ -1,0 +1,64 @@
+<div class="row d-flex justify-content-center align-items-start mt-4" style="width: 100%; max-height: 100%; overflow: auto;" *ngIf="expedientes">
+
+  <div class="col-10 ">
+    <div class="row m-4 d-flex justify-content-center align-items-center">
+      <button id="btn-crear-expediente" mat-raised-button class="ml-3" title="Crear expediente" style="width: 250px; height: 50px;" routerLink="/admin/expedientes/creacion">
+        <span class="text-white" style="font-size: medium;">Nuevo expediente</span>
+      </button>
+    </div>
+    <mat-card style="width: 100%!important; height: 100%!important; overflow: auto;">
+      <mat-toolbar class="d-flex justify-content-center align-items-center"><h2 class="text-white">Expedienetes</h2></mat-toolbar>
+      <mat-card-content>
+        <table class="table table-hover">
+          <thead>
+            <tr style="text-align: center;">
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido Paterno</th>
+              <th scope="col">Apellido Materno</th>
+              <th scope="col">Próxima Cita</th>
+              <th scope="col">Ver</th>
+              <th scope="col">Eliminar</th>
+              <th scope="col">Exportar</th>
+
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let expediente of expedientes; index as i">
+              <td>{{expediente.paciente.nombre}}</td>
+              <td>{{expediente.paciente.apellido_paterno}}</td>
+              <td>{{expediente.paciente.apellido_materno}}</td>
+              <td>{{getLastCita(i)}}</td>
+              <td>
+                <button mat-fab class="viewButton"  [routerLink]="['/expedientes/detalle', expediente._id]">
+                  <mat-icon class="text-white">visibility</mat-icon>
+                </button>
+              </td>
+              <td>
+                <button mat-fab class="bg-danger" (click)="deleteExpedient(expediente._id)">
+                  <mat-icon class="text-white">delete</mat-icon>
+                </button>
+              </td>
+              <td>
+                <button mat-fab class="bg-danger" (click)="exportar(expediente._id)">
+                  <mat-icon class="text-white">picture_as_pdf</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<style>
+  td{
+    text-align: center;
+  }
+
+  table{
+    width: 100%;
+    height: 100%;
+  }
+</style>

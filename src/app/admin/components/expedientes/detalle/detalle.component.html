@@ -1,0 +1,554 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<div class="col" style="width: 100%; min-height: 100%; z-index: 0!important;" *ngIf="expediente">
+
+  <div class="row d-flex justify-content-around align-items-center m-4 p-2" style="width: 100%!important;">
+    <div class="col d-flex align-items-center justify-content-center">
+      <button mat-raised-button (click)="save()" id="save">Guardar Cambios<mat-icon>save</mat-icon></button>
+    </div>
+    <div class="col d-flex align-items-center justify-content-center">
+      <button mat-raised-button id="regresarExpedientes" [routerLink]="['/admin/expedientes/lista']">
+        <span>Expedientes</span>
+        <mat-icon class="icon">file_copy</mat-icon>
+      </button>
+    </div>
+    <div class="col d-flex align-items-center justify-content-center">
+      <button mat-raised-button id="regresarExpedientes" [routerLink]="['/admin/agenda']">
+        <span>Agenda</span>
+        <mat-icon class="icon">book</mat-icon>
+      </button>
+    </div>
+  </div>
+  <mat-tab-group [selectedIndex]="changeToTabOnIndex" >
+    <mat-tab label="Expediente" id="ExpedienteSection">
+      <!--SECCION QUE CONTIENE EL FORMULARIO DEL EXPEDIENTE-->
+      <form class="row d-flex justify-content-center" [formGroup]="expedienteForm"
+        style="width: 100%;max-height: 100%; overflow: auto;">
+        <mat-card style="max-width: 80%;">
+
+          <mat-card-title class="row d-flex justify-content-center align-items-center p-4">
+            Datos Del Paciente
+          </mat-card-title>
+          <mat-card-content>
+            <div class="row d-flex justify-content-around align-items-center">
+              <div class="col-3 ">
+                <mat-form-field appearance="outline" class="p-0">
+                  <mat-label>Nombre</mat-label>
+                  <input readonly matInput formControlName="nombre">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>Apellido Paterno</mat-label>
+                  <input readonly matInput formControlName="apellido_paterno">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>Apellido Materno</mat-label>
+                  <input readonly matInput formControlName="apellido_materno">
+                </mat-form-field>
+              </div>
+
+            </div>
+            <div class="row d-flex justify-content-around">
+              <div class="col-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>Edad</mat-label>
+                  <input readonly matInput formControlName="edad">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>Sexo</mat-label>
+                  <input readonly matInput formControlName="sexo">
+                </mat-form-field>
+              </div>
+              <div class="col-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>Ingresos Mensuales</mat-label>
+                  <input readonly matInput formControlName="ocupacion">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row d-flex justify-content-around align-items-center">
+              <div class="col-11">
+                <mat-form-field appearance="outline">
+                  <mat-label>Dirección</mat-label>
+                  <input readonly matInput formControlName="direccion">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+              <div class="col-11">
+                <mat-form-field appearance="outline">
+                  <mat-label>Ocupación</mat-label>
+                  <textarea readonly matInput formControlName="ocupacion"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-title class="row d-flex justify-content-center align-items-center p-4">
+            Datos Del Expediente
+          </mat-card-title>
+          <mat-card-content>
+            <mat-tab-group>
+              <mat-tab label="Motivo De Consulta">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Motivo De Consulta</mat-label>
+                      <textarea readonly matInput formControlName="motivo_consulta"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Circunstancias De Aparición">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Circunstancias De Aparición</mat-label>
+                      <textarea readonly matInput formControlName="circunstancias_aparicion"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Sintomas Detectados">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-list>
+                      <mat-list-item *ngFor="let sintoma of expediente.expediente.sintomas; index as i">
+                        <div matListItem>{{sintoma.sintoma}}</div>
+                      </mat-list-item>
+                    </mat-list>
+
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Descripción Física">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Descripción Física</mat-label>
+                      <textarea readonly matInput formControlName="motivo_consulta"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Demanda De Tratamiento">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Demanda De Tratamiento</mat-label>
+                      <textarea readonly matInput formControlName="demanda_tratamiento"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Área Escolar">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Área Escolar</mat-label>
+                      <textarea readonly matInput formControlName="area_escolar"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Área Laboral">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Área Laboral</mat-label>
+                      <textarea readonly matInput formControlName="area_laboral"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Acontecimientos Significativos">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Acontecimientos Significativos En Su Vida</mat-label>
+                      <textarea readonly matInput formControlName="acontecimientos_significativos"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Desarrollo Psicosexual">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Desarrollo Psicosexual</mat-label>
+                      <textarea readonly matInput formControlName="desarrollo_psicosexual"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Familiograma">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Familiograma</mat-label>
+                      <textarea readonly matInput formControlName="familiograma"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Área Familiar y De Relación">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Área Familiar y De Relación</mat-label>
+                      <textarea readonly matInput formControlName="area_familiar_relacion"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Mapeo Familiar">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Mapeo Familiar</mat-label>
+                      <textarea readonly matInput formControlName="mapeo_familiar"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Impresión Diagnóstica De La Familia">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Impresión Diagnóstica De La Família</mat-label>
+                      <textarea readonly matInput formControlName="impresiones_diagnositcas_familia"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Hipótesis Familiar">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Hipótesis Familiar</mat-label>
+                      <textarea readonly matInput formControlName="hipotesis_familiar"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Exámen Mental">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Exámen Mental</mat-label>
+                      <textarea readonly matInput formControlName="examen_mental"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Indicaciones Diagnósticas">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Indicaciones Diagnósticas</mat-label>
+                      <textarea readonly matInput formControlName="examen_mental"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Impresiones Diagnósticas Con DCM y CIE">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <table class="table table-hover col-11">
+                    <thead>
+                      <tr>
+                        <th>Eje</th>
+                        <th>Código</th>
+                        <th>DCM</th>
+                        <th>CIE</th>
+                        <th>Transtorno</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let impresion of expediente.expediente.impresiones_diagnosticas; index as i">
+                        <td>{{impresion.eje}}</td>
+                        <td>{{impresion.codigo}}</td>
+                        <td>{{impresion.dcm}}</td>
+                        <td>{{impresion.cie}}</td>
+                        <td>{{impresion.transtorno}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </mat-tab>
+              <mat-tab label="Fóco Terapéutico">
+                <div class="row d-flex justify-content-center">
+                  <div class="col-11">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Fóco Terapéutico</mat-label>
+                      <textarea readonly matInput formControlName="foco_terapeutico"></textarea>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </mat-tab>
+              <mat-tab label="Modalidad Terapéutica Que Sguiére">
+                <div class="row d-flex justify-content-around align-itens-center">
+                  <table class="table table-hover col-11">
+                    <thead>
+                      <tr>
+                        <th>T.I</th>
+                        <th>T.F</th>
+                        <th>T.P</th>
+                        <th>T.G</th>
+                        <th>Otra</th>
+                        <th>Fundamento</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let data of expediente.expediente.modalidad_terapeutica; index as i" style="text-align: center;">
+                        <td *ngIf="data.ti"><mat-icon class="text-success">check</mat-icon></td>
+                        <td *ngIf="!data.ti"><mat-icon class="text-danger">close</mat-icon></td>
+                        <td *ngIf="data.tf"><mat-icon class="text-success">check</mat-icon></td>
+                        <td *ngIf="!data.tf"><mat-icon class="text-danger">close</mat-icon></td>
+                        <td *ngIf="data.tp"><mat-icon class="text-success">check</mat-icon></td>
+                        <td *ngIf="!data.tp"><mat-icon class="text-danger">close</mat-icon></td>
+                        <td *ngIf="data.tg"><mat-icon class="text-success">check</mat-icon></td>
+                        <td *ngIf="!data.tg"><mat-icon class="text-danger">close</mat-icon></td>
+                        <td *ngIf="data.otra"><mat-icon class="text-success">check</mat-icon></td>
+                        <td *ngIf="!data.otra"><mat-icon class="text-danger">close</mat-icon></td>
+                        <td>{{data.fundamento}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </mat-card-content>
+
+        </mat-card>
+      </form>
+    </mat-tab>
+    <mat-tab label="Notas Clínicas">
+      <!--SECCION QUE MUESTRA LAS NOTAS CLÍNICAS-->
+      <div class="row d-flex mt-4 justify-content-center" style="width: 100%;">
+        <div class="col-10">
+          <div class="table table-hover" style="width: 100%;">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Fecha</th>
+                  <th scope="col">Ver</th>
+                  <th scope="col">Exportar</th>
+                  <th scope="col">Eliminar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let nota of expediente.notas_clinicas; index as i">
+                  <td>{{i+1}}</td>
+                  <td>{{nota.fecha}}</td>
+                  <td>
+                    <button mat-mini-fab class="bg-primary" (click)="verNotaDetalle(i)">
+                      <mat-icon class="text-white">visibility</mat-icon>
+                    </button>
+                  </td>
+                  <td>
+                    <button mat-mini-fab class="bg-info" (click)="exportarNotaClinica(i)">
+                      <mat-icon class="text-white">picture_as_pdf</mat-icon>
+                    </button>
+                  </td>
+                  <td>
+                    <button mat-mini-fab class="bg-danger" (click)="deleteClinicalNote(i,'notas_clinica')">
+                      <mat-icon class="text-white">delete</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </mat-tab>
+    <mat-tab label="Nueva Nota Clínica">
+            <!--SECCION DEL FORMULARIO PARA LA CREACION DE LA NUEVA NOTA CLINICA-->
+            <div class="col d-flex justify-content-center mt-4" style="min-height: 650px;">
+              <div class="col-10">
+                <form [formGroup]="notaClinicaForm">
+                  <div class="col mt-4">
+                    <div class="row d-flex justify-content-center mt-4">
+                      <div class="col-4">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Fecha</mat-label>
+                          <input matInput [matDatepicker]="picker" formControlName="auxFecha" style="text-align: center;">
+                          <mat-hint>MM/DD/YYYY</mat-hint>
+                          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="row d-flex justify-content-center mt-4">
+                      <div class="col-9">
+                        <mat-form-field appearance="outline">
+                          <mat-label>Nota Clínica</mat-label>
+                          <textarea matInput formControlName="nota" cols="30" rows="5"></textarea>
+                          <mat-hint>{{this.notaClinicaForm.get('nota')?.value?.length}} / 1000 caractéres.</mat-hint>
+                          <mat-error *ngIf="hasError('nota','required')">El campo esrequerido.</mat-error>
+                          <mat-error *ngIf="hasError('nota','maxlength')">Máximo 1000 caractéres</mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+                <div class="row d-flex justify-content-center align-items-center">
+                  <div class="col-5 d-flex justify-content-center align-items-center">
+                    <button id="guardarNotaClinica" mat-raised-button
+                    [disabled]="validateFormControl(['fecha','nota']) || haveBeenCreated_ClinicalNote == true" (click)="(  addNotaClinica() )">Agregar Nota
+                    Clínica<mat-icon>add</mat-icon>
+                  </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+    </mat-tab>
+    <mat-tab label="Citas">
+      <div class="row d-flex justify-content-center p-4" style="min-height: 100%; width: 100%;">
+        <div class="row d-flex justify-content-center" style="min-width:100%">
+          <div class="col-6 d-flex justify-content-center">
+            <span style="font-weight: 600; font-size: large;">Próxima Cita</span>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center" style="min-width:100%">
+          <div class="col-4 mt-2 d-flex justify-content-center align-items-center">
+              <input type="datetime-local"  class="form-control" placeholder="Fecha" [(ngModel)]="fecha_proximaCita" style="text-align: center;">
+          </div>
+          <div class="col-2 d-flex justify-content-center align-items-center">
+            <button mat-fab (click)="addNewCita()" id="addCita">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="row d-flex justify-content-center mt-4" style="min-width:100%" *ngIf="expediente.citas.length > 0">
+          <div class="row row d-flex justify-content-center align-items-center" style="min-width:100%">
+            <span style="font-weight: 600; font-size: medium;">Citas Registradas</span>
+          </div>
+          <div class="col-10 mt-2">
+            <table class="table table-hover mt-2" style="width: 100%; max-height: 350px; overflow: auto;">
+              <thead style="background-color: rgb(235, 235, 235);">
+                <tr>
+                  <td style="font-weight: 600;">Fecha</td>
+                  <td style="font-weight: 600;">Estatus</td>
+                  <td style="font-weight: 600;">Cancelar</td>
+                  <td style="font-weight: 600;">Confirmar</td>
+
+
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cita of expediente.citas; index as i">
+                  <td>{{cita.fecha}}</td>
+                  <td>{{cita.status ? 'Confirmada':'Cancelada' }}</td>
+                  <td>
+                    <button mat-icon-button (click)="cancelCita(i)">
+                      <mat-icon class="text-danger" >cancel</mat-icon>
+                    </button>
+                  </td>
+                  <td>
+                    <button mat-icon-button (click)="confirmCita(i)">
+                      <mat-icon class="text-success" >done</mat-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center" style="min-width:100%" *ngIf="expediente.citas.length == 0">
+          <div class="col-6 mt-2">
+            <span style="font-weight: 600; font-size: medium;">No existen citas registradas.</span>
+          </div>
+        </div>
+
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+
+
+
+</div>
+
+
+<!--
+        <div class="row m-2 p-2 d-flex justify-content-around">
+        <div class="col-3 d-flex justify-content-center align-items-center">
+          <span style="font-size:large; font-weight: 550; color: #003554;">{{expediente.notas_clinicas.length}} notas
+            clínicas en éste expediente.</span>
+        </div>
+        <div class="col-3 d-flex justify-content-center align-items-center">
+          <mat-slide-toggle color="primary" [checked]="mostrarNotasClinicas"
+            (click)="mostrarNotasClinicas = !mostrarNotasClinicas" [disabled]="expediente.notas_clinicas.length == 0">Mostrar Notas
+            Clínicas</mat-slide-toggle>
+        </div>
+        <div class="col-3 d-flex justify-content-center align-items-center" *ngIf="haveBeenCreated_ClinicalNote == true">
+          <mat-slide-toggle  color="primary" [checked]="mostrarUltimaRegistrada"
+            (click)="mostrarUltimaRegistrada = !mostrarUltimaRegistrada" [disabled]="!haveBeenCreated_ClinicalNote">Mostrar Última Insertada</mat-slide-toggle>
+        </div>
+      </div>
+      <div class="row d-flex justify content-center mt-4" *ngIf="mostrarNotasClinicas" [formGroup]="expedienteForm"
+        style="max-height: 100%!important;">
+        <ng-container formArrayName="notas_clinica" style="width:100%!important; height: 100%!important;">
+          <div class="row d-flex justify-content-center align-items-center mt-2"
+            *ngFor="let control of this.expedienteForm.controls.notas_clinica.controls;index as i"
+            [formGroupName]="i" style="width: 100%!important;">
+
+            <mat-card-title class="nota-clinica_title m-2" *ngIf="isTheLastOneInserted(i)==true && mostrarUltimaRegistrada==true">Nota Clínica del {{gateDateOfNote(i,'fecha')}}</mat-card-title>
+            <div class="row d-flex justify-content-center m-2" style="width: 100%;" *ngIf="isTheLastOneInserted(i)==true && mostrarUltimaRegistrada==true">
+              <div class="col-8">´
+                <mat-form-field appearance="outline">
+                  <mat-label>Nota</mat-label>
+                  <textarea type="text" matInput placeholder="" formControlName="nota" cols="30" rows="5" [readonly]="isReadyOnly(i)" style="text-align: center;"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="col-1 d-flex justify-content-center align-items-center">
+                <button mat-fab class="text-white bg-danger"
+                  (click)="exportarNotaClinica(i)"><mat-icon>picture_as_pdf</mat-icon></button>
+              </div>
+              <div class="col-1 d-flex justify-content-center align-items-center">
+                <button mat-fab class="text-white bg-danger"
+                  (click)="deleteClinicalNote(i,'notas_clinica')"><mat-icon>delete</mat-icon></button>
+              </div>
+
+
+            </div>
+
+            <mat-card-title class="nota-clinica_title m-2" *ngIf=" mostrarUltimaRegistrada==false" >Nota Clínica del {{gateDateOfNote(i,'fecha')}}</mat-card-title>
+            <div class="row d-flex justify-content-center" style="width: 100%;" *ngIf=" mostrarUltimaRegistrada==false">
+              <div class="col-8">
+                <mat-form-field appearance="outline">
+                  <mat-label>Nota</mat-label>
+                  <textarea type="text" matInput placeholder="" formControlName="nota" cols="30" rows="5" [readonly]="isReadyOnly(i)" style="text-align: center;"></textarea>
+                </mat-form-field>
+              </div>
+              <div class="col-1 d-flex justify-content-center align-items-center">
+                <button mat-fab class="text-white bg-danger"
+                  (click)="deleteClinicalNote(i,'notas_clinica')"><mat-icon>delete</mat-icon></button>
+              </div>
+              <div class="col-1 d-flex justify-content-center align-items-center">
+                <button mat-fab class="text-white bg-danger"
+                  (click)="exportarNotaClinica(i)"><mat-icon>picture_as_pdf</mat-icon></button>
+              </div>
+            </div>
+            <div class="row d-flex justify-content-center m-2" style="width:100%;" >
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+
+-->
+

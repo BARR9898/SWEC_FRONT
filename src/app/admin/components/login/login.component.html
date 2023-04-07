@@ -1,0 +1,60 @@
+<div class="row d-flex justify-content-center align-items-center" style="height: 100%;">
+
+  <form [formGroup]="user"
+    style="width: 750px; height: 750px; display: flex; flex-direction: column; justify-content: center;">
+    <div class="row d-flex justify-content-center">
+        <h2>Iniciar Sesión</h2>
+    </div>
+    <div class="row d-flex justify-content-center align-items-center m-4">
+      <div class="col-9">
+        <mat-form-field aparence="fill">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" required formControlName="email">
+          <mat-hint>{{getWroteLength('email')}} / 50</mat-hint>
+          <mat-error *ngIf="hasError('email','required')">
+            El campo es requerido.
+          </mat-error>
+          <mat-error *ngIf="hasError('email','email')">
+            Ingrese un correo valido.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center align-items-center m-4">
+      <div class="col-9">
+        <mat-form-field aparence="fill">
+          <mat-label>Password</mat-label>
+          <input type="password" matInput required formControlName="password">
+          <mat-hint>{{getWroteLength('password')}} / mínimo 5</mat-hint>
+          <mat-error *ngIf="hasError('password','required')">
+            El campo es requerido.
+          </mat-error>
+          <mat-error *ngIf="hasError('password','minlength')">
+            Mínimo 5 caractéres.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-around align-items-center m-4">
+      <button type="button" mat-raised-button class="bg-primary text-white" (click)="resetForm()">
+        Limpiar
+      </button>
+      <button type="button" mat-raised-button class="bg-primary text-white" (click)=login()>
+        Entrar
+      </button>
+    </div>
+  </form>
+</div>
+
+
+<style>
+  mat-form-field {
+    width: 100%;
+  }
+
+  button {
+    width: 140px;
+    height: 50px !important;
+    font-size: large !important;
+  }
+</style>

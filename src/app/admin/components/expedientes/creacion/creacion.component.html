@@ -1,0 +1,769 @@
+<div style="width: 100%;height: 100%;">
+  <mat-stepper orientation="vertical" linear="false" #stepper>
+    <mat-step [stepControl]="expediente">
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Datos del paciente.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-4">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Nombre" formControlName="nombre" required>
+            <mat-hint>{{getWrotenValueLength('nombre')}} / 50</mat-hint>
+            <mat-error *ngIf="hasError('nombre','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('nombre','maxlength')">
+              Máximo 50 caracteres
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="col-4">
+            <mat-label>Apellido Paterno</mat-label>
+            <input matInput placeholder="Apellido Paterno" formControlName="apellido_paterno" required>
+            <mat-hint>{{getWrotenValueLength('apellido_paterno')}} / 50</mat-hint>
+            <mat-error *ngIf="hasError('apellido_paterno','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('apellido_paterno','maxlength')">
+              Máximo 50 caracteres
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="col-4">
+            <mat-label>Apellido Materno</mat-label>
+            <input matInput placeholder="Apellido Materno" formControlName="apellido_materno" required>
+            <mat-hint>{{getWrotenValueLength('apellido_materno')}} / 50</mat-hint>
+            <mat-error *ngIf="hasError('apellido_materno','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('apellido_materno','maxlength')">
+              Máximo 50 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row d-flex justify-content-start align-items-center">
+          <mat-form-field appearance="fill" class="col-6">
+            <mat-label>Dirección</mat-label>
+            <input matInput placeholder="Dirección" formControlName="direccion" required>
+            <mat-hint>{{getWrotenValueLength('direccion')}} / 60</mat-hint>
+            <mat-error *ngIf="hasError('direccion','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('direccion','maxlength')">
+              Máximo 50 caracteres
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="col-6">
+            <mat-label>Ocupación</mat-label>
+            <input matInput placeholder="Ocupación" formControlName="ocupacion" required>
+            <mat-hint>{{getWrotenValueLength('ocupacion')}} / 50</mat-hint>
+            <mat-error *ngIf="hasError('ocupacion','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('ocupacion','maxlength')">
+              Máximo 60 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row d-flex align-items-center">
+          <mat-form-field appearance="fill" class="col-4">
+            <mat-label>Edad</mat-label>
+            <input matInput type="numbe" placeholder="Edad" formControlName="edad" required>
+            <mat-hint>{{getWrotenValueLength('edad')}} / 3</mat-hint>
+            <mat-error *ngIf="hasError('edad','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('edad','maxlength')">
+              Máximo 3 caracteres
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="col-4">
+            <mat-label>Sexo</mat-label>
+            <mat-select formControlName="sexo">
+              <mat-option *ngFor="let sexo of sexos" [value]="sexo.value" >
+                {{sexo.descripcion}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="hasError('sexo','required')">
+              El campo es requeirdo.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="col-4">
+            <mat-label>Ingresos Mensuales</mat-label>
+            <input  matInput formControlName="ingresos_mensuales">
+            <mat-hint>{{getWrotenValueLength('ingresos_mensuales')}} / 6</mat-hint>
+            <mat-error *ngIf="hasError('ingresos_mensuales','required')">
+              El dato es requerido.
+            </mat-error>
+            <mat-error *ngIf="hasError('ingresos_mensuales','maxlength')">
+              Máximo 6 caractéres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Motivo De Consulta.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Motivo de consulta</mat-label>
+            <textarea rows="5" matInput placeholder="Nombre" formControlName="motivo_consulta" required></textarea>
+            <mat-hint>{{getWrotenValueLength('motivo_consulta')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('motivo_consulta','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('nombre','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Sintomas.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-10">
+            <mat-label>Sintoma</mat-label>
+            <input matInput placeholder="Sintoma" formControlName="auxSintoma">
+            <mat-hint>{{getWrotenValueLength('auxSintoma')}} / 50</mat-hint>
+            <mat-error *ngIf="hasError('auxSintoma','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('auxSintoma','maxlength')">
+              Máximo 50 caracteres
+            </mat-error>
+          </mat-form-field>
+          <div class="col-2 d-flex justify-content-center align-items-center">
+            <button mat-fab class="bg-primary" (click)="addItemToArray(['auxSintoma'],'sintomas',['sintoma'])">
+              <mat-icon class="text-white">add</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-4">
+            <mat-checkbox (click)="mostrarSintomas = !mostrarSintomas" [disabled]="getLengthOfArrayForm('sintomas') == 0">Mostrar Sintomas</mat-checkbox>
+          </div>
+          <div class="col-4">
+            <span>{{getLengthOfArrayForm('sintomas')}} sintomas agregados.</span>
+          </div>
+
+        </div>
+
+        <ng-container formArrayName="sintomas" *ngIf="(mostrarSintomas == true) && (getLengthOfArrayForm('sintomas') > 0)">
+          <div class="formArrayContainer">
+            <div class="row d-flex justify-content-center align-items-center"
+              *ngFor="let control of this.expediente.controls.sintomas.controls;index as i" [formGroupName]="i">
+
+              <mat-form-field appearance="fill" class="col-8 d-flex align-items-center">
+                <mat-label>Sintoma {{i+1}}</mat-label>
+                <input type="text" matInput placeholder="" formControlName="sintoma">
+              </mat-form-field>
+              <div class="col-2 d-flex justify-content-center align-items-center">
+                <button mat-fab class="text-white bg-danger"
+                  (click)="deleteItemFromArray(i,'sintomas')"><mat-icon>delete</mat-icon></button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Circunstancias De Aparición.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Circunstancias De Aparición</mat-label>
+            <textarea rows="5" matInput placeholder="Circunstancias" formControlName="circunstancias_aparicion" required></textarea>
+            <mat-hint>{{getWrotenValueLength('circunstancias_aparicion')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('circunstancias_aparicion','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('circunstancias_aparicion','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Descripción Física.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Descripción Física</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="descripcion_fisica" required></textarea>
+            <mat-hint>{{getWrotenValueLength('descripcion_fisica')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('descripcion_fisica','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('descripcion_fisica','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Demanda De Tratamiento.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Demanda De Tratameinto.</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="demanda_tratamiento" required></textarea>
+            <mat-hint>{{getWrotenValueLength('demanda_tratamiento')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('demanda_tratamiento','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('demanda_tratamiento','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Área Escolar.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Área Escolar.</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="area_escolar" required></textarea>
+            <mat-hint>{{getWrotenValueLength('area_escolar')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('area_escolar','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('area_escolar','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Área Laboral.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Área Laboral.</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="area_laboral" required></textarea>
+            <mat-hint>{{getWrotenValueLength('area_laboral')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('area_laboral','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('area_laboral','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Acontecimientos Significativos.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Acontecimientos Significativos En Su Vida.</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="acontecimientos_significativos" required></textarea>
+            <mat-hint>{{getWrotenValueLength('acontecimientos_significativos')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('acontecimientos_significativos','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('acontecimientos_significativos','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Desarrollo Psicosexual.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Desarrollo Psicosexual.</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="desarrollo_psicosexual" required></textarea>
+            <mat-hint>{{getWrotenValueLength('desarrollo_psicosexual')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('desarrollo_psicosexual','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('desarrollo_psicosexual','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Familiograma.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Familiograma.</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="familiograma" required></textarea>
+            <mat-hint>{{getWrotenValueLength('familiograma')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('familiograma','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('familiograma','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Area Familiar y De Realción.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Área Familiar y De Relación.</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="area_familiar_relacion" required></textarea>
+            <mat-hint>{{getWrotenValueLength('area_familiar_relacion')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('area_familiar_relacion','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('area_familiar_relacion','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Mapeo Familiar.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Mapeo Familiar.</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="mapeo_familiar" required></textarea>
+            <mat-hint>{{getWrotenValueLength('mapeo_familiar')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('mapeo_familiar','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('mapeo_familiar','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Impresiones Diagnósticas De La Familia.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Impresiones Diagnósticas De La Familia.</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="impresiones_diagnositcas_familia" required></textarea>
+            <mat-hint>{{getWrotenValueLength('impresiones_diagnositcas_familia')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('impresiones_diagnositcas_familia','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('impresiones_diagnositcas_familia','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Hipótesis Familiar.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Hipótesis Familiar.</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="hipotesis_familiar" required></textarea>
+            <mat-hint>{{getWrotenValueLength('hipotesis_familiar')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('hipotesis_familiar','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('hipotesis_familiar','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Examen Mental.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Examen Mental.</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="examen_mental" required></textarea>
+            <mat-hint>{{getWrotenValueLength('examen_mental')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('examen_mental','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('examen_mental','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Indicaciones Diagnósticas.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Indicaciones Diagnósticas.</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="indicaciones_diagnosticas" required></textarea>
+            <mat-hint>{{getWrotenValueLength('indicaciones_diagnosticas')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('indicaciones_diagnosticas','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('indicaciones_diagnosticas','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Indicaciones Diagnósticas DCM y CIE.</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-2">
+            <mat-label>Eje</mat-label>
+            <input matInput placeholder="Eje" formControlName="auxEje">
+            <mat-hint>{{getWrotenValueLength('auxEje')}} / 20</mat-hint>
+            <mat-error *ngIf="hasError('auxEje','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('auxEje','maxlength')">
+              Máximo 50 caracteres
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="col-2">
+            <mat-label>Código</mat-label>
+            <input matInput placeholder="Eje" formControlName="auxCodigo">
+            <mat-hint>{{getWrotenValueLength('auxCodigo')}} / 10</mat-hint>
+            <mat-error *ngIf="hasError('auxCodigo','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('auxCodigo','maxlength')">
+              Máximo 10 caracteres
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="col-2">
+            <mat-label>DCM</mat-label>
+            <input matInput placeholder="Eje" formControlName="auxDcm">
+            <mat-hint>{{getWrotenValueLength('auxDcm')}} / 10</mat-hint>
+            <mat-error *ngIf="hasError('auxDcm','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('auxDcm','maxlength')">
+              Máximo 10 caracteres
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="col-2">
+            <mat-label>CIE</mat-label>
+            <input matInput placeholder="Cie" formControlName="auxCie">
+            <mat-hint>{{getWrotenValueLength('auxCie')}} / 10</mat-hint>
+            <mat-error *ngIf="hasError('auxCie','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('auxCie','maxlength')">
+              Máximo 10 caracteres
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="col-2">
+            <mat-label>Transtorno</mat-label>
+            <input matInput placeholder="Cie" formControlName="auxTranstorno">
+            <mat-hint>{{getWrotenValueLength('auxTranstorno')}} / 10</mat-hint>
+            <mat-error *ngIf="hasError('auxTranstorno','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('auxTranstorno','maxlength')">
+              Máximo 20 caracteres
+            </mat-error>
+          </mat-form-field>
+          <div class="col-2 d-flex justify-content-center align-items-center">
+            <button mat-fab class="bg-primary" (click)="addItemToArray(['auxEje','auxCodigo','auxCie','auxDcm','auxTranstorno'],'impresiones_diagnostics_dcm_cie',['eje','codigo','cie','dcm','transtorno'])">
+              <mat-icon class="text-white">add</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-4">
+            <mat-checkbox (click)="mostrarIndicacionesDcmCIe = !mostrarIndicacionesDcmCIe" [disabled]="getLengthOfArrayForm('impresiones_diagnostics_dcm_cie') == 0">Mostrar Indicaciones</mat-checkbox>
+          </div>
+          <div class="col-4">
+            <span>{{getLengthOfArrayForm('impresiones_diagnostics_dcm_cie')}} indicaciones agregadas.</span>
+          </div>
+
+        </div>
+        <ng-container formArrayName="impresiones_diagnostics_dcm_cie" *ngIf="( getLengthOfArrayForm('impresiones_diagnostics_dcm_cie') ) > 0 && (mostrarIndicacionesDcmCIe == true)">
+          <div class="formArrayContainer">
+            <div class="row d-flex justify-content-center align-items-center"
+              *ngFor="let control of this.expediente.controls.impresiones_diagnostics_dcm_cie.controls;index as i" [formGroupName]="i">
+
+              <mat-form-field appearance="fill" class="col-2 d-flex align-items-center">
+                <mat-label>Eje</mat-label>
+                <input type="text" matInput placeholder="" formControlName="eje">
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="col-2 d-flex align-items-center">
+                <mat-label>Código</mat-label>
+                <input type="text" matInput placeholder="" formControlName="codigo">
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="col-2 d-flex align-items-center">
+                <mat-label>DCM</mat-label>
+                <input type="text" matInput placeholder="" formControlName="dcm">
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="col-2 d-flex align-items-center">
+                <mat-label>CIE</mat-label>
+                <input type="text" matInput placeholder="" formControlName="cie">
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="col-2 d-flex align-items-center">
+                <mat-label>Transtorno</mat-label>
+                <input type="text" matInput placeholder="" formControlName="transtorno">
+              </mat-form-field>
+              <div class="col-2 d-flex justify-content-center align-items-center">
+                <button mat-fab class="text-white bg-danger"
+                  (click)="deleteItemFromArray(i,'impresiones_diagnostics_dcm_cie')"><mat-icon>delete</mat-icon></button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <!--FOCO TERAPEUTICO-->
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Fóco Terapéutico</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Fóco</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="foco_terapeutico"></textarea>
+            <mat-hint>{{getWrotenValueLength('foco_terapeutico')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('foco_terapeutico','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('foco_terapeutico','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <!--MODALIDAD TERAPEUTICA-->
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Modalidad Terapéutica Que Sugiere</ng-template>
+        <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-2">
+            <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxTi')" formControlName="auxTi">T.I</mat-checkbox>
+          </div>
+          <div class="col-2">
+            <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxTf')">T.F</mat-checkbox>
+          </div>
+          <div class="col-2">
+            <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxTp')" >T.P</mat-checkbox>
+          </div>
+          <div class="col-2">
+            <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxTg')" >T.G</mat-checkbox>
+          </div>
+          <div class="col-2">
+            <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxOtra')" >Otra</mat-checkbox>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-center align-items-center">
+          <mat-form-field appearance="fill" class="col-10">
+            <mat-label>Fundamento</mat-label>
+            <textarea rows="5" matInput placeholder="Fundamente" formControlName="auxFundamento"></textarea>
+            <mat-hint>{{getWrotenValueLength('auxFundamento')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('auxFundamento','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('auxFundamento','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <!--OBJETIVO TERAPEUTICO-->
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Objetivo Terapéutico</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Objetivo</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="objetivo_terapeutico"></textarea>
+            <mat-hint>{{getWrotenValueLength('objetivo_terapeutico')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('objetivo_terapeutico','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('objetivo_terapeutico','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <!--ESTRATEGIAS TERAPEUTICAS A UTILIZAR-->
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Estrategias Terapéuticas</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Estrategias</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="estrategias_terapeuticas"></textarea>
+            <mat-hint>{{getWrotenValueLength('estrategias_terapeuticas')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('estrategias_terapeuticas','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('estrategias_terapeuticas','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <!--PRONOSTICO TERAPEUTICO-->
+    <mat-step>
+      <form [formGroup]="expediente">
+        <ng-template matStepLabel>Pronóstico Terapéutico</ng-template>
+        <div class="row d-flex">
+          <mat-form-field appearance="fill" class="col-12">
+            <mat-label>Pronóstico</mat-label>
+            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="pronostico_terapeutico"></textarea>
+            <mat-hint>{{getWrotenValueLength('pronostico_terapeutico')}} / 600</mat-hint>
+            <mat-error *ngIf="hasError('pronostico_terapeutico','required')">
+              El campo es requerido
+            </mat-error>
+            <mat-error *ngIf="hasError('pronostico_terapeutico','maxlength')">
+              Máximo 600 caracteres
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <!--PROXOIMA CITA-->
+    <mat-step>
+      <ng-template matStepLabel>Próxima Cita</ng-template>
+      <div class="row d-flex justify-content-center mt-4" style="min-width:100%">
+        <div class="col-8 d-flex justify-content-center align-items-center">
+          <span style="font-weight: 500; font-size: medium;">Seleccione una fecha y hora.</span>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center mt-4" style="min-width:100%">
+        <div class="col-8 mt-2 d-flex justify-content-center align-items-center">
+            <input type="datetime-local"  class="form-control" placeholder="Fecha" [(ngModel)]="fecha_proximaCita" style="text-align: center;" >
+        </div>
+        <div class="col-2 d-flex justify-content-center align-items-center">
+          <button mat-fab (click)="addNewCita()" id="addCita" [disabled]="fecha_proximaCita == ''">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+      <button mat-button matStepperPrevious>Atras</button>
+      <button mat-button matStepperNext>Siguiente</button>
+
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Completado</ng-template>
+      <p>Has termiando el formulario.</p>
+      <div>
+        <button mat-button matStepperPrevious>Atras</button>
+        <button mat-button matStepperNext>Siguiente</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+  <div class="row d-flex ml-4 align-items-center">
+    <button mat-fab class="bg-primary text-white" (click)="saveExpedient()" ><mat-icon>save</mat-icon></button>
+  </div>
+
+
+</div>

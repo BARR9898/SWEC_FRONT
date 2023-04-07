@@ -1,0 +1,71 @@
+*{
+  font-family: 'Times New Roman', Times, serif;
+
+}
+
+
+mat-form-field{
+  width: 100%;
+}
+
+textarea{
+  min-height: 150px!important;
+  text-align: center!important;
+}
+
+mat-card-content,
+mat-steeper{
+  max-width: 100%;
+}
+
+table > thead > tr > th{
+  font-weight: 600;
+  text-align: center;
+}
+
+td {
+  text-align: center;
+}
+
+#crearNotaCinica{
+  background-color: #003554!important;
+  color: #e7ecef!important;
+  font-weight: 800!important;
+  font-size: large;
+}
+
+#guardarNotaClinica,
+#save,
+#addCita,
+#regresarExpedientes{
+  background-color: #275570!important;
+  color: #e7ecef!important;
+  font-weight: 800!important;
+  font-size: large;
+}
+
+mat-tab,
+mat-tab-group{
+  width: 100%!important;
+  max-height: 100%!important;
+  z-index: none!important;
+
+}
+
+
+mat-tab-body{
+  z-index: none!important;
+}
+
+.inputDateTime{
+  width: 100px;
+
+}
+
+.nota-clinica_title{
+  font-size: 20px;
+  color: #003554!important;
+  font-weight: 550;
+
+}
+
