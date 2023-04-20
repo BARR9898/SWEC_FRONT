@@ -19,12 +19,7 @@ export class ListaComponent implements OnInit{
   expedientes:any;
 
   ngOnInit(): void {
-    this.expedientesService.obtenerExpedientes()
-    .subscribe((res:any) => {
-      this.expedientes = res.data;
-      console.log(this.expedientes);
-
-    })
+    this.getExpedientData()
 
   }
 
@@ -46,8 +41,9 @@ export class ListaComponent implements OnInit{
             'Elimnado!',
             'El expediente a sido eliminado.',
             'success'
-          )
-          this.routerServices.navigate(['admin/expedientes/lista'])
+          ).then(() => {
+            this.getExpedientData()
+          })
         })
 
       }
@@ -59,7 +55,6 @@ export class ListaComponent implements OnInit{
 
   getLastCita(index:number){
     let expediente = this.expedientes[index]
-    console.log(expediente);
 
     let length = expediente.citas.length
     let ultima_cita = expediente.citas[length-1]
@@ -68,6 +63,18 @@ export class ListaComponent implements OnInit{
 
   exportar(id:string){
     this.exportarcionService.main(id)
+  }
+
+  getExpedientData(){
+    this.expedientesService.obtenerExpedientes()
+    .subscribe((res:any) => {
+      if(res.data.length == 0){
+        this.expedientes = []
+        return
+      }
+      this.expedientes = res.data;
+
+    })
   }
 
 

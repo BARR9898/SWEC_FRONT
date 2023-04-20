@@ -1,10 +1,21 @@
 <div style="width: 100%;height: 100%;">
+  <header class="d-flex flex-column flex-md-row a justify-content-md-around align-items-md-center mt-4" style="width: 100%;">
+    <div class="col-12 col-md-3 d-flex align-items-center justify-content-center">
+      <h2 style="font-size: 15px; font-weight: 500;">Nuevo Expediente</h2>
+    </div>
+    <div class="col-12 col-md-3 d-flex align-items-center justify-content-center">
+      <h2 style="font-size: 15px; font-weight: 500;">Fecha De Creación:{{fecha}}</h2>
+    </div>
+    <div class="col-12 col-md-4 d-flex align-items-center justify-content-center">
+      <h2 style="font-size: 15px; font-weight: 500;">Expediente Número: {{expedientes_length}}</h2>
+    </div>
+  </header>
   <mat-stepper orientation="vertical" linear="false" #stepper>
     <mat-step [stepControl]="expediente">
       <form [formGroup]="expediente">
         <ng-template matStepLabel>Datos del paciente.</ng-template>
         <div class="row d-flex">
-          <mat-form-field appearance="fill" class="col-4">
+          <mat-form-field appearance="fill" class="col-12 col-md-4">
             <mat-label>Nombre</mat-label>
             <input matInput placeholder="Nombre" formControlName="nombre" required>
             <mat-hint>{{getWrotenValueLength('nombre')}} / 50</mat-hint>
@@ -15,7 +26,7 @@
               Máximo 50 caracteres
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill" class="col-4">
+          <mat-form-field appearance="fill" class="col-12 col-md-4">
             <mat-label>Apellido Paterno</mat-label>
             <input matInput placeholder="Apellido Paterno" formControlName="apellido_paterno" required>
             <mat-hint>{{getWrotenValueLength('apellido_paterno')}} / 50</mat-hint>
@@ -26,7 +37,7 @@
               Máximo 50 caracteres
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill" class="col-4">
+          <mat-form-field appearance="fill" class="col-12 col-md-4">
             <mat-label>Apellido Materno</mat-label>
             <input matInput placeholder="Apellido Materno" formControlName="apellido_materno" required>
             <mat-hint>{{getWrotenValueLength('apellido_materno')}} / 50</mat-hint>
@@ -39,7 +50,7 @@
           </mat-form-field>
         </div>
         <div class="row d-flex justify-content-start align-items-center">
-          <mat-form-field appearance="fill" class="col-6">
+          <mat-form-field appearance="fill" class="col-12 col-md-6">
             <mat-label>Dirección</mat-label>
             <input matInput placeholder="Dirección" formControlName="direccion" required>
             <mat-hint>{{getWrotenValueLength('direccion')}} / 60</mat-hint>
@@ -50,7 +61,7 @@
               Máximo 50 caracteres
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill" class="col-6">
+          <mat-form-field appearance="fill" class="col-12 col-md-6">
             <mat-label>Ocupación</mat-label>
             <input matInput placeholder="Ocupación" formControlName="ocupacion" required>
             <mat-hint>{{getWrotenValueLength('ocupacion')}} / 50</mat-hint>
@@ -63,7 +74,7 @@
           </mat-form-field>
         </div>
         <div class="row d-flex align-items-center">
-          <mat-form-field appearance="fill" class="col-4">
+          <mat-form-field appearance="fill" class="col-12 col-md-4">
             <mat-label>Edad</mat-label>
             <input matInput type="numbe" placeholder="Edad" formControlName="edad" required>
             <mat-hint>{{getWrotenValueLength('edad')}} / 3</mat-hint>
@@ -74,9 +85,9 @@
               Máximo 3 caracteres
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill" class="col-4">
+          <mat-form-field appearance="fill" class="col-md-4">
             <mat-label>Sexo</mat-label>
-            <mat-select formControlName="sexo">
+            <mat-select formControlName="sexo" [(value)]="sexos[0].value">
               <mat-option *ngFor="let sexo of sexos" [value]="sexo.value" >
                 {{sexo.descripcion}}
               </mat-option>
@@ -85,7 +96,7 @@
               El campo es requeirdo.
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill" class="col-4">
+          <mat-form-field appearance="fill" class="col-md-4">
             <mat-label>Ingresos Mensuales</mat-label>
             <input  matInput formControlName="ingresos_mensuales">
             <mat-hint>{{getWrotenValueLength('ingresos_mensuales')}} / 6</mat-hint>
@@ -128,8 +139,8 @@
     <mat-step>
       <form [formGroup]="expediente">
         <ng-template matStepLabel>Sintomas.</ng-template>
-        <div class="row d-flex">
-          <mat-form-field appearance="fill" class="col-10">
+        <div class="row d-flex d-flex justify-content-center align-items-center">
+          <mat-form-field appearance="fill" class="col-10 col-md-5">
             <mat-label>Sintoma</mat-label>
             <input matInput placeholder="Sintoma" formControlName="auxSintoma">
             <mat-hint>{{getWrotenValueLength('auxSintoma')}} / 50</mat-hint>
@@ -147,10 +158,10 @@
           </div>
         </div>
         <div class="row d-flex justify-content-center align-items-center">
-          <div class="col-4">
+          <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
             <mat-checkbox (click)="mostrarSintomas = !mostrarSintomas" [disabled]="getLengthOfArrayForm('sintomas') == 0">Mostrar Sintomas</mat-checkbox>
           </div>
-          <div class="col-4">
+          <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
             <span>{{getLengthOfArrayForm('sintomas')}} sintomas agregados.</span>
           </div>
 
@@ -158,18 +169,25 @@
 
         <ng-container formArrayName="sintomas" *ngIf="(mostrarSintomas == true) && (getLengthOfArrayForm('sintomas') > 0)">
           <div class="formArrayContainer">
-            <div class="row d-flex justify-content-center align-items-center"
-              *ngFor="let control of this.expediente.controls.sintomas.controls;index as i" [formGroupName]="i">
+            <mat-card style="width: 100%; max-height: 250px!important; border-radius: 3px; border: 0.5px solid #d1d1d1; padding: 30px; overflow: auto;">
+              <mat-card-title class="mt-2 d-flex justify-content-center align-items-center">Sintomas Agregados</mat-card-title>
+              <mat-card-content class="mt-4 p-2">
+                <div class="row d-flex justify-content-center align-items-center"
+                *ngFor="let control of this.expediente.controls.sintomas.controls;index as i" [formGroupName]="i">
 
-              <mat-form-field appearance="fill" class="col-8 d-flex align-items-center">
-                <mat-label>Sintoma {{i+1}}</mat-label>
-                <input type="text" matInput placeholder="" formControlName="sintoma">
-              </mat-form-field>
-              <div class="col-2 d-flex justify-content-center align-items-center">
-                <button mat-fab class="text-white bg-danger"
-                  (click)="deleteItemFromArray(i,'sintomas')"><mat-icon>delete</mat-icon></button>
+                <mat-form-field appearance="fill" class="col-10 col-md-5 d-flex align-items-center">
+                  <mat-label>Sintoma {{i+1}}</mat-label>
+                  <input type="text" matInput placeholder="" formControlName="sintoma">
+                </mat-form-field>
+                <div class="col-2 col-md-1 d-flex justify-content-center align-items-center">
+                  <button mat-fab class="text-white bg-danger"
+                    (click)="deleteItemFromArray(i,'sintomas')"><mat-icon>delete</mat-icon></button>
+                </div>
               </div>
-            </div>
+              </mat-card-content>
+
+            </mat-card>
+
           </div>
         </ng-container>
         <div>
@@ -489,8 +507,8 @@
     <mat-step>
       <form [formGroup]="expediente">
         <ng-template matStepLabel>Indicaciones Diagnósticas DCM y CIE.</ng-template>
-        <div class="row d-flex">
-          <mat-form-field appearance="fill" class="col-2">
+        <div class="row d-flex justify-content-center align-items-center">
+          <mat-form-field appearance="fill" class="col-12 col-md-2">
             <mat-label>Eje</mat-label>
             <input matInput placeholder="Eje" formControlName="auxEje">
             <mat-hint>{{getWrotenValueLength('auxEje')}} / 20</mat-hint>
@@ -501,18 +519,7 @@
               Máximo 50 caracteres
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill" class="col-2">
-            <mat-label>Código</mat-label>
-            <input matInput placeholder="Eje" formControlName="auxCodigo">
-            <mat-hint>{{getWrotenValueLength('auxCodigo')}} / 10</mat-hint>
-            <mat-error *ngIf="hasError('auxCodigo','required')">
-              El campo es requerido
-            </mat-error>
-            <mat-error *ngIf="hasError('auxCodigo','maxlength')">
-              Máximo 10 caracteres
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field appearance="fill" class="col-2">
+          <mat-form-field appearance="fill" class="co-12 col-md-2">
             <mat-label>DCM</mat-label>
             <input matInput placeholder="Eje" formControlName="auxDcm">
             <mat-hint>{{getWrotenValueLength('auxDcm')}} / 10</mat-hint>
@@ -523,7 +530,7 @@
               Máximo 10 caracteres
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill" class="col-2">
+          <mat-form-field appearance="fill" class="col-12 col-md-2">
             <mat-label>CIE</mat-label>
             <input matInput placeholder="Cie" formControlName="auxCie">
             <mat-hint>{{getWrotenValueLength('auxCie')}} / 10</mat-hint>
@@ -534,7 +541,7 @@
               Máximo 10 caracteres
             </mat-error>
           </mat-form-field>
-          <mat-form-field appearance="fill" class="col-2">
+          <mat-form-field appearance="fill" class="col-12 col-md-2">
             <mat-label>Transtorno</mat-label>
             <input matInput placeholder="Cie" formControlName="auxTranstorno">
             <mat-hint>{{getWrotenValueLength('auxTranstorno')}} / 10</mat-hint>
@@ -546,50 +553,53 @@
             </mat-error>
           </mat-form-field>
           <div class="col-2 d-flex justify-content-center align-items-center">
-            <button mat-fab class="bg-primary" (click)="addItemToArray(['auxEje','auxCodigo','auxCie','auxDcm','auxTranstorno'],'impresiones_diagnostics_dcm_cie',['eje','codigo','cie','dcm','transtorno'])">
+            <button mat-fab class="bg-primary" (click)="addItemToArray(['auxEje','auxCie','auxDcm','auxTranstorno'],'impresiones_diagnostics_dcm_cie',['eje','cie','dcm','transtorno'])">
               <mat-icon class="text-white">add</mat-icon>
             </button>
           </div>
         </div>
         <div class="row d-flex justify-content-center align-items-center">
-          <div class="col-4">
+          <div class="col-md-4">
             <mat-checkbox (click)="mostrarIndicacionesDcmCIe = !mostrarIndicacionesDcmCIe" [disabled]="getLengthOfArrayForm('impresiones_diagnostics_dcm_cie') == 0">Mostrar Indicaciones</mat-checkbox>
           </div>
-          <div class="col-4">
+          <div class="col-md-4">
             <span>{{getLengthOfArrayForm('impresiones_diagnostics_dcm_cie')}} indicaciones agregadas.</span>
           </div>
 
         </div>
         <ng-container formArrayName="impresiones_diagnostics_dcm_cie" *ngIf="( getLengthOfArrayForm('impresiones_diagnostics_dcm_cie') ) > 0 && (mostrarIndicacionesDcmCIe == true)">
           <div class="formArrayContainer">
-            <div class="row d-flex justify-content-center align-items-center"
-              *ngFor="let control of this.expediente.controls.impresiones_diagnostics_dcm_cie.controls;index as i" [formGroupName]="i">
+            <mat-card style="width: 100%; max-height: 250px!important; border-radius: 3px; border: 0.5px solid #d1d1d1; padding: 30px; overflow: auto;">
+              <mat-card-title class="mt-2 d-flex justify-content-center align-items-center">Impresiones Diagnósticas Agregadas</mat-card-title>
+              <mat-card-content class="mt-4 p-2">
+                <div class="row d-flex justify-content-center align-items-center"
+                *ngFor="let control of this.expediente.controls.impresiones_diagnostics_dcm_cie.controls;index as i" [formGroupName]="i">
 
-              <mat-form-field appearance="fill" class="col-2 d-flex align-items-center">
-                <mat-label>Eje</mat-label>
-                <input type="text" matInput placeholder="" formControlName="eje">
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="col-2 d-flex align-items-center">
-                <mat-label>Código</mat-label>
-                <input type="text" matInput placeholder="" formControlName="codigo">
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="col-2 d-flex align-items-center">
-                <mat-label>DCM</mat-label>
-                <input type="text" matInput placeholder="" formControlName="dcm">
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="col-2 d-flex align-items-center">
-                <mat-label>CIE</mat-label>
-                <input type="text" matInput placeholder="" formControlName="cie">
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="col-2 d-flex align-items-center">
-                <mat-label>Transtorno</mat-label>
-                <input type="text" matInput placeholder="" formControlName="transtorno">
-              </mat-form-field>
-              <div class="col-2 d-flex justify-content-center align-items-center">
-                <button mat-fab class="text-white bg-danger"
-                  (click)="deleteItemFromArray(i,'impresiones_diagnostics_dcm_cie')"><mat-icon>delete</mat-icon></button>
+                <mat-form-field appearance="fill" class="col-12 col-md-2 d-flex align-items-center">
+                  <mat-label>Eje</mat-label>
+                  <input type="text" matInput placeholder="" formControlName="eje">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="col-12 col-md-2 d-flex align-items-center">
+                  <mat-label>DCM</mat-label>
+                  <input type="text" matInput placeholder="" formControlName="dcm">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="col-12 col-md-2 d-flex align-items-center">
+                  <mat-label>CIE</mat-label>
+                  <input type="text" matInput placeholder="" formControlName="cie">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="col-12 col-md-2 d-flex align-items-center">
+                  <mat-label>Transtorno</mat-label>
+                  <input type="text" matInput placeholder="" formControlName="transtorno">
+                </mat-form-field>
+                <div class="col-2 d-flex justify-content-center align-items-center">
+                  <button mat-fab class="text-white bg-danger"
+                    (click)="deleteItemFromArray(i,'impresiones_diagnostics_dcm_cie')"><mat-icon>delete</mat-icon></button>
+                </div>
               </div>
-            </div>
+              </mat-card-content>
+
+            </mat-card>
+
           </div>
         </ng-container>
         <div>
@@ -626,24 +636,24 @@
       <form [formGroup]="expediente">
         <ng-template matStepLabel>Modalidad Terapéutica Que Sugiere</ng-template>
         <div class="row d-flex justify-content-center align-items-center">
-          <div class="col-2">
+          <div class="col-12 col-md-2">
             <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxTi')" formControlName="auxTi">T.I</mat-checkbox>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
             <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxTf')">T.F</mat-checkbox>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
             <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxTp')" >T.P</mat-checkbox>
           </div>
-          <div class="col-2">
-            <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxTg')" >T.G</mat-checkbox>
+          <div class="col-12 col-md-2">
+            <mat-checkbox (clcol-2ick)="ModalidadTerapeuticaSetValue('auxTg')" >T.G</mat-checkbox>
           </div>
-          <div class="col-2">
+          <div class="col-12 col-md-2">
             <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxOtra')" >Otra</mat-checkbox>
           </div>
         </div>
         <div class="row d-flex justify-content-center align-items-center">
-          <mat-form-field appearance="fill" class="col-10">
+          <mat-form-field appearance="fill" class="col-12 col-md-10">
             <mat-label>Fundamento</mat-label>
             <textarea rows="5" matInput placeholder="Fundamente" formControlName="auxFundamento"></textarea>
             <mat-hint>{{getWrotenValueLength('auxFundamento')}} / 600</mat-hint>
@@ -738,11 +748,11 @@
           <span style="font-weight: 500; font-size: medium;">Seleccione una fecha y hora.</span>
         </div>
       </div>
-      <div class="row d-flex justify-content-center mt-4" style="min-width:100%">
-        <div class="col-8 mt-2 d-flex justify-content-center align-items-center">
+      <div class="row d-flex justify-content-center align-items-center mt-4" style="min-width:100%">
+        <div class="col-md-4 mt-2 d-flex justify-content-center align-items-center">
             <input type="datetime-local"  class="form-control" placeholder="Fecha" [(ngModel)]="fecha_proximaCita" style="text-align: center;" >
         </div>
-        <div class="col-2 d-flex justify-content-center align-items-center">
+        <div class="col-1 d-flex justify-content-center align-items-center">
           <button mat-fab (click)="addNewCita()" id="addCita" [disabled]="fecha_proximaCita == ''">
             <mat-icon>add</mat-icon>
           </button>

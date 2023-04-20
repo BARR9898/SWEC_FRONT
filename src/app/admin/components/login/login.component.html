@@ -1,60 +1,139 @@
-<div class="row d-flex justify-content-center align-items-center" style="height: 100%;">
+<div class="main row d-flex justify-content-center">
+  <div class="sections row d-flex justify-content-center w-100">
+    <div class="leftSection row d-flex justify-content-center align-items-center col-12 col-md-6">
+      <div class="leftSection_main-container">
+        <div class="leftSection_image-container col-12 d-flex justify-content-center ">
+          <section class="leftSection_image-container_image row d-flex justify-content-center align-items-center mt-3">
+            <img src="../../../../assets/images/pngwing.com.png" alt="">
+          </section>
+        </div>
+        <div class="leftSection_title-container col-12 d-flex justify-content-center mt-3">
+          <h2 class="leftSection_title-container_title">SIDGEC</h2>
+        </div>
+        <div class="leftSection_title-container col-12 d-flex justify-content-center mt-3">
+          <h2 class="leftSection_title-container_subtitle">Sistema Integral De Gestión De Expedientes Clínicos</h2>
+        </div>
+      </div>
+    </div>
+    <div class="rigthSection d-flex align-items-center justify-content-center col-12  col-md-6">
+      <div class="rigthSection_form">
+        <div class="rigthSection_title-container col-12 d-flex justify-content-center  mt-4">
+          <h2 class="rigthSection_title-container_title">Iniciar Sesión</h2>
+        </div>
+        <form [formGroup]="user" class="rigthSideContent_form">
+          <!--EMAIL-->
+          <div class="col-12 mt-2">
+            <mat-form-field aparence="fill">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" required formControlName="email">
+              <mat-hint>{{getWroteLength('email')}} / 50</mat-hint>
+              <mat-error *ngIf="hasError('email','required')">
+                El campo es requerido.
+              </mat-error>
+              <mat-error *ngIf="hasError('email','email')">
+                Ingrese un correo valido.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!--PASSWORD-->
+          <div class="col-12 mt-2">
+            <mat-form-field aparence="fill">
+              <mat-label>Password</mat-label>
+              <input type="password" matInput required formControlName="password">
+              <mat-hint>{{getWroteLength('password')}} / mínimo 5</mat-hint>
+              <mat-error *ngIf="hasError('password','required')">
+                El campo es requerido.
+              </mat-error>
+              <mat-error *ngIf="hasError('password','minlength')">
+                Mínimo 5 caractéres.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!--BUTTONS-->
+          <div class="rigthSideContent_form_buttons row d-flex justify-content-center mt-2">
+            <!--LOGIN-->
+            <div class="col-12 mt-2 d-flex justify-content-center mt-4">
+              <button type="button" mat-raised-button class="login-button" (click)=login()>
+                Entrar
+              </button>
+            </div>
+            <!--LIMPIAR-->
+            <div class="col-12 mt-2 d-flex justify-content-center mt-4">
+              <button class="login-button" type="button" mat-raised-button (click)="resetForm()">
+                Limpiar
+              </button>
+            </div>
 
-  <form [formGroup]="user"
-    style="width: 750px; height: 750px; display: flex; flex-direction: column; justify-content: center;">
-    <div class="row d-flex justify-content-center">
-        <h2>Iniciar Sesión</h2>
-    </div>
-    <div class="row d-flex justify-content-center align-items-center m-4">
-      <div class="col-9">
-        <mat-form-field aparence="fill">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" required formControlName="email">
-          <mat-hint>{{getWroteLength('email')}} / 50</mat-hint>
-          <mat-error *ngIf="hasError('email','required')">
-            El campo es requerido.
-          </mat-error>
-          <mat-error *ngIf="hasError('email','email')">
-            Ingrese un correo valido.
-          </mat-error>
-        </mat-form-field>
+          </div>
+        </form>
       </div>
+
     </div>
-    <div class="row d-flex justify-content-center align-items-center m-4">
-      <div class="col-9">
-        <mat-form-field aparence="fill">
-          <mat-label>Password</mat-label>
-          <input type="password" matInput required formControlName="password">
-          <mat-hint>{{getWroteLength('password')}} / mínimo 5</mat-hint>
-          <mat-error *ngIf="hasError('password','required')">
-            El campo es requerido.
-          </mat-error>
-          <mat-error *ngIf="hasError('password','minlength')">
-            Mínimo 5 caractéres.
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row d-flex justify-content-around align-items-center m-4">
-      <button type="button" mat-raised-button class="bg-primary text-white" (click)="resetForm()">
-        Limpiar
-      </button>
-      <button type="button" mat-raised-button class="bg-primary text-white" (click)=login()>
-        Entrar
-      </button>
-    </div>
-  </form>
+  </div>
 </div>
 
 
-<style>
-  mat-form-field {
-    width: 100%;
-  }
+<!--
+<div class="row d-flex justify-content-center" style="height: 100%; width: 100%;">
+  <div class="rigthSideContent col-12 d-flex row justify-content-center align-items-center ">
 
-  button {
-    width: 140px;
-    height: 50px !important;
-    font-size: large !important;
-  }
-</style>
+    <div class="rigthSideContent_image-main-container row  d-flex justify-content-center align-items-center mt-4">
+      <div class="raigthSideContent_image-container  d-flex justify-content-center align-items-center">
+        <img class="raigthSideContent_image-container_image" src="../../../../assets/images/pngwing.com.png" alt="" srcset="">
+      </div>
+
+    </div>
+    <div class="rigthSideContent_title-container col-12 d-flex justify-content-center align-items-center mt-4">
+      <h2 class="rigthSideContent_title-container_title">SIDGEC</h2>
+    </div>
+
+  </div>
+  <div class="leftSideContent col-12 d-flex  justify-content-center  ">
+    <form [formGroup]="user" class="rigthSideContent_form row">
+      <div class="row d-flex justify-content-center">
+          <h2 id="rigthSideContent_form-title">Iniciar Sesión</h2>
+      </div>
+      <div class="row d-flex justify-content-center align-items-center ">
+        <div class="col-12">
+          <mat-form-field aparence="fill">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" required formControlName="email">
+            <mat-hint>{{getWroteLength('email')}} / 50</mat-hint>
+            <mat-error *ngIf="hasError('email','required')">
+              El campo es requerido.
+            </mat-error>
+            <mat-error *ngIf="hasError('email','email')">
+              Ingrese un correo valido.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center align-items-center ">
+        <div class="col-12">
+          <mat-form-field aparence="fill">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput required formControlName="password">
+            <mat-hint>{{getWroteLength('password')}} / mínimo 5</mat-hint>
+            <mat-error *ngIf="hasError('password','required')">
+              El campo es requerido.
+            </mat-error>
+            <mat-error *ngIf="hasError('password','minlength')">
+              Mínimo 5 caractéres.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-around align-items-center ">
+        <button type="button" mat-raised-button class="bg-primary text-white col-12 mt-3" (click)="resetForm()">
+          Limpiar
+        </button>
+        <button type="button" mat-raised-button class="bg-primary text-white col-12 mt-3" (click)=login()>
+          Entrar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+-->
+
+

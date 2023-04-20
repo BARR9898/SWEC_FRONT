@@ -8,6 +8,7 @@ import { Expediente } from 'src/app/admin/interfaces/expediente';
 import {jsPDF} from 'jspdf';
 import html2canvas from 'html2canvas';
 import { ExportarService } from 'src/app/admin/services/exportar.service';
+import { Logger } from 'html2canvas/dist/types/core/logger';
 
 @Component({
   selector: 'app-detalle',
@@ -32,8 +33,10 @@ export class DetalleComponent implements OnInit {
   clinicalNotesOriginal_length:any
   mostrarUltimaRegistrada = false
   changeToTabOnIndex = 0;
-  fecha_proximaCita = ''
+  fecha_proximaCita = null
   cambiosGuardados = false
+  expediente_fecha_creacion =  null
+  expediente_id = null
 
   //Formulario para el expediente
   expedienteForm = this.fb.group({
@@ -102,6 +105,12 @@ export class DetalleComponent implements OnInit {
 
   ngOnInit(): void {
     //Obtiene el expediente en base al id mandado y setea los forms con el valor corrrespondiente
+    this.getExpedientData();
+
+
+  }
+
+  getExpedientData(){
     this.activatedRoute.params.subscribe((params: Params) => {
       this._id = this.activatedRoute.snapshot.paramMap.get('id')
       console.log(this._id)
@@ -109,30 +118,15 @@ export class DetalleComponent implements OnInit {
         .subscribe((expedientGeted:any) => {
           this.expediente = expedientGeted.data
           console.log(this.expediente);
+
           this.asignValuesToFormControls()
           this.asignNotasClinicasToFormArray()
           this.asignNotasCitasToFormArray()
           this.clinicalNotesOriginal_length = this.expedienteForm.controls.notas_clinica.length
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          this.expediente_fecha_creacion = new Date(this.expediente.createdAt).toLocaleDateString('es-MX')
+          this.expediente_id = this.expediente.expediente_id
         });
     });
-
   }
 
   //Metodo que encuentra el control correspondiente y le asigna el valor del expediente solicitado
@@ -177,6 +171,10 @@ export class DetalleComponent implements OnInit {
     this.setValuesForm('examen_mental',this.expediente.expediente.examen_mental)
     this.setValuesForm('indicaciones_diagnosticas',this.expediente.expediente.indicaciones_diagnosticas)
     this.setValuesForm('foco_terapeutico',this.expediente.expediente.foco)
+    this.setValuesForm('objetivo_terapeutivo',this.expediente.expediente.objetivo_terapeutico)
+    this.setValuesForm('pronostico_terapeutico',this.expediente.expediente.pronostico_terapeutico)
+    this.setValuesForm('estrategias_terapeuticas',this.expediente.expediente.estrategias_terapeuticas)
+
 
 
   }
@@ -198,17 +196,14 @@ export class DetalleComponent implements OnInit {
   save(){
 
     let expedient_updated = this.prepareExpedientToSend()
+    console.log('expediente actualizado',expedient_updated);
 
     this.expedientesServices.actualizarExpediente(this._id,expedient_updated)
     .subscribe((res:any) =>{
       console.log(res);
-
       if(res.result){
-
         this.showDialog('Cambios guardados!','success')
-        setTimeout(() => {
-          window.location.reload()
-        },3000)
+        this.getExpedientData()
       }
 
 
@@ -216,10 +211,16 @@ export class DetalleComponent implements OnInit {
 
 
 
+
   }
 
   //Agregar nueva nota clínica al form array del formulario expediente
   addNotaClinica(){
+
+    if (this.notaClinicaForm.controls.nota.value == '' || this.notaClinicaForm.controls.auxFecha.value == '') {
+        this.showDialog('Seleccione la fecha e ingrese la información de la nota clínica','warning')
+        return
+    }
 
     this.crearNotaClinica = !this.crearNotaClinica
     let date_before_format = this.notaClinicaForm.get('auxFecha')?.value
@@ -236,15 +237,14 @@ export class DetalleComponent implements OnInit {
     notasClinicasFormArray.push(newNoteClinic)
     this.haveBeenCreated_ClinicalNote = true
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Nota agregada con éxito',
-      showConfirmButton: false,
-      timer: 2500
-    })
 
-    this.mostrarUltimaRegistrada = true
+    this.showDialog('Nota agregada con exito','success')
 
+    //Limpiando valores de los inputs
+    this.notaClinicaForm.controls.auxFecha.setValue(new Date().toISOString())
+    this.notaClinicaForm.controls.nota.setValue('Ingrese la nueva nota')
+
+    this.save();
     this.setIndexOfTabFocused()
   }
 
@@ -257,6 +257,7 @@ export class DetalleComponent implements OnInit {
     }
 
     let formArray_notaClinica = (this.expedienteForm.get('notas_clinica') as FormArray)
+    formArray_notaClinica.clear()
     notas_clinicas.forEach((nota:any) => {
 
       let fecha = nota.fecha;
@@ -282,14 +283,17 @@ export class DetalleComponent implements OnInit {
       }
 
       let formArray_citas = (this.expedienteForm.get('citas') as FormArray)
+      formArray_citas.clear()
       citas.forEach((cita:any) => {
 
         let fecha = cita.fecha;
         let status =  cita.status;
-
+        let asistencia = cita.asistencia
         let newFormGroup = this.fb.group({
           fecha: this.fb.control(fecha),
-          stauts: this.fb.control(status)
+          status: this.fb.control(status),
+          asistencia: this.fb.control(asistencia)
+
         })
 
         formArray_citas.push(newFormGroup)
@@ -325,6 +329,11 @@ export class DetalleComponent implements OnInit {
         const formControlAsArray = this.expedienteForm.get(formControl) as FormArray
         formControlAsArray.removeAt(index)
         Swal.fire('Eliminado!', '', 'success')
+        .then(() => {
+          this.save()
+        })
+
+
       } else if (result.isDenied) {
       }
     })
@@ -332,6 +341,7 @@ export class DetalleComponent implements OnInit {
   }
 
   prepareExpedientToSend():Expediente{
+    let test:Expediente = this.expedienteForm.value as Expediente
     let expedient: Expediente = {
       paciente: {
         nombre: this.expedienteForm.controls.nombre.value ,
@@ -346,7 +356,7 @@ export class DetalleComponent implements OnInit {
       expediente: {
         motivo_de_consulta: this.expedienteForm.controls.motivo_consulta.value,
         circunstancias_de_aparicion: this.expedienteForm.controls.circunstancias_aparicion.value,
-        sintomas: this.expedienteForm.controls.sintomas.value,
+        sintomas:this.expediente.expediente.sintomas,
         descripcion_fisica: this.expedienteForm.controls.descripcion_fisica.value,
         demanda_de_tratamiento: this.expedienteForm.controls.demanda_tratamiento.value,
         area_escolar: this.expedienteForm.controls.area_escolar.value,
@@ -360,19 +370,23 @@ export class DetalleComponent implements OnInit {
         hipotesis_familiar: this.expedienteForm.controls.hipotesis_familiar.value,
         examen_mental: this.expedienteForm.controls.examen_mental.value,
         indicaciones_diagnosticas: this.expedienteForm.controls.indicaciones_diagnosticas.value,
-        impresiones_diagnosticas: this.expedienteForm.controls.impresiones_diagnostics_dcm_cie.value,
-        modalidad_terapeutica: this.expedienteForm.controls.modalidad_terapeutica.value,
+        impresiones_diagnosticas: this.expediente.expediente.impresiones_diagnosticas,
+        modalidad_terapeutica: this.expediente.expediente.modalidad_terapeutica,
         objetivo_terapeutico: this.expedienteForm.controls.objetivo_terapeutico.value,
         estrategias_terapeuticas: this.expedienteForm.controls.estrategias_terapeuticas.value,
         pronostico_terapeutico: this.expedienteForm.controls.pronostico_terapeutico.value,
         foco: this.expedienteForm.controls.foco_terapeutico.value
 
       },
+      expediente_id:this.expediente.expediente_id,
       notas_clinicas: this.expedienteForm.controls.notas_clinica.value,
       citas: this.expedienteForm.controls.citas.value
 
 
   }
+
+  console.log('expediente ready to send',expedient);
+
 
   return expedient
 
@@ -408,7 +422,38 @@ export class DetalleComponent implements OnInit {
     this.changeToTabOnIndex =  1
   }
 
+  //CITAS
+
+  deleteCita(index: number) {
+    //Show confirm dialog for delete an item
+    Swal.fire({
+      title: '¿Desea eliminar la cita?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: 'Si',
+      denyButtonText: `No`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        const formControlAsArray = this.expedienteForm.get('citas') as FormArray
+        formControlAsArray.removeAt(index)
+        Swal.fire('Eliminado!', '', 'success')
+        .then(() => {
+          this.save()
+        })
+
+
+      } else if (result.isDenied) {
+      }
+    })
+
+  }
+
   addNewCita(){
+    if(this.fecha_proximaCita == null){
+      this.showDialog('Seleccione una fecha','warning')
+      return
+    }
     let citaProximaCita = this.setDate()
     let citasFormArray = this.expedienteForm.get('citas') as FormArray
     let newFormControl_cita = this.fb.group({
@@ -417,17 +462,16 @@ export class DetalleComponent implements OnInit {
         asistencia: false
     })
     citasFormArray.push(newFormControl_cita);
-    let newCita = {
-      fecha: citaProximaCita,
-      status: true
-    }
-    this.expediente.citas.push(newCita)
-    console.log(this.expedienteForm.controls.citas.value);
+
+    this.save()
+    this.fecha_proximaCita = new Date().toISOString()
 
 
 
   }
+
   setDate(){
+
     let date_time = new Date(this.fecha_proximaCita).toLocaleTimeString()
     let date_date = new Date(this.fecha_proximaCita).toLocaleDateString()
     let deate_formated = `${date_date} - ${date_time}`
@@ -445,19 +489,17 @@ export class DetalleComponent implements OnInit {
           confirmButtonText: 'Si',
           denyButtonText: `No`,
         }).then((result) => {
-          /* Read more about isConfirmed, isDenied below */
           if (result.isConfirmed) {
             const formControlAsArray = this.expedienteForm.get('citas') as FormArray
             let oldValue = formControlAsArray.controls[index].value
-            let newValue = this.fb.group({
-              fecha: this.fb.control(oldValue.fecha),
-              status: this.fb.control(false)
-            })
-            formControlAsArray.removeAt(index)
-            formControlAsArray.insert(index,newValue)
-            console.log(this.expedienteForm.controls.citas.value);
-            this.expediente.citas[index].status = false
+            formControlAsArray.controls[index].get('fecha').setValue(oldValue.fecha)
+            formControlAsArray.controls[index].get('status').setValue(false)
+            formControlAsArray.controls[index].get('asistencia').setValue(false)
+
             Swal.fire('Cita Cancelada!', '', 'success')
+            .then(()=> {
+              this.save()
+            })
           } else if (result.isDenied) {
           }
         })
@@ -470,6 +512,7 @@ export class DetalleComponent implements OnInit {
   }
 
   confirmCita(index:number){
+    console.log(index);
 
     //Show confirm dialog for delete an item
     Swal.fire({
@@ -481,17 +524,15 @@ export class DetalleComponent implements OnInit {
     }).then((result) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        const formControlAsArray = this.expedienteForm.get('citas') as FormArray
+        let formControlAsArray = this.expedienteForm.get('citas') as FormArray
         let oldValue = formControlAsArray.controls[index].value
-        let newValue = this.fb.group({
-          fecha: this.fb.control(oldValue.fecha),
-          status: this.fb.control(true)
-        })
-        formControlAsArray.removeAt(index)
-        formControlAsArray.insert(index,newValue)
-        console.log(this.expedienteForm.controls.citas.value);
-        this.expediente.citas[index].status = true
+        formControlAsArray.controls[index].get('fecha').setValue(oldValue.fecha)
+        formControlAsArray.controls[index].get('status').setValue(true)
+        formControlAsArray.controls[index].get('asistencia').setValue(false)
         Swal.fire('Cita Confirmada!', '', 'success')
+        .then(() => {
+          this.save()
+        })
       } else if (result.isDenied) {
       }
     })
@@ -530,6 +571,15 @@ export class DetalleComponent implements OnInit {
 
   verNotaDetalle(index:number){
     this.routerService.navigate(['/admin/notas/detalle',this.expediente._id,index])
+  }
+
+  disableButton(controls:string[]){
+    let status = false;
+    controls.forEach(control => {
+      status = this.notaClinicaForm.get(control).value == ''
+      return status
+    });
+
   }
 
 

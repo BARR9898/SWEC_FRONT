@@ -1,6 +1,9 @@
 .formArrayContainer{
   max-height: 250px!important;
-  overflow: auto;
+  margin-top: 40px;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
 }
 
 

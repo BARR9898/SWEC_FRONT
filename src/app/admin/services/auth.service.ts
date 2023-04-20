@@ -15,7 +15,7 @@ export class AuthService {
   constructor(private http:HttpClient,private tokenService:TokenService) { }
 
   login(email:string,password:string){
-    return this.http.post<ResponseLogin>(`${this.apiUrl}/auth/login`,{
+    return this.http.post<ResponseLogin>(`${this.apiUrl}/api/auth/login`,{
       email,
       password
     })

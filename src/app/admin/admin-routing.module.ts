@@ -33,7 +33,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     path: 'notas/detalle/:id_expediente/:index_nota',
     component: DetalleNotaComponent
-  }
+  },
+  {
+    canActivate: [AuthGuard],
+    path: '',
+    component: AgendaComponent
+  },
 ];
 
 @NgModule({

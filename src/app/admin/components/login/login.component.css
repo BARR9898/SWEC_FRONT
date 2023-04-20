@@ -1,0 +1,69 @@
+
+
+/*ESTILOS GENERALES*/
+mat-form-field{
+  width: 100%;
+}
+
+.col-12,
+.col-6{
+  padding: 0px!important;
+}
+
+
+.main{
+  height: 100%;
+}
+
+.leftSection{
+  background-color: #023E7D;
+
+}
+.leftSection_image-container_image{
+  width: 150px;
+  height: 150px;
+  background-color: #f2f2f3;
+  border-radius: 50%;
+}
+
+img{
+  width: 100px;
+  height: 100px;
+}
+
+
+.leftSection_title-container_title{
+  color: #f2f2f3;
+  font-size: 28px;
+  font-weight: 500;
+}
+.leftSection_title-container_subtitle{
+  color: #f2f2f3;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/*RAIGTH SECTION*/
+
+
+.rigthSection{
+  margin: 0;
+}
+
+.rigthSection_title-container_title{
+  color: #023E7D;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+
+.leftSideContent_form{
+}
+
+.login-button,
+.limpiar-button{
+  background-color: #023E7D!important;
+  color: #f2f2f1!important;
+  width: 200px;
+  height: 45px;
+}

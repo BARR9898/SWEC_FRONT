@@ -3,9 +3,8 @@ import { Expediente } from 'src/app/admin/interfaces/expediente';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2'
 import { ExpedientesService } from 'src/app/admin/services/expedientes.service';
-import { HttpClient } from '@angular/common/http';
-import { enviroment } from 'src/app/enviroments/enviroment';
-import { checkToken } from 'src/app/admin/interceptors/token.interceptor';
+
+
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-creacion',
@@ -14,13 +13,20 @@ import { Router } from '@angular/router';
 })
 
 
-export class CreacionComponent {
+export class CreacionComponent implements OnInit{
 
 
   constructor(private fb: FormBuilder, private expedienteService: ExpedientesService, private routerService: Router) {
     fb = fb;
   }
+  ngOnInit(): void {
+    this.expedienteService.obtenerExpedientes()
+    .subscribe((res:any) => {
+      this.expedientes_length = (res.data.length + 1)
+    })
+  }
 
+  fecha = new Date().toLocaleString('es-MX')
   mostrarSintomas = false;
   mostrarIndicacionesDcmCIe = false;
   mostrarModalidadTerapeutica = false;
@@ -39,6 +45,7 @@ export class CreacionComponent {
       value: 'O'
     }
   ]
+  expedientes_length = 0;
 
   expediente = this.fb.group({
     //Paciente
@@ -70,7 +77,6 @@ export class CreacionComponent {
     indicaciones_diagnosticas: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
     //DCM Y CIE
     auxEje: this.fb.control('E1', [Validators.maxLength(20)]),
-    auxCodigo: this.fb.control('200', [Validators.maxLength(10)]),
     auxDcm: this.fb.control('CC2', [Validators.maxLength(10)]),
     auxCie: this.fb.control('Z142', [Validators.maxLength(10)]),
     auxTranstorno: this.fb.control('Bipolar', [Validators.maxLength(50)]),
@@ -261,6 +267,7 @@ export class CreacionComponent {
         foco: this.expediente.controls.foco_terapeutico.value
 
       },
+      expediente_id: this.expedientes_length,
       notas_clinicas: [],
       citas: this.expediente.controls.citas.value
 

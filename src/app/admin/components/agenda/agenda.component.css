@@ -1,10 +1,11 @@
+/*
 mat-card{
   width: 100%!important;
   height: 100%!important;
 }
 
 .title{
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 500;
   padding: 10px;
   margin-bottom: 10px;
@@ -32,4 +33,46 @@ table{
 }
 
 .asistencia_status_indicador{
+}
+
+.row{
+  width: 100%!important;
+}
+
+.citas_mensaje{
+  width: 100%!important;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 250px;
+}
+
+#citas-mensaje__mensaje{
+  font-weight: 550;
+  font-size: 30px;
+}
+*/
+
+#main-title{
+  font-size: 28px;
+  font-weight: 500;
+  color: #002855;
+}
+
+
+
+#indicador-citas-faltantes{
+  font-size: 20px;
+  font-weight: 500;
+  color: #002855;
+}
+
+#noCitas-title{
+  font-size: 28px;
+  font-weight: 500;
+  color: #002855;
+}
+
+td,
+th{
+  text-align: center;
 }

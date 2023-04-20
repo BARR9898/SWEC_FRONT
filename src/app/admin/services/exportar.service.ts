@@ -54,7 +54,6 @@ export class ExportarService {
       let impresionesAux = []
 
       impresionesAux.push(impresion.eje)
-      impresionesAux.push(impresion.codigo)
       impresionesAux.push(impresion.dcm)
       impresionesAux.push(impresion.cie)
       impresionesAux.push(impresion.transtorno)

@@ -1,9 +1,69 @@
-  <div class="row d-flex justify-content-center" *ngIf="proximas_citas" style="height: 100%!important;">
-    <mat-card >
+<div class="main row d-flex p-4">
+    <div class="col-12 d-flex justify-content-center align-items-center mt-4" *ngIf="proximas_citas.length == 0">
+      <h2 id="noCitas-title">No existen citas registradas</h2>
+    </div>
+    <div class="col-12 d-flex justify-content-center align-items-center mt-4">
+      <h2 id="main-title">Agenda</h2>
+    </div>
+    <div class="col-12 p-2">
+          <div class="table-responsive mw-100 ">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Paciente</th>
+                  <th scope="col">Cita</th>
+                  <th scope="col">Estatus</th>
+                  <th scope="col">Expediente</th>
+                  <th scope="col">Confirmar Asistencia</th>
+                  <th scope="col">Confirmar Falta</th>
 
-      <div class="row d-flex justify-content-center">
-        <span class="title">Proximas Citas</span>
-      </div>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let cita of proximas_citas;index as i">
+                  <td>{{cita.paciente}}</td>
+                  <td>{{cita.ultima_cita}}</td>
+                  <td *ngIf="cita.asistencia == true" class="asistencia_status_indicador">Asistió</td>
+                  <td *ngIf="cita.asistencia == false" class="asistencia_status_indicador">Faltó</td>
+                  <td *ngIf="(cita.asistencia != false) && (cita.asistencia != true)" class="asistencia_status_indicador" >Pendiente</td>
+                  <td>
+                    <button mat-mini-fab  class="bg-primary" [routerLink]="['/admin/expedientes/detalle',cita.id_expediente]">
+                      <mat-icon class="text-white">visibility</mat-icon>
+                    </button>
+                  </td>
+                  <td>
+                      <button mat-mini-fab  class="bg-success" (click)="marcarAsistencia(i,true)">
+                        <mat-icon class="text-white">done</mat-icon>
+                      </button>
+                  </td>
+                  <td>
+                    <button mat-mini-fab  class="bg-danger" (click)="marcarAsistencia(i,false)">
+                      <mat-icon class="text-white">close</mat-icon>
+                    </button>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    </div>
+    <div class="col-12 d-flex justify-content-center align-items-center justify-content-md-start mt-4">
+      <h2 id="indicador-citas-faltantes">{{proximas_citas.length}} citas restantes</h2>
+    </div>
+
+</div>
+
+
+
+
+<!--
+<div class="row d-flex justify-content-center" *ngIf="proximas_citas" style="height: 100%!important;">
+    <mat-card *ngIf="proximas_citas.length > 0">
+
+      <header class="row d-flex justify-content-center mb-2 mt-2">
+        <div class="col-6 d-flex justify-content-center align-items-center">
+          <span class="title" >Proximas Citas</span>
+        </div>
+      </header>
       <div class="row d-flex justify-content-center align-items-center">
         <div class="col-10">
           <table class="table table-hover">
@@ -55,4 +115,15 @@
       </div>
 
     </mat-card>
+    <section class="citas_mensaje mt-4" *ngIf="proximas_citas.length == 0">
+      <section class="row d-flex justify-content-center align-items-center">
+        <div class="col-6 d-flex justify-content-center align-items-center">
+          <h2 id="citas-mensaje__mensaje">No existen citas pendientes</h2>
+        </div>
+      </section>
+    </section>
   </div>
+-->
+
+
+

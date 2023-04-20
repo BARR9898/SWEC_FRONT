@@ -10,7 +10,7 @@ mat-form-field{
 
 textarea{
   min-height: 150px!important;
-  text-align: center!important;
+  text-align: justify!important;
 }
 
 mat-card-content,

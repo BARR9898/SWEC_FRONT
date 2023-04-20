@@ -16,31 +16,31 @@ export class ExpedientesService {
   apiUrl = enviroment.API_URL
 
   public crearExpediente(expediente:Expediente){
-    return this.http.post(`${this.apiUrl}/expedientes`,expediente,{context:checkToken()})
+    return this.http.post(`${this.apiUrl}/api/expedientes`,expediente,{context:checkToken()})
 
 
   }
 
   public obtenerExpedientes(){
-    return this.http.get(`${this.apiUrl}/expedientes`,{context:checkToken()})
+    return this.http.get(`${this.apiUrl}/api/expedientes`,{context:checkToken()})
 
 
   }
 
   public obtenerExpediente(id:string){
 
-      return this.http.get(`${this.apiUrl}/expedientes/${id}`,{context:checkToken()})
+      return this.http.get(`${this.apiUrl}/api/expedientes/${id}`,{context:checkToken()})
 
 
 
   }
 
   public elminiarExpediente(id:string){
-    return this.http.delete(`${enviroment.API_URL}/expedientes/${id}`,{context: checkToken()})
+    return this.http.delete(`${enviroment.API_URL}/api/expedientes/${id}`,{context: checkToken()})
   }
 
   public actualizarExpediente(id:string,expedient_updated:any){
-    return this.http.put(`${enviroment.API_URL}/expedientes/${id}`,expedient_updated,{context: checkToken()})
+    return this.http.put(`${enviroment.API_URL}/api/expedientes/${id}`,expedient_updated,{context: checkToken()})
 
   }
 }
