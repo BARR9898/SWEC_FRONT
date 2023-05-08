@@ -23,8 +23,6 @@ export class ExpedientesService {
 
   public obtenerExpedientes(){
     return this.http.get(`${this.apiUrl}/api/expedientes`,{context:checkToken()})
-
-
   }
 
   public obtenerExpediente(id:string){

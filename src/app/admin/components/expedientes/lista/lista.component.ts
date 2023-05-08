@@ -68,6 +68,8 @@ export class ListaComponent implements OnInit{
   getExpedientData(){
     this.expedientesService.obtenerExpedientes()
     .subscribe((res:any) => {
+      console.log('obtenerExpedientes', res);
+      
       if(res.data.length == 0){
         this.expedientes = []
         return

@@ -8,7 +8,13 @@ import { DetalleComponent } from './components/expedientes/detalle/detalle.compo
 import { ExportarComponent } from './components/expedientes/exportar/exportar.component';
 import { AgendaComponent } from './components/agenda/agenda.component';
 import { DetalleNotaComponent } from './components/notas/detalle-nota/detalle-nota.component';
+import { MainComponent } from './components/expedientes/main/main.component';
 const routes: Routes = [
+  {
+    canActivate: [AuthGuard],
+    path: 'expedientes/main/:id',
+    component: MainComponent
+  },
   {
     canActivate: [AuthGuard],
     path: 'expedientes/lista',

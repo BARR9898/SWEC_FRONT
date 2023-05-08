@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Nueva Nota Clínica</h1>
+<div mat-dialog-content>
+
+    <form [formGroup]="notaForm">
+
+        <mat-form-field appearance="fill">
+            <mat-label>Nota</mat-label>
+            <textarea matInput  formControlName="nota" maxlength="1000"></textarea>
+            <mat-hint>{{notaForm.controls.nota.value.length}} / 1000</mat-hint>
+            <mat-error *ngIf="notaForm.controls.nota.hasError('required')">El campo es requerido</mat-error>
+            <mat-error *ngIf="notaForm.controls.nota.hasError('maxlengh')">Máximo 1000 caracteres</mat-error>
+
+        </mat-form-field>
+        
+          
+    </form>
+
+
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button (click)="registrar()">Registrar</button>
+
+</div>

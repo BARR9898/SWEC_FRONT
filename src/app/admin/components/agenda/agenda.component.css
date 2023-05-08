@@ -52,6 +52,10 @@ table{
 }
 */
 
+mat-form-field{
+  width: 100%;
+}
+
 #main-title{
   font-size: 28px;
   font-weight: 500;

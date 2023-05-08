@@ -116,15 +116,19 @@ export class DetalleComponent implements OnInit {
       console.log(this._id)
       this.expedientesServices.obtenerExpediente(this._id)
         .subscribe((expedientGeted:any) => {
+          console.log('expedientGeted',expedientGeted);
+          console.log('id',this._id);
+          
+          
           this.expediente = expedientGeted.data
           console.log(this.expediente);
 
           this.asignValuesToFormControls()
-          this.asignNotasClinicasToFormArray()
-          this.asignNotasCitasToFormArray()
-          this.clinicalNotesOriginal_length = this.expedienteForm.controls.notas_clinica.length
-          this.expediente_fecha_creacion = new Date(this.expediente.createdAt).toLocaleDateString('es-MX')
-          this.expediente_id = this.expediente.expediente_id
+          //this.asignNotasClinicasToFormArray()
+          //this.asignNotasCitasToFormArray()
+          //this.clinicalNotesOriginal_length = this.expedienteForm.controls.notas_clinica.length
+          this.expediente_fecha_creacion = `${new Date(this.expediente.expediente.fecha_creacion).toLocaleDateString('es-MX')} - ${new Date(this.expediente.expediente.fecha_creacion).toLocaleTimeString('es-MX')}`
+          this.expediente_id = this.expediente.expediente.id
         });
     });
   }
@@ -155,28 +159,26 @@ export class DetalleComponent implements OnInit {
       default:
         break;
     }
-    this.setValuesForm('motivo_consulta',this.expediente.expediente.motivo_de_consulta)
-    this.setValuesForm('circunstancias_aparicion',this.expediente.expediente.circunstancias_de_aparicion)
+    this.setValuesForm('motivo_consulta',this.expediente.expediente.motivo_consulta)
+    this.setValuesForm('circunstancias_aparicion',this.expediente.expediente.circunstancias_aparicion)
     this.setValuesForm('descripcion_fisica',this.expediente.expediente.descripcion_fisica)
-    this.setValuesForm('demanda_tratamiento',this.expediente.expediente.demanda_de_tratamiento)
+    this.setValuesForm('demanda_tratamiento',this.expediente.expediente.demanda_tratamiento)
     this.setValuesForm('area_escolar',this.expediente.expediente.area_escolar)
     this.setValuesForm('area_laboral',this.expediente.expediente.area_laboral)
     this.setValuesForm('acontecimientos_significativos',this.expediente.expediente.acontecimientos_significativos)
     this.setValuesForm('desarrollo_psicosexual',this.expediente.expediente.desarrollo_psicosexual)
     this.setValuesForm('familiograma',this.expediente.expediente.familiograma)
-    this.setValuesForm('area_familiar_relacion',this.expediente.expediente.area_de_relacion_y_familiar)
+    this.setValuesForm('area_familiar_relacion',this.expediente.expediente.area_familiar_relacion)
     this.setValuesForm('mapeo_familiar',this.expediente.expediente.mapeo_familiar)
-    this.setValuesForm('impresiones_diagnositcas_familia',this.expediente.expediente.impresion_diagnostica_de_familia)
+    this.setValuesForm('impresiones_diagnositcas_familia',this.expediente.expediente.impresiones_diagnosticas_familia)
     this.setValuesForm('hipotesis_familiar',this.expediente.expediente.hipotesis_familiar)
     this.setValuesForm('examen_mental',this.expediente.expediente.examen_mental)
     this.setValuesForm('indicaciones_diagnosticas',this.expediente.expediente.indicaciones_diagnosticas)
-    this.setValuesForm('foco_terapeutico',this.expediente.expediente.foco)
+    this.setValuesForm('foco_terapeutico',this.expediente.expediente.foco_terapeutico)
     this.setValuesForm('objetivo_terapeutivo',this.expediente.expediente.objetivo_terapeutico)
     this.setValuesForm('pronostico_terapeutico',this.expediente.expediente.pronostico_terapeutico)
     this.setValuesForm('estrategias_terapeuticas',this.expediente.expediente.estrategias_terapeuticas)
-
-
-
+  
   }
 
   //Valida si el form control que se envia como parametro tiene algun error y a sido tocado anteriormente
@@ -561,7 +563,7 @@ export class DetalleComponent implements OnInit {
     }
     console.log(nota_clinica_to_export);
 
-    this.exportarcionService.entrevistaClinicaPDF(nota_clinica_to_export)
+    //this.exportarcionService.entrevistaClinicaPDF(nota_clinica_to_export)
   }
 
   hasError(controlName:string,typeError:string){

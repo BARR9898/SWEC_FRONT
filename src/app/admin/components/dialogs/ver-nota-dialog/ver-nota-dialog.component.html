@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Nota Clinica</h1>
+<div mat-dialog-content>
+
+    
+    <form *ngIf="nota.nota != null" >
+    
+        <mat-form-field appearance="fill" style="width: 100%;">
+            <mat-label>Nota</mat-label>
+            <textarea matInput  [value]="nota.nota" maxlength="1000" readonly></textarea>
+            <mat-hint>Esta infromación no puede ser editada</mat-hint>
+        </mat-form-field>
+    
+        
+          
+    </form>
+
+
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="cancelar()">Cancelar</button>
+
+</div>

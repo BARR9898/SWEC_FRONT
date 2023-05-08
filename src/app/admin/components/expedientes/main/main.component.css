@@ -1,0 +1,170 @@
+
+
+.main{
+    width: 100%;
+    height: 100%;
+}
+
+mat-form-field {
+    width: 100%;
+    height: 70px;
+
+}
+
+
+
+mat-card{
+    width: 100%;
+    height: 380px;
+    border-radius: 12px;
+    -webkit-box-shadow: 2px 7px 21px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 7px 21px 0px rgba(0,0,0,0.75);
+    box-shadow: 2px 7px 21px 0px rgba(0,0,0,0.75);
+
+}
+
+
+
+#ExpedientCard{
+    width:98%;
+    height: 100%;
+    border-radius: 12px;
+    -webkit-box-shadow: 2px 7px 21px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 2px 7px 21px 0px rgba(0,0,0,0.75);
+    box-shadow: 2px 7px 21px 0px rgba(0,0,0,0.75); 
+}
+
+app-detalle{
+    max-width: 100%;
+}
+
+
+mat-card-title{
+    font-size: 28px;
+    font-weight: 600;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #eaeaeb;
+    color: #001845;
+    border-radius: 10px;
+
+
+    
+}
+
+mat-card-content{
+    overflow: auto;
+}
+
+.img-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+    
+}
+
+mat-card-actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 150px;
+
+}
+
+
+img{
+    width: 40px;
+    height: 40px;
+}
+
+.img-title{
+    width: 80px;
+    height: 80px;
+
+}
+.img-title-citas{
+    width: 150px;
+    height: 70px;
+
+
+}
+
+#viewExpedient{
+    background-color: #001845;
+    color: whitesmoke;
+    font-size: medium;
+    box-shadow: 2px 7px 21px 0px #1a3f84;
+    width: 180px;
+
+}
+
+#exportExpedient{
+    background-color: #b51d1d;
+    color: whitesmoke;
+    font-size: medium;
+    box-shadow: 2px 7px 21px 0px #b63a3a;
+    width: 180px;
+
+}
+
+
+.viewClinicalNote{
+    background-color: #001845;
+    color: whitesmoke;
+    font-size: medium;
+    box-shadow: 2px 7px 21px 0px #1a3f84;
+}
+
+.exportClinicalNote{
+    background-color: #b51d1d;
+    color: whitesmoke;
+    font-size: medium;
+    box-shadow: 2px 7px 21px 0px #b63a3a;
+
+
+}
+
+#searchClinicalNote{
+    background-color: #0353A4;
+    color: whitesmoke;
+    font-size: medium;
+    box-shadow: 2px 5px 21px 0px #0466C8;
+}
+
+
+td,
+th{
+    text-align: center;
+}
+
+#noDatesTitle{
+    font-size:22px;
+    font-weight: 600;
+    margin: 20px;
+}
+
+.cancelButton{
+    background-color: #b51d1d;
+    color: #eaeaeb;
+    box-shadow: 2px 5px 21px 0px #b63a3a;
+
+}
+
+.deleteButton{
+    background-color: #d12323;
+    color: #eaeaeb;
+    box-shadow: 2px 5px 21px 0px #da5353;
+
+}
+
+.confirmButton{
+    background-color: #1e8f0a;
+    color: #eaeaeb;
+    box-shadow: 2px 5px 21px 0px #44af31;
+
+}

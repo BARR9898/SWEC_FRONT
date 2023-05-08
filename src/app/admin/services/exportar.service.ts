@@ -4,6 +4,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { ExpedientesService } from './expedientes.service';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +40,8 @@ export class ExportarService {
   public crearEstructuraImpresionesDiagnosticas(impresiones_diagnositcas){
     var estructure = [
       {
-        table: {
+        table: {          
+          layout: 'lightHorizontalLines',
           widths:[],
           heights:[],
           body:[
@@ -110,39 +112,71 @@ export class ExportarService {
   }
 
   public crearEstructuraModalidadTerapeutica(modalidad_terapeutica){
-    let modalidad_array = []
-
-    modalidad_terapeutica.forEach((modalidad:any) => {
-      modalidad_array.push(modalidad.ti)
-      modalidad_array.push(modalidad.tf)
-      modalidad_array.push(modalidad.tp)
-      modalidad_array.push(modalidad.tg)
-      modalidad_array.push(modalidad.otra)
-      modalidad_array.push(modalidad.fundamento)
-    })
-
-    let modalidad_array_seteado = []
-
-    modalidad_array.forEach((modalidad:any) => {
-      if(modalidad == true){
-         modalidad_array_seteado.push('Si')
-
-      }else if(modalidad == false){
-        modalidad_array_seteado.push('No')
-
-      }else{
-        modalidad_array_seteado.push(modalidad)
-
+    
+    var estructure = [
+      {
+        table: {
+          layout: 'lightHorizontalLines',
+          widths:[],
+          heights:[],
+          body:[
+            ['TI','TF','TP','TG','Otra','Fundamento']
+          ]
+        }
       }
+    ]
+
+
+    modalidad_terapeutica.forEach((modalidad:any,index) => {
+
+
+
+      let modalidadesAux = []
+
+      
+      modalidadesAux.push(modalidad.ti == true  ? modalidad.ti = 'Si' : modalidad.ti = 'No')
+      modalidadesAux.push(modalidad.tf == true  ? modalidad.tf = 'Si' : modalidad.tf = 'No')
+      modalidadesAux.push(modalidad.tp == true  ? modalidad.tp = 'Si' : modalidad.tp = 'No')
+      modalidadesAux.push(modalidad.tg == true  ? modalidad.tg = 'Si' : modalidad.tg = 'No')
+      modalidadesAux.push(modalidad.otra == true  ? modalidad.otra = 'Si' : modalidad.otra = 'No')
+      modalidadesAux.push(modalidad.fundamento)
+
+      estructure[0].table.body.push(modalidadesAux)
+
 
     })
-    return modalidad_array_seteado
+
+    var length_columns = estructure[0].table.body[0].length;
+    var width_column = (100/length_columns)
+    console.log('width_column',width_column);
+    console.log('length_columns',length_columns);
+    var widthToString = `${width_column.toString()}%`
+
+    do {
+      estructure[0].table.widths.push('*')
+      length_columns--
+    } while (length_columns > 0);
+
+    let length_rows = estructure[0].table.body.length * estructure[0].table.widths.length
+
+    do {
+      estructure[0].table.heights.push(20)
+      length_rows--
+
+    } while (length_rows > 0);
+
+
+    console.log(estructure);
+
+    return estructure
+    
   }
 
   public crearEstructuraSintomas(sintomas){
     var estructure = [
       {
         table: {
+          layout: 'lightHorizontalLines',
           widths:['100%'],
           heights:[],
           body:[
@@ -156,7 +190,7 @@ export class ExportarService {
     let index = 0
     do {
       let sintomasAux = []
-      sintomasAux.push(sintomas[index].sintoma)
+      sintomasAux.push(sintomas[index])
       sintomas_length--
       index++
       estructure[0].table.body.push(sintomasAux)
@@ -194,17 +228,21 @@ export class ExportarService {
 
   public createPDF(){
 
+    
     let expediente = this.expediente
+    
     let sintomas = this.crearEstructuraSintomas(expediente.expediente.sintomas)
     let impresiones_diagnosticas = this.crearEstructuraImpresionesDiagnosticas(expediente.expediente.impresiones_diagnosticas)
-    let modalidad_terapeutica = this.crearEstructuraModalidadTerapeutica(expediente.expediente.modalidad_terapeutica)
-    let fecha = new Date().toLocaleString('es-MX')
+    let modalidad_terapeutica = this.crearEstructuraModalidadTerapeutica(expediente.expediente.modalida_terapeutica)
+    
+    
+    let fecha = moment(new Date()).format('YYYY-MM-DD h:mm:ss')
     let sexo = this.obtenerSexo(expediente.paciente.sexo)
 
     const pdfDefinition:any = {
       content:[
         {
-          layout:'lightHorizontalLines',
+          layout: 'lightHorizontalLines',
           table:{
             widths: ['100%','100%','100%'],
             heights:[30,30,30,15,30,15,30,15,30,15,30,15,30,15,30,15,30,15,30,15,30,15,30,15,30,15,30,15,30,15,30,15,30,15,30,15,30,20,30,15,30,15,30,15,30,15,30],
@@ -212,7 +250,19 @@ export class ExportarService {
               //Primer renglon
               [
                 {
-                  text:[{text:`Fecha: `,alignment:'right',bold:true},{text:`${fecha}`,alignment:'right'}]
+                  columns: [
+                    {
+                      width:'50%',
+                      text:[{text:`N° Expediente: `,alignment:'left',bold:true},{text:`${expediente.expediente.id}`,alignment:'center'}]
+
+                    },
+                    {
+                      width:'50%',
+                      text:[{text:`Fecha Impresion: `,alignment:'left',bold:true},{text:`${fecha}`,alignment:'center'}]
+
+                    }
+                  ]
+
                 }
               ],
               [
@@ -261,7 +311,7 @@ export class ExportarService {
               //Quinto renglon
               [
                 {
-                  text:[{text:`${expediente.expediente.motivo_de_consulta}`,style:['styleLongContent']}],
+                  text:[{text:`${expediente.expediente.motivo_consulta}`,style:['styleLongContent']}],
                   margin: [0,0,0,10 ]
                 }
               ],
@@ -274,11 +324,12 @@ export class ExportarService {
               //SEPTIMO RENGLON (CIRCUNSTANCIAS DE APARICION)
               [
                 {
-                  text:[{text:`${expediente.expediente.circunstancias_de_aparicion}`,style:['styleLongContent']}],
+                  text:[{text:`${expediente.expediente.circunstancias_aparicion}`,style:['styleLongContent']}],
                   margin: [0,0,0,10 ]
 
                 }
               ],
+              
               //OCTAVO renglon (SINTOMAS)
               [
                 {
@@ -288,6 +339,7 @@ export class ExportarService {
               ],
               //NOVENO renglon (SINTOMAS)
               sintomas,
+              
               //DECIMO REGNLON (DESCRIPCION FÍSICA)
               [
                 {
@@ -314,7 +366,7 @@ export class ExportarService {
               //DECIMO TERCERO renglon (DEMANDA DE TRATAMIENTO)
               [
                 {
-                  text:[{text:`${expediente.expediente.demanda_de_tratamiento}`,style:['styleLongContent']}],
+                  text:[{text:`${expediente.expediente.demanda_tratamiento}`,style:['styleLongContent']}],
                   margin: [0,0,0,10 ]
 
 
@@ -331,21 +383,6 @@ export class ExportarService {
               [
                 {
                   text:[{text:`${expediente.expediente.area_escolar}`,style:['styleLongContent']}],
-                  margin: [0,0,0,10 ]
-
-                }
-              ],
-              //AREA FAMILIAR
-              [
-                {
-                  text:[{text:`Área Familiar`,style:['styleIndicatorLongContent']}],
-                }
-
-              ],
-              //ÁREA FAMILIAR
-              [
-                {
-                  text:[{text:`${expediente.expediente.area_de_relacion_y_familiar}`,style:['styleLongContent']}],
                   margin: [0,0,0,10 ]
 
                 }
@@ -405,7 +442,7 @@ export class ExportarService {
               //AREA FAMILIAR Y DE RELACION
               [
                 {
-                  text:[{text:`${expediente.expediente.area_de_relacion_y_familiar}`,style:['styleLongContent']}],
+                  text:[{text:`${expediente.expediente.area_familiar_relacion}`,style:['styleLongContent']}],
                   margin: [0,0,0,10 ]
 
                 }
@@ -435,7 +472,7 @@ export class ExportarService {
               //IMPRESION DIAGNOSTICA DE LA FAMILIA
               [
                 {
-                  text:[{text:`${expediente.expediente.impresion_diagnostica_de_familia}`,style:['styleLongContent']}],
+                  text:[{text:`${expediente.expediente.impresiones_diagnosticas_familia}`,style:['styleLongContent']}],
                   margin: [0,0,0,10 ]
 
                 }
@@ -444,7 +481,7 @@ export class ExportarService {
               [
                 {
                   text:[{text:`Hipótesis Familiar`,style:['styleIndicatorLongContent']}],
-                  margin: [0,70,0,10 ]
+                  margin: [0,20,0,10 ]
 
                 }
 
@@ -472,6 +509,7 @@ export class ExportarService {
 
                 }
               ],
+              
               //INDICACIONES DIAGNOSTICAS
               [
                 {
@@ -487,6 +525,7 @@ export class ExportarService {
 
                 }
               ],
+              
               //IMPRESIONES DIAGNOSTICAS
               [
                 {
@@ -495,6 +534,7 @@ export class ExportarService {
               ],
               //IMPRESIONES DIAGNOSTICAS
               impresiones_diagnosticas,
+            
               //FOCO TERAPEUTICO
               [
                 {
@@ -506,10 +546,11 @@ export class ExportarService {
               //FOCO TERAPÉTUCIO
               [
                 {
-                  text:[{text:`${expediente.expediente.foco}`,style:['styleLongContent']}],
+                  text:[{text:`${expediente.expediente.foco_terapeutico}`,style:['styleLongContent']}],
                   margin: [0,0,0,10]
                 }
               ],
+             
               //MODALIDAD TERAPEUTICA
               [
                 {
@@ -520,24 +561,9 @@ export class ExportarService {
               ],
               //MODALIDAD TERAPEUTICA
               [
-                {
-                  table:{
-                    widths: ['12%','12%','12%','12%','12%','*'],
-                    heights: [20,30],
-                    body:[
-                      [
-                        'T.I','T.F','T.P','T.G','Otra','Fundamento'
-                      ],
-
-                        modalidad_terapeutica
-
-
-
-                    ]
-                  },
-                  margin: [0,20,0,10]
-                }
+                modalidad_terapeutica
               ],
+              
               //OBJETIVO TERAPEUTICO
               [
                 {
@@ -563,7 +589,7 @@ export class ExportarService {
               //ESTRATEGIAS TERAPEUTICAS
               [
                 {
-                  text:[{text:`${expediente.expediente.estrategias_terapeuticas}`,style:['styleLongContent']}],
+                  text:[{text:`${expediente.expediente.estrategia_terapeutica}`,style:['styleLongContent']}],
                   margin: [0,0,0,10 ]
 
 
@@ -620,11 +646,13 @@ export class ExportarService {
 
   }
 
-  public entrevistaClinicaPDF(data){
+  public notaClinica(data){
+    console.log('data recibida',data);
+    
     const pdfDefinition:any = {
       content:[
         {
-          layout:'lightHorizontalLines',
+          layout:'noBorder',
           table:{
             widths: ['100%'],
             heights:[30,30,30],
@@ -637,14 +665,16 @@ export class ExportarService {
                       text:[{text:`Nombre: `,style:['styleIndicator']},{text:`${data.paciente}: `,style:['styleContent']}],
                     },
                     {
-                      width: '30%',
-                      text:[{text:`Fecha: `,style:['styleIndicator']},{text:`${data.fecha}`,style:['styleContent']}]
+                      width: '*',
+                      text:[{text:`Creación: `,style:['styleIndicator']},{text:`${data.fecha}`,style:['styleContent']}]
                     },
                     {
-                      width: '30%',
-                      text:[{text:`Número de nota: `,style:['styleIndicator']},{text:`${data.numero_de_nota}`,style:['styleContent']}]
+                      width: '*',
+                      text:[{text:`Número de nota: `,style:[{alignment:'center',bold:true,fontSize:14}]},{text:`${data.numero_de_nota}`,style:['styleContent']}]
+
                     }
-                  ]
+                  ],
+
                 }
               ],
               [
@@ -663,7 +693,7 @@ export class ExportarService {
               ],
               [
                 {
-                  text:[{text:`Fecha de impresión: `,style:[{alignment:'right',bold:true}]},{text:`${new Date().toLocaleString('es-MX')} `,style:[{alignment:'right'}]}],
+                  text:[{text:`Fecha de impresión: `,style:[{alignment:'right',bold:true}]},{text:`${moment(new Date()).format('YYYY-MM-DD h:mm:ss')} `,style:[{alignment:'right'}]}],
 
                 }
               ]

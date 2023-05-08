@@ -1,0 +1,190 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js" integrity="sha512-CryKbMe7sjSCDPl18jtJI5DR5jtkUWxPXWaLCst6QjH8wxDexfRJic2WRmRXmstr2Y8SxDDWuBO6CQC6IE4KTA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<section class="main" *ngIf="expediente && citas">
+    <section class="cards row d-flex justify-content-around">
+        <div class="col-12 col-md-7 mt-3 d-flex justify-content-center">
+            <mat-card id="ExpedientCard">
+                <mat-card-title>
+                    <div class="row d-flex justify-content-start align-items-center">
+                        <div class="col-3">
+                            <img src="../../../../../assets/images/local_library_FILL0_wght400_GRAD0_opsz48.png" alt="" srcset="">
+                        </div>
+                        <div class="col-9">
+                            Expediente 
+                        </div>
+                    </div>
+                </mat-card-title>
+                <mat-card-content>
+                    <app-detalle></app-detalle>
+                </mat-card-content>
+            </mat-card>  
+        </div>
+        <div class="col-12 col-md-5 mt-3 justify-content-around">
+            <div class="col-12">
+                <mat-card >
+                    <mat-card-title>
+                        <div class="row d-flex  align-items-center">
+                            <div class="col-2">
+                                <img src="../../../../../assets/images/note_alt_FILL0_wght400_GRAD0_opsz48.png" alt="" srcset="">
+                            </div>
+                            <div class="col-10">
+                                Notas Clinicas
+                            </div>
+                        </div>
+                    </mat-card-title>
+                    <mat-card-content class="mt-4">
+
+                        <section class="notesTable col-12" >
+                            <div class="row d-flex justify-content-around">
+                                <div class="col-5 d-flex align-items-center">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Desde</mat-label>
+                                        <input matInput [matDatepicker]="picker" [(ngModel)]="notas_desde">
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-5 d-flex align-items-center">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Hasta</mat-label>
+                                        <input matInput [matDatepicker]="picker1" [(ngModel)]="notas_hasta">
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-2 d-flex justify-content-center align-items-center">
+                                    <button mat-mini-fab id="searchClinicalNote" (click)="searchNote()">
+                                        <mat-icon>search</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-center align-items-center" *ngIf="notas.length == 0">
+                                <h2>No hay notas registradas</h2>
+                            </div>
+                            <table class="table table-fluid" *ngIf="notas.length > 0">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Ver</th>
+                                    <th scope="col">Exportar</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let nota of notas; index as i">
+                                    <td>{{nota.id}}</td>
+                                    <td>{{nota.fecha_creacion_formateada}}</td>
+                                    <td>
+                                        <button mat-mini-fab class="viewClinicalNote" (click)="openDialogViewNote('500ms', '500ms',nota.id)">
+                                            <mat-icon>visibility</mat-icon>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button mat-mini-fab class="exportClinicalNote" (click)="export(nota)">
+                                            <mat-icon>picture_as_pdf</mat-icon>
+                                        </button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button id="viewExpedient" (click)="openDialogNewNote('500ms', '500ms')">
+                            <mat-icon>add</mat-icon>
+                            Nueva Nota
+                        </button>
+                    </mat-card-actions>
+                </mat-card>  
+            </div>
+            <div class="col-12 col-md-12 mt-4">
+                <mat-card>
+                    <mat-card-title>
+                        <div class="row d-flex align-items-center">
+                            <div class="col-3">
+                                <img src="../../../../../assets/images/calendar_month_FILL0_wght400_GRAD0_opsz48.png" alt="" srcset="">
+                            </div>
+                            <div class="col-9">
+                                Citas
+                            </div>
+                        </div>
+                    </mat-card-title>
+                    <mat-card-content class="mt-4">
+                        <section class="notesTable col-12" >
+                            <div class="row d-flex justify-content-around">
+                                <div class="col-5 d-flex align-items-center" >
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Desde</mat-label>
+                                        <input matInput [matDatepicker]="picker2" [(ngModel)]="citas_desde">
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-5 d-flex align-items-center">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Hasta</mat-label>
+                                        <input matInput [matDatepicker]="picker3" [(ngModel)]="citas_hasta">
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker3"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker3></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-2 d-flex justify-content-center align-items-center">
+                                    <button mat-mini-fab id="searchClinicalNote" (click)="searchCita()">
+                                        <mat-icon>search</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                            <table class="table table-fluid" *ngIf="citas.length > 0" > 
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Estatus</th>
+                                    <th scope="col">Confirmar</th>
+                                    <th scope="col">Cancelar</th>
+                                    <th scope="col">Eliminar</th>
+
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let cita of citas; index as i" >
+                                    <td>{{cita.id}}</td>
+                                    <td>{{cita.fecha_formated}}</td>
+                                    <td *ngIf="cita.status">Confirmada</td>
+                                    <td *ngIf="!cita.status">Cancelada</td>
+                                    <td>
+                                        <button mat-mini-fab class="confirmButton" (click)="changeStatusCita(cita.id,'confirm',cita)">
+                                            <mat-icon>done</mat-icon>
+                                        </button>
+
+                                    </td>
+                                    <td>
+                                        <button mat-mini-fab class="cancelButton" (click)="changeStatusCita(cita.id,'cancel',cita)">
+                                            <mat-icon>close</mat-icon>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button mat-mini-fab class="deleteButton" (click)="deleteCita(cita.id)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                        <section class="col-10 d-flex justify-content-center align-items-center" *ngIf="citas.length == 0">
+                            <span id="noDatesTitle">No hay citas registradas</span>
+                        </section>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button id="viewExpedient" (click)="openDialogNewCita('0ms', '0ms')">
+                            <mat-icon>add</mat-icon>
+                            Nueva Cita
+                        </button>
+                    </mat-card-actions>
+                </mat-card>  
+            </div>
+        </div>
+
+        
+    </section>
+</section>

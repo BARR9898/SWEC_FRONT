@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Nueva Cita</h1>
+<div mat-dialog-content>
+    <div class="form-outline datetimepicker col-12">
+      <label for="datetimepickerExample" class="form-label">Seleccione una fecha y hora</label>
+      <input type="datetime-local" class="form-control" [formControl]="cita_fecha">
+  </div>
+
+
+
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button (click)="registrar()">Registrar</button>
+
+</div>

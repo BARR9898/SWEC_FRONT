@@ -1,11 +1,43 @@
 <div class="main row d-flex p-4">
-    <div class="col-12 d-flex justify-content-center align-items-center mt-4" *ngIf="proximas_citas.length == 0">
-      <h2 id="noCitas-title">No existen citas registradas</h2>
-    </div>
+
     <div class="col-12 d-flex justify-content-center align-items-center mt-4">
       <h2 id="main-title">Agenda</h2>
     </div>
-    <div class="col-12 p-2">
+    <div class="row d-flex justify-content-around" style="width: 100%;">
+      <div class="col-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Desde</mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="filtro.desde">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Hasta</mat-label>
+          <input matInput [matDatepicker]="picker1" [(ngModel)]="filtro.hasta">
+          <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Estatus</mat-label>
+          <mat-select [(ngModel)]="filtro.asistencia" value="false" >
+            <mat-option *ngFor="let estatus of estatusArray" [value]="estatus.value">
+              {{estatus.description}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-1 d-flex justify-content-center align-items-center">
+        <button mat-fab id="searchCitas" (click)="searchCitas()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </div>
+ 
+    <div class="col-12 p-2" *ngIf="proximas_citas.length > 0">
           <div class="table-responsive mw-100 ">
             <table class="table">
               <thead>
@@ -21,8 +53,8 @@
               </thead>
               <tbody>
                 <tr *ngFor="let cita of proximas_citas;index as i">
-                  <td>{{cita.paciente}}</td>
-                  <td>{{cita.ultima_cita}}</td>
+                  <td>{{cita.nombre}}</td>
+                  <td>{{cita.fecha}}</td>
                   <td *ngIf="cita.asistencia == true" class="asistencia_status_indicador">Asistió</td>
                   <td *ngIf="cita.asistencia == false" class="asistencia_status_indicador">Faltó</td>
                   <td *ngIf="(cita.asistencia != false) && (cita.asistencia != true)" class="asistencia_status_indicador" >Pendiente</td>
@@ -32,12 +64,12 @@
                     </button>
                   </td>
                   <td>
-                      <button mat-mini-fab  class="bg-success" (click)="marcarAsistencia(i,true)">
+                      <button mat-mini-fab  class="bg-success" (click)="marcarAsistencia(cita.id,cita,true)">
                         <mat-icon class="text-white">done</mat-icon>
                       </button>
                   </td>
                   <td>
-                    <button mat-mini-fab  class="bg-danger" (click)="marcarAsistencia(i,false)">
+                    <button mat-mini-fab  class="bg-danger" (click)="marcarAsistencia(cita.id,cita,false)">
                       <mat-icon class="text-white">close</mat-icon>
                     </button>
                 </td>
@@ -45,6 +77,9 @@
               </tbody>
             </table>
           </div>
+    </div>
+    <div class="col-12 d-flex justify-content-center align-items-center mt-4" *ngIf="proximas_citas.length == 0">
+      <h2 id="noCitas-title">No existen citas registradas</h2>
     </div>
     <div class="col-12 d-flex justify-content-center align-items-center justify-content-md-start mt-4">
       <h2 id="indicador-citas-faltantes">{{proximas_citas.length}} citas restantes</h2>

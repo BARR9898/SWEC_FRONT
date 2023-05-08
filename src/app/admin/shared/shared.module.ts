@@ -21,6 +21,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatSelectModule} from '@angular/material/select';
+import {MatDialogModule} from '@angular/material/dialog';
 @NgModule({
   declarations: [
     SidenavComponent
@@ -46,7 +47,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatNativeDateModule,
     MatSlideToggleModule,
     MatDividerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule
   ],
   exports: [
     CommonModule,
@@ -70,7 +72,8 @@ import {MatSelectModule} from '@angular/material/select';
     MatNativeDateModule,
     MatSlideToggleModule,
     MatDividerModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule
   ],
 })
 export class SharedModule { }

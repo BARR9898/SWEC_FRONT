@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Expediente } from '../../interfaces/expediente';
 import { ExpedientesService } from '../../services/expedientes.service';
 import Swal from 'sweetalert2';
+import { CitasService } from '../../services/citas.service';
+import moment from 'moment';
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.component.html',
@@ -13,57 +15,81 @@ export class AgendaComponent implements OnInit{
 
   expedientes:any
   proximas_citas:any[] = []
+  filtro:any =  {
+    desde:'',
+    hasta:'',
+    asistencia: ''
+  }
+
+  estatusArray = [
+    {
+      description: 'Pendientes',
+      value: false
+    },
+    {
+      description: 'Sin Asistencia',
+      value: true
+    },
+    {
+      description: 'Todos',
+      value: ''
+    }
+  ]
+
+
 
   constructor(
-    private expedienteService:ExpedientesService
+    private citasService:CitasService
   ){}
 
 
   ngOnInit(): void {
-
-    this.expedienteService.obtenerExpedientes()
-    .subscribe((res:any) => {
-      this.expedientes = res.data
-      console.log(res.data);
-      console.log(this.proximas_citas);
-
-      this.obtenerProximasCitas();
-
-    })
+    this.obtenerProximasCitas();
 
   }
 
   public obtenerProximasCitas(){
+    let filtros = {
+      desde: moment(new Date()).format('YYYY-MM-DD 00:00:00'),
+      hasta: moment(new Date()).format('YYYY-MM-DD 23:59:59')
 
-    this.expedientes.forEach((expediente:any) => {
-
-      let size = expediente.citas.length
-
-      let aux_paciente_cita = {
-        id_expediente: expediente._id,
-        paciente: `${expediente.paciente.nombre} ${expediente.paciente.apellido_paterno} ${expediente.paciente.apellido_materno}`,
-        ultima_cita: expediente.citas[size-1].fecha,
-        status: expediente.citas[size-1].status
+    }
+    this.citasService.getAllCitas_agenda(filtros)
+    .subscribe((res:any) => {
+      if (res.result) {
+        console.log(res);
+        this.proximas_citas = res.data
+        this.proximas_citas.forEach((cita:any) => {
+          cita.fecha = moment(cita.fecha).format('YYYY-MM-DD h:mm:ss')
+        })
       }
-
-      if(aux_paciente_cita.status == true){
-        this.proximas_citas.push(aux_paciente_cita)
-      }
-
-      console.log(this.proximas_citas);
-
-
     })
+    
 
   }
 
-  public marcarAsistencia(index:number,status:boolean){
+  public marcarAsistencia(id:number,cita:any,status:boolean){
+  
 
-    this.proximas_citas[index].asistencia = status
+    
     if(status == true){
-      this.showDialog('success','Asistencia confirmada')
+      cita.asistencia = true
+      this.citasService.updateCita(id,cita)
+      .subscribe((res:any) => {
+        if (res.result) {
+            Swal.fire('Asistencia Confirmada','Se a confirmado la asistencia','success')
+        }
+        
+      })
     }else{
-      this.showDialog('error','Falta confirmada')
+      cita.asistencia = false
+      this.citasService.updateCita(id,cita)
+      .subscribe((res:any) => {
+        if (res.result) {
+          Swal.fire('Falta confirmada','Se a confirmado la falta','success')
+      }
+
+      })
     }
 
   }
@@ -77,5 +103,49 @@ export class AgendaComponent implements OnInit{
     })
   }
 
+  public searchCitas(){
+
+
+    let filters = {
+      desde:'',
+      hasta:'',
+      asistencia:this.filtro.asistencia
+    }
+
+    if(this.filtro.desde != ''  && this.filtro.hasta == ''){
+      filters.desde = moment(this.filtro.desde).format('YYYY-MM-DD 00:00:00')
+    }else if(this.filtro.desde == ''  && this.filtro.hasta != ''){
+      filters.hasta = moment(this.filtro.hasta).format('YYYY-MM-DD 23:59:59')
+    }else if(this.filtro.desde == ''  && this.filtro.hasta == ''){
+      filters.desde = ''
+      filters.hasta = ''
+    }else{
+      filters.desde = moment(this.filtro.desde).format('YYYY-MM-DD 00:00:00')
+      filters.hasta = moment(this.filtro.hasta).format('YYYY-MM-DD 23:59:59')
+    }
+
+    console.log('f',filters);
+    
+    
+
+    this.citasService.getAllCitas_agenda(filters)
+    .subscribe((res:any) => {
+      if(res.result){
+        console.log('res',res);
+        this.proximas_citas = res.data
+        this.proximas_citas.forEach((cita) => {
+          cita.fecha =  moment(cita.fecha).format('YYYY-MM-DD h:mm:ss')
+        })
+
+        
+      }
+    })
+
+
+    
+  }
+
+
+  
 
 }

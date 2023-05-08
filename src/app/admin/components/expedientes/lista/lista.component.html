@@ -16,7 +16,6 @@
               <th scope="col">Nombre</th>
               <th scope="col">Apellido Paterno</th>
               <th scope="col">Apellido Materno</th>
-              <th scope="col">Próxima Cita</th>
               <th scope="col">Ver</th>
               <th scope="col">Eliminar</th>
               <th scope="col">Exportar</th>
@@ -26,22 +25,21 @@
           </thead>
           <tbody>
             <tr *ngFor="let expediente of expedientes; index as i">
-              <td>{{expediente.paciente.nombre}}</td>
-              <td>{{expediente.paciente.apellido_paterno}}</td>
-              <td>{{expediente.paciente.apellido_materno}}</td>
-              <td>{{getLastCita(i)}}</td>
+              <td>{{expediente.nombre}}</td>
+              <td>{{expediente.apellido_paterno}}</td>
+              <td>{{expediente.apellido_materno}}</td>
               <td>
-                <button mat-fab class="viewButton"  [routerLink]="['/expedientes/detalle', expediente._id]">
+                <button mat-fab class="viewButton"  [routerLink]="['/expedientes/main', expediente.id]">
                   <mat-icon class="text-white">visibility</mat-icon>
                 </button>
               </td>
               <td>
-                <button mat-fab class="bg-danger" (click)="deleteExpedient(expediente._id)">
+                <button mat-fab class="bg-danger" (click)="deleteExpedient(expediente.id)">
                   <mat-icon class="text-white">delete</mat-icon>
                 </button>
               </td>
               <td>
-                <button mat-fab class="bg-danger" (click)="exportar(expediente._id)">
+                <button mat-fab class="bg-danger" (click)="exportar(expediente.id)">
                   <mat-icon class="text-white">picture_as_pdf</mat-icon>
                 </button>
               </td>
