@@ -34,10 +34,7 @@ export interface Expediente {
     estrategias_terapeuticas: string | null
     pronostico_terapeutico: string | null,
     foco: string | null
-  },
-  expediente_id: any,
-  citas:JSON[] | any[],
-  notas_clinicas: JSON[] | any[],
+  }
 
 
 }

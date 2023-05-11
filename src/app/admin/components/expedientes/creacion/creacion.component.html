@@ -7,7 +7,7 @@
       <h2 style="font-size: 15px; font-weight: 500;">Fecha De Creación:{{fecha}}</h2>
     </div>
     <div class="col-12 col-md-4 d-flex align-items-center justify-content-center">
-      <h2 style="font-size: 15px; font-weight: 500;">Expediente Número: {{expedientes_length}}</h2>
+      <h2 style="font-size: 15px; font-weight: 500;">Expediente Número: {{expedient_id}}</h2>
     </div>
   </header>
   <mat-stepper orientation="vertical" linear="false" #stepper>
@@ -740,28 +740,7 @@
         </div>
       </form>
     </mat-step>
-    <!--PROXOIMA CITA-->
-    <mat-step>
-      <ng-template matStepLabel>Próxima Cita</ng-template>
-      <div class="row d-flex justify-content-center mt-4" style="min-width:100%">
-        <div class="col-8 d-flex justify-content-center align-items-center">
-          <span style="font-weight: 500; font-size: medium;">Seleccione una fecha y hora.</span>
-        </div>
-      </div>
-      <div class="row d-flex justify-content-center align-items-center mt-4" style="min-width:100%">
-        <div class="col-md-4 mt-2 d-flex justify-content-center align-items-center">
-            <input type="datetime-local"  class="form-control" placeholder="Fecha" [(ngModel)]="fecha_proximaCita" style="text-align: center;" >
-        </div>
-        <div class="col-1 d-flex justify-content-center align-items-center">
-          <button mat-fab (click)="addNewCita()" id="addCita" [disabled]="fecha_proximaCita == ''">
-            <mat-icon>add</mat-icon>
-          </button>
-        </div>
-      </div>
-      <button mat-button matStepperPrevious>Atras</button>
-      <button mat-button matStepperNext>Siguiente</button>
 
-    </mat-step>
     <mat-step>
       <ng-template matStepLabel>Completado</ng-template>
       <p>Has termiando el formulario.</p>

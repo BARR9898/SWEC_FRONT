@@ -380,9 +380,7 @@ export class DetalleComponent implements OnInit {
         foco: this.expedienteForm.controls.foco_terapeutico.value
 
       },
-      expediente_id:this.expediente.expediente_id,
-      notas_clinicas: this.expedienteForm.controls.notas_clinica.value,
-      citas: this.expedienteForm.controls.citas.value
+
 
 
   }

@@ -19,12 +19,7 @@ export class CreacionComponent implements OnInit{
   constructor(private fb: FormBuilder, private expedienteService: ExpedientesService, private routerService: Router) {
     fb = fb;
   }
-  ngOnInit(): void {
-    this.expedienteService.obtenerExpedientes()
-    .subscribe((res:any) => {
-      this.expedientes_length = (res.data.length + 1)
-    })
-  }
+
 
   fecha = new Date().toLocaleString('es-MX')
   mostrarSintomas = false;
@@ -45,7 +40,19 @@ export class CreacionComponent implements OnInit{
       value: 'O'
     }
   ]
-  expedientes_length = 0;
+  expedient_id = 0;
+
+  ngOnInit(): void {
+
+    console.log('hola');
+    
+    this.expedienteService.getNextId()
+    .subscribe((res:any) => {
+      this.expedient_id = res.data + 1
+      
+    })
+
+  }
 
   expediente = this.fb.group({
     //Paciente
@@ -129,6 +136,9 @@ export class CreacionComponent implements OnInit{
     }
 
     let expediente_ready_to_send = this.prepareExpedientToSend()
+    console.log('expedient to send',expediente_ready_to_send);
+    
+    
     this.expedienteService.crearExpediente(expediente_ready_to_send)
     .subscribe((res:any) => {
       console.log(res);
@@ -155,6 +165,7 @@ export class CreacionComponent implements OnInit{
 
 
     })
+    
   }
 
   //Obtiene el tamaño de lo que se a escrito dentro de un form control
@@ -229,8 +240,38 @@ export class CreacionComponent implements OnInit{
 
   //Asigna los valores de los controls a una variable de tipo Expediente que será la que se envie
   //en la peticion
-  prepareExpedientToSend(): Expediente {
-    let expedient: Expediente = {
+  prepareExpedientToSend() {
+
+    let sintomasAsArray = [] 
+    this.expediente.controls.sintomas.value.forEach((sintoma:any) => {
+      sintomasAsArray.push(sintoma.sintoma)
+    })
+
+    let impresionesDiagnosticasAsArray = [] 
+    this.expediente.controls.impresiones_diagnostics_dcm_cie.value.forEach((impresion:any) => {
+      let aux = []
+      aux.push(impresion.eje)
+      aux.push(impresion.dcm)
+      aux.push(impresion.cie)
+      aux.push(impresion.transtorno)
+      impresionesDiagnosticasAsArray.push(aux)
+    })
+
+    let modalidadTerapeuticaAsArray = [] 
+    this.expediente.controls.modalidad_terapeutica.value.forEach((modalidad:any) => {
+      let aux = []
+      aux.push(modalidad.ti)
+      aux.push(modalidad.tf)     
+      aux.push(modalidad.tp)
+      aux.push(modalidad.tg)
+      aux.push(modalidad.otra)
+      aux.push(modalidad.fundamento)
+      modalidadTerapeuticaAsArray.push(aux)
+    })
+
+
+    
+    let expedient = {
       paciente: {
         nombre: this.expediente.controls.nombre.value,
         edad: this.expediente.controls.edad.value,
@@ -244,35 +285,34 @@ export class CreacionComponent implements OnInit{
       },
       expediente: {
         motivo_de_consulta: this.expediente.controls.motivo_consulta.value,
-        circunstancias_de_aparicion: this.expediente.controls.circunstancias_aparicion.value,
-        sintomas: this.expediente.controls.sintomas.value,
+        circunstancias_aparicion: this.expediente.controls.circunstancias_aparicion.value,
+        sintomas: sintomasAsArray,
         descripcion_fisica: this.expediente.controls.descripcion_fisica.value,
-        demanda_de_tratamiento: this.expediente.controls.demanda_tratamiento.value,
+        demanda_tratamiento: this.expediente.controls.demanda_tratamiento.value,
         area_escolar: this.expediente.controls.area_escolar.value,
         area_laboral: this.expediente.controls.area_laboral.value,
         acontecimientos_significativos: this.expediente.controls.acontecimientos_significativos.value,
         desarrollo_psicosexual: this.expediente.controls.desarrollo_psicosexual.value,
         familiograma: this.expediente.controls.familiograma.value,
-        area_de_relacion_y_familiar: this.expediente.controls.area_familiar_relacion.value,
+        area_familiar_relacion: this.expediente.controls.area_familiar_relacion.value,
         mapeo_familiar: this.expediente.controls.mapeo_familiar.value,
-        impresion_diagnostica_de_familia: this.expediente.controls.impresiones_diagnositcas_familia.value,
+        impresiones_diagnosticas_familia: this.expediente.controls.impresiones_diagnositcas_familia.value,
         hipotesis_familiar: this.expediente.controls.hipotesis_familiar.value,
         examen_mental: this.expediente.controls.examen_mental.value,
         indicaciones_diagnosticas: this.expediente.controls.indicaciones_diagnosticas.value,
-        impresiones_diagnosticas: this.expediente.controls.impresiones_diagnostics_dcm_cie.value,
-        modalidad_terapeutica: this.expediente.controls.modalidad_terapeutica.value,
+        impresiones_diagnosticas: impresionesDiagnosticasAsArray,
+        modalidad_terapeutica: modalidadTerapeuticaAsArray,
         objetivo_terapeutico: this.expediente.controls.objetivo_terapeutico.value,
-        estrategias_terapeuticas: this.expediente.controls.estrategias_terapeuticas.value,
+        estrategia_terapeutica: this.expediente.controls.estrategias_terapeuticas.value,
         pronostico_terapeutico: this.expediente.controls.pronostico_terapeutico.value,
-        foco: this.expediente.controls.foco_terapeutico.value
+        foco_terapeutico: this.expediente.controls.foco_terapeutico.value
 
-      },
-      expediente_id: this.expedientes_length,
-      notas_clinicas: [],
-      citas: this.expediente.controls.citas.value
+      }
 
 
     }
+
+  
 
     return expedient
 
@@ -311,8 +351,9 @@ export class CreacionComponent implements OnInit{
 
   }
 
+
   //Crea el formGroup que se insertada dentro del FormArrayControl de citas
-  addNewCita() {
+  /*addNewCita() {
     if (this.expediente.controls.citas.value.length == 1) {
 
       Swal.fire({
@@ -337,6 +378,7 @@ export class CreacionComponent implements OnInit{
       showConfirmButton: true
     })
   }
+  */
 
   //Evualua si los controls necesarios estan vacios o no y retorna un arreglo JSON con los controls
   //que si estan vacios
@@ -463,11 +505,7 @@ export class CreacionComponent implements OnInit{
       {
         control_name: 'foco_terapeutico',
         nameForUser: 'Fóco Terapéutico'
-      },
-      {
-        control_name: 'citas',
-        nameForUser: 'Citas'
-      },
+      }
     ]
 
 

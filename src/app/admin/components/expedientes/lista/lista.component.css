@@ -2,13 +2,34 @@
   background-color: #006494!important;
   color: #e7ecef!important;
   font-weight: 700;
+  box-shadow: 2px 7px 21px 0px #227ea9;
+
 }
 
 .viewButton{
   background-color: #006494!important;
   color: #e7ecef!important;
+  box-shadow: 2px 7px 21px 0px #2f98c9;
+
 }
 
 mat-toolbar{
   width: 100%!important;
+}
+
+#applyFilters{
+  background-color: #006494;
+  color: #e7ecef;
+  box-shadow: 2px 7px 21px 0px #227ea9;
+
+  
+}
+
+.delete,
+.export{
+  background-color: #c91d0a;
+  color: #e7ecef;
+  box-shadow: 2px 7px 21px 0px #d13322;
+
+  
 }

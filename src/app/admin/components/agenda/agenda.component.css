@@ -80,3 +80,10 @@ td,
 th{
   text-align: center;
 }
+
+#searchCitas{
+  background-color: #002855;
+  color: whitesmoke;
+  box-shadow: 2px 7px 21px 0px #226cc1;
+
+}

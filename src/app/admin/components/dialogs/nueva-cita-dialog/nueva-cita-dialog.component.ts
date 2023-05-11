@@ -31,8 +31,8 @@ export class NuevaCitaDialogComponent implements OnInit {
     
     let data = {
       fecha: cita_fecha_formated,
-      status: null,
-      asistencia: false,
+      status: true,
+      asistencia: null,
       id_paciente: this.data_paciente.paciente_id
 
     }

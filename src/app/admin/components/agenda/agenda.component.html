@@ -3,6 +3,7 @@
     <div class="col-12 d-flex justify-content-center align-items-center mt-4">
       <h2 id="main-title">Agenda</h2>
     </div>
+
     <div class="row d-flex justify-content-around" style="width: 100%;">
       <div class="col-3">
         <mat-form-field appearance="fill">
@@ -31,7 +32,7 @@
         </mat-form-field>
       </div>
       <div class="col-1 d-flex justify-content-center align-items-center">
-        <button mat-fab id="searchCitas" (click)="searchCitas()">
+        <button mat-fab id="searchCitas" (click)="searchCitas()" >
           <mat-icon>search</mat-icon>
         </button>
       </div>
@@ -57,9 +58,9 @@
                   <td>{{cita.fecha}}</td>
                   <td *ngIf="cita.asistencia == true" class="asistencia_status_indicador">Asistió</td>
                   <td *ngIf="cita.asistencia == false" class="asistencia_status_indicador">Faltó</td>
-                  <td *ngIf="(cita.asistencia != false) && (cita.asistencia != true)" class="asistencia_status_indicador" >Pendiente</td>
+                  <td *ngIf="cita.asistencia == null" class="asistencia_status_indicador" >Pendiente</td>
                   <td>
-                    <button mat-mini-fab  class="bg-primary" [routerLink]="['/admin/expedientes/detalle',cita.id_expediente]">
+                    <button mat-mini-fab  class="bg-primary" [routerLink]="['/expedientes/main/',cita.expediente_id]">
                       <mat-icon class="text-white">visibility</mat-icon>
                     </button>
                   </td>

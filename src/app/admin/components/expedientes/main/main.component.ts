@@ -56,7 +56,14 @@ export class MainComponent implements OnInit {
       width: '450px',
       enterAnimationDuration,
       exitAnimationDuration,
-    });
+    }).afterClosed().subscribe(() => {
+      let filtros = {
+        desde: '',
+        hasta: ''
+      }
+      this.searchCita()
+
+    })
   }
 
   changeStatusCita(id:any,action:string,data:any){

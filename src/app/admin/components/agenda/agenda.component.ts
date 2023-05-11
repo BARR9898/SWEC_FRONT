@@ -16,8 +16,8 @@ export class AgendaComponent implements OnInit{
   expedientes:any
   proximas_citas:any[] = []
   filtro:any =  {
-    desde:'',
-    hasta:'',
+    desde:new Date().toISOString(),
+    hasta:new Date().toISOString(),
     asistencia: ''
   }
 
@@ -28,6 +28,10 @@ export class AgendaComponent implements OnInit{
     },
     {
       description: 'Sin Asistencia',
+      value: null
+    },
+    {
+      description: 'Con Asistencia',
       value: true
     },
     {

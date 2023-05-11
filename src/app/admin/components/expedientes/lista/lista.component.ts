@@ -5,6 +5,7 @@ import { ExpedientesService } from 'src/app/admin/services/expedientes.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ExportarService } from 'src/app/admin/services/exportar.service';
+import moment from 'moment';
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
@@ -17,6 +18,12 @@ export class ListaComponent implements OnInit{
   }
 
   expedientes:any;
+
+  filtros = {
+    nombre: '',
+    apellido_paterno:  '',
+    apellido_materno:  ''
+  }
 
   ngOnInit(): void {
     this.getExpedientData()
@@ -66,7 +73,7 @@ export class ListaComponent implements OnInit{
   }
 
   getExpedientData(){
-    this.expedientesService.obtenerExpedientes()
+    this.expedientesService.obtenerExpedientes(this.filtros)
     .subscribe((res:any) => {
       console.log('obtenerExpedientes', res);
       
@@ -77,6 +84,15 @@ export class ListaComponent implements OnInit{
       this.expedientes = res.data;
 
     })
+  }
+
+  aplicarFiltros(){
+    this.expedientesService.obtenerExpedientes(this.filtros)
+      .subscribe((res:any) => {
+        if (res.result) {
+            this.expedientes = res.data
+        }
+      })
   }
 
 
