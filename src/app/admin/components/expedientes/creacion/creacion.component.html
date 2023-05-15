@@ -120,8 +120,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Motivo de consulta</mat-label>
-            <textarea rows="5" matInput placeholder="Nombre" formControlName="motivo_consulta" required></textarea>
-            <mat-hint>{{getWrotenValueLength('motivo_consulta')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Nombre" formControlName="motivo_consulta" required></textarea>
+            <mat-hint>{{getWrotenValueLength('motivo_consulta')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('motivo_consulta','required')">
               El campo es requerido
             </mat-error>
@@ -152,14 +152,14 @@
             </mat-error>
           </mat-form-field>
           <div class="col-2 d-flex justify-content-center align-items-center">
-            <button mat-fab class="bg-primary" (click)="addItemToArray(['auxSintoma'],'sintomas',['sintoma'])">
+            <button mat-fab class="bg-primary" (click)="addItemToArray(['auxSintoma'],'sintomas',['sintoma'],'mostrarSintomas')" [disabled]="expediente.controls.auxSintoma.value == '' ">
               <mat-icon class="text-white">add</mat-icon>
             </button>
           </div>
         </div>
         <div class="row d-flex justify-content-center align-items-center">
           <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
-            <mat-checkbox (click)="mostrarSintomas = !mostrarSintomas" [disabled]="getLengthOfArrayForm('sintomas') == 0">Mostrar Sintomas</mat-checkbox>
+            <mat-checkbox  formControlName="mostrarSintomas" [checked]="expediente.controls.mostrarSintomas.value">Mostrar Sintomas</mat-checkbox>
           </div>
           <div class="col-12 col-md-4 d-flex justify-content-center align-items-center">
             <span>{{getLengthOfArrayForm('sintomas')}} sintomas agregados.</span>
@@ -167,7 +167,7 @@
 
         </div>
 
-        <ng-container formArrayName="sintomas" *ngIf="(mostrarSintomas == true) && (getLengthOfArrayForm('sintomas') > 0)">
+        <ng-container formArrayName="sintomas" *ngIf="(expediente.controls.mostrarSintomas.value == true) && (getLengthOfArrayForm('sintomas') > 0)">
           <div class="formArrayContainer">
             <mat-card style="width: 100%; max-height: 250px!important; border-radius: 3px; border: 0.5px solid #d1d1d1; padding: 30px; overflow: auto;">
               <mat-card-title class="mt-2 d-flex justify-content-center align-items-center">Sintomas Agregados</mat-card-title>
@@ -181,7 +181,7 @@
                 </mat-form-field>
                 <div class="col-2 col-md-1 d-flex justify-content-center align-items-center">
                   <button mat-fab class="text-white bg-danger"
-                    (click)="deleteItemFromArray(i,'sintomas')"><mat-icon>delete</mat-icon></button>
+                    (click)="deleteItemFromArray(i,'sintomas','mostrarSintomas')"><mat-icon>delete</mat-icon></button>
                 </div>
               </div>
               </mat-card-content>
@@ -202,8 +202,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Circunstancias De Aparición</mat-label>
-            <textarea rows="5" matInput placeholder="Circunstancias" formControlName="circunstancias_aparicion" required></textarea>
-            <mat-hint>{{getWrotenValueLength('circunstancias_aparicion')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Circunstancias" formControlName="circunstancias_aparicion" required></textarea>
+            <mat-hint>{{getWrotenValueLength('circunstancias_aparicion')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('circunstancias_aparicion','required')">
               El campo es requerido
             </mat-error>
@@ -224,8 +224,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Descripción Física</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="descripcion_fisica" required></textarea>
-            <mat-hint>{{getWrotenValueLength('descripcion_fisica')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="descripcion_fisica" required></textarea>
+            <mat-hint>{{getWrotenValueLength('descripcion_fisica')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('descripcion_fisica','required')">
               El campo es requerido
             </mat-error>
@@ -246,8 +246,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Demanda De Tratameinto.</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="demanda_tratamiento" required></textarea>
-            <mat-hint>{{getWrotenValueLength('demanda_tratamiento')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="demanda_tratamiento" required></textarea>
+            <mat-hint>{{getWrotenValueLength('demanda_tratamiento')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('demanda_tratamiento','required')">
               El campo es requerido
             </mat-error>
@@ -268,8 +268,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Área Escolar.</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="area_escolar" required></textarea>
-            <mat-hint>{{getWrotenValueLength('area_escolar')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="area_escolar" required></textarea>
+            <mat-hint>{{getWrotenValueLength('area_escolar')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('area_escolar','required')">
               El campo es requerido
             </mat-error>
@@ -290,8 +290,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Área Laboral.</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="area_laboral" required></textarea>
-            <mat-hint>{{getWrotenValueLength('area_laboral')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="area_laboral" required></textarea>
+            <mat-hint>{{getWrotenValueLength('area_laboral')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('area_laboral','required')">
               El campo es requerido
             </mat-error>
@@ -312,8 +312,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Acontecimientos Significativos En Su Vida.</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="acontecimientos_significativos" required></textarea>
-            <mat-hint>{{getWrotenValueLength('acontecimientos_significativos')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="acontecimientos_significativos" required></textarea>
+            <mat-hint>{{getWrotenValueLength('acontecimientos_significativos')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('acontecimientos_significativos','required')">
               El campo es requerido
             </mat-error>
@@ -334,8 +334,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Desarrollo Psicosexual.</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="desarrollo_psicosexual" required></textarea>
-            <mat-hint>{{getWrotenValueLength('desarrollo_psicosexual')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="desarrollo_psicosexual" required></textarea>
+            <mat-hint>{{getWrotenValueLength('desarrollo_psicosexual')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('desarrollo_psicosexual','required')">
               El campo es requerido
             </mat-error>
@@ -356,8 +356,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Familiograma.</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="familiograma" required></textarea>
-            <mat-hint>{{getWrotenValueLength('familiograma')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="familiograma" required></textarea>
+            <mat-hint>{{getWrotenValueLength('familiograma')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('familiograma','required')">
               El campo es requerido
             </mat-error>
@@ -378,8 +378,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Área Familiar y De Relación.</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="area_familiar_relacion" required></textarea>
-            <mat-hint>{{getWrotenValueLength('area_familiar_relacion')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="area_familiar_relacion" required></textarea>
+            <mat-hint>{{getWrotenValueLength('area_familiar_relacion')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('area_familiar_relacion','required')">
               El campo es requerido
             </mat-error>
@@ -400,8 +400,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Mapeo Familiar.</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="mapeo_familiar" required></textarea>
-            <mat-hint>{{getWrotenValueLength('mapeo_familiar')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="mapeo_familiar" required></textarea>
+            <mat-hint>{{getWrotenValueLength('mapeo_familiar')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('mapeo_familiar','required')">
               El campo es requerido
             </mat-error>
@@ -422,8 +422,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Impresiones Diagnósticas De La Familia.</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="impresiones_diagnositcas_familia" required></textarea>
-            <mat-hint>{{getWrotenValueLength('impresiones_diagnositcas_familia')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="impresiones_diagnositcas_familia" required></textarea>
+            <mat-hint>{{getWrotenValueLength('impresiones_diagnositcas_familia')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('impresiones_diagnositcas_familia','required')">
               El campo es requerido
             </mat-error>
@@ -444,8 +444,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Hipótesis Familiar.</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="hipotesis_familiar" required></textarea>
-            <mat-hint>{{getWrotenValueLength('hipotesis_familiar')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="hipotesis_familiar" required></textarea>
+            <mat-hint>{{getWrotenValueLength('hipotesis_familiar')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('hipotesis_familiar','required')">
               El campo es requerido
             </mat-error>
@@ -466,8 +466,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Examen Mental.</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="examen_mental" required></textarea>
-            <mat-hint>{{getWrotenValueLength('examen_mental')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="examen_mental" required></textarea>
+            <mat-hint>{{getWrotenValueLength('examen_mental')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('examen_mental','required')">
               El campo es requerido
             </mat-error>
@@ -488,8 +488,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Indicaciones Diagnósticas.</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="indicaciones_diagnosticas" required></textarea>
-            <mat-hint>{{getWrotenValueLength('indicaciones_diagnosticas')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="indicaciones_diagnosticas" required></textarea>
+            <mat-hint>{{getWrotenValueLength('indicaciones_diagnosticas')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('indicaciones_diagnosticas','required')">
               El campo es requerido
             </mat-error>
@@ -506,7 +506,7 @@
     </mat-step>
     <mat-step>
       <form [formGroup]="expediente">
-        <ng-template matStepLabel>Indicaciones Diagnósticas DCM y CIE.</ng-template>
+        <ng-template matStepLabel>Diagnostico Diagnósticas DSM y CIE.</ng-template>
         <div class="row d-flex justify-content-center align-items-center">
           <mat-form-field appearance="fill" class="col-12 col-md-2">
             <mat-label>Eje</mat-label>
@@ -553,21 +553,21 @@
             </mat-error>
           </mat-form-field>
           <div class="col-2 d-flex justify-content-center align-items-center">
-            <button mat-fab class="bg-primary" (click)="addItemToArray(['auxEje','auxCie','auxDcm','auxTranstorno'],'impresiones_diagnostics_dcm_cie',['eje','cie','dcm','transtorno'])">
+            <button mat-fab class="bg-primary" (click)="addItemToArray(['auxEje','auxCie','auxDcm','auxTranstorno'],'impresiones_diagnostics_dcm_cie',['eje','cie','dcm','transtorno'],'mostrarIndicacionesDcmCIe')" [disabled]="expediente.controls.auxEje.value == '' || expediente.controls.auxCie.value == '' || expediente.controls.auxDcm.value == '' || expediente.controls.auxTranstorno.value == '' ">
               <mat-icon class="text-white">add</mat-icon>
             </button>
           </div>
         </div>
         <div class="row d-flex justify-content-center align-items-center">
           <div class="col-md-4">
-            <mat-checkbox (click)="mostrarIndicacionesDcmCIe = !mostrarIndicacionesDcmCIe" [disabled]="getLengthOfArrayForm('impresiones_diagnostics_dcm_cie') == 0">Mostrar Indicaciones</mat-checkbox>
+            <mat-checkbox formControlName="mostrarIndicacionesDcmCIe" >Mostrar Indicaciones</mat-checkbox>
           </div>
           <div class="col-md-4">
             <span>{{getLengthOfArrayForm('impresiones_diagnostics_dcm_cie')}} indicaciones agregadas.</span>
           </div>
 
         </div>
-        <ng-container formArrayName="impresiones_diagnostics_dcm_cie" *ngIf="( getLengthOfArrayForm('impresiones_diagnostics_dcm_cie') ) > 0 && (mostrarIndicacionesDcmCIe == true)">
+        <ng-container formArrayName="impresiones_diagnostics_dcm_cie" *ngIf="( getLengthOfArrayForm('impresiones_diagnostics_dcm_cie') ) > 0 && (expediente.controls.mostrarIndicacionesDcmCIe.value == true)">
           <div class="formArrayContainer">
             <mat-card style="width: 100%; max-height: 250px!important; border-radius: 3px; border: 0.5px solid #d1d1d1; padding: 30px; overflow: auto;">
               <mat-card-title class="mt-2 d-flex justify-content-center align-items-center">Impresiones Diagnósticas Agregadas</mat-card-title>
@@ -593,7 +593,7 @@
                 </mat-form-field>
                 <div class="col-2 d-flex justify-content-center align-items-center">
                   <button mat-fab class="text-white bg-danger"
-                    (click)="deleteItemFromArray(i,'impresiones_diagnostics_dcm_cie')"><mat-icon>delete</mat-icon></button>
+                    (click)="deleteItemFromArray(i,'impresiones_diagnostics_dcm_cie','mostrarIndicacionesDcmCIe')"><mat-icon>delete</mat-icon></button>
                 </div>
               </div>
               </mat-card-content>
@@ -615,8 +615,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Fóco</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="foco_terapeutico"></textarea>
-            <mat-hint>{{getWrotenValueLength('foco_terapeutico')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="foco_terapeutico"></textarea>
+            <mat-hint>{{getWrotenValueLength('foco_terapeutico')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('foco_terapeutico','required')">
               El campo es requerido
             </mat-error>
@@ -637,7 +637,7 @@
         <ng-template matStepLabel>Modalidad Terapéutica Que Sugiere</ng-template>
         <div class="row d-flex justify-content-center align-items-center">
           <div class="col-12 col-md-2">
-            <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxTi')" formControlName="auxTi">T.I</mat-checkbox>
+            <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxTi')">T.I</mat-checkbox>
           </div>
           <div class="col-12 col-md-2">
             <mat-checkbox (click)="ModalidadTerapeuticaSetValue('auxTf')">T.F</mat-checkbox>
@@ -655,8 +655,8 @@
         <div class="row d-flex justify-content-center align-items-center">
           <mat-form-field appearance="fill" class="col-12 col-md-10">
             <mat-label>Fundamento</mat-label>
-            <textarea rows="5" matInput placeholder="Fundamente" formControlName="auxFundamento"></textarea>
-            <mat-hint>{{getWrotenValueLength('auxFundamento')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Fundamente" formControlName="auxFundamento" maxlength="1000"></textarea>
+            <mat-hint>{{getWrotenValueLength('auxFundamento')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('auxFundamento','required')">
               El campo es requerido
             </mat-error>
@@ -678,8 +678,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Objetivo</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="objetivo_terapeutico"></textarea>
-            <mat-hint>{{getWrotenValueLength('objetivo_terapeutico')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="objetivo_terapeutico"></textarea>
+            <mat-hint>{{getWrotenValueLength('objetivo_terapeutico')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('objetivo_terapeutico','required')">
               El campo es requerido
             </mat-error>
@@ -701,8 +701,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Estrategias</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="estrategias_terapeuticas"></textarea>
-            <mat-hint>{{getWrotenValueLength('estrategias_terapeuticas')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="estrategias_terapeuticas"></textarea>
+            <mat-hint>{{getWrotenValueLength('estrategias_terapeuticas')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('estrategias_terapeuticas','required')">
               El campo es requerido
             </mat-error>
@@ -724,8 +724,8 @@
         <div class="row d-flex">
           <mat-form-field appearance="fill" class="col-12">
             <mat-label>Pronóstico</mat-label>
-            <textarea rows="5" matInput placeholder="Ingrese la descripción" formControlName="pronostico_terapeutico"></textarea>
-            <mat-hint>{{getWrotenValueLength('pronostico_terapeutico')}} / 600</mat-hint>
+            <textarea maxlength="1000" rows="5" matInput placeholder="Ingrese la descripción" formControlName="pronostico_terapeutico"></textarea>
+            <mat-hint>{{getWrotenValueLength('pronostico_terapeutico')}} / 1000</mat-hint>
             <mat-error *ngIf="hasError('pronostico_terapeutico','required')">
               El campo es requerido
             </mat-error>
@@ -746,12 +746,11 @@
       <p>Has termiando el formulario.</p>
       <div>
         <button mat-button matStepperPrevious>Atras</button>
-        <button mat-button matStepperNext>Siguiente</button>
       </div>
     </mat-step>
   </mat-stepper>
   <div class="row d-flex ml-4 align-items-center">
-    <button mat-fab class="bg-primary text-white" (click)="saveExpedient()" ><mat-icon>save</mat-icon></button>
+    <button mat-raised-button class="bg-primary text-white" (click)="saveExpedient()" ><mat-icon>save</mat-icon></button>
   </div>
 
 

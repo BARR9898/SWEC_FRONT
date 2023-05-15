@@ -55,6 +55,10 @@ export class CreacionComponent implements OnInit{
   }
 
   expediente = this.fb.group({
+
+    //Boleanos auxiliares
+    mostrarSintomas: this.fb.control({value:false,disabled:true}),
+    mostrarIndicacionesDcmCIe: this.fb.control({value:false,disabled:true}), 
     //Paciente
     nombre: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(50)]),
     apellido_paterno: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(50)]),
@@ -63,25 +67,25 @@ export class CreacionComponent implements OnInit{
     ocupacion: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(60)]),
     direccion: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(60)]),
     sexo: this.fb.control('M', [Validators.required]),
-    ingresos_mensuales: this.fb.control('6000', [Validators.required, Validators.maxLength(6)]),
+    ingresos_mensuales: this.fb.control('10000', [Validators.required, Validators.maxLength(6)]),
     //Expediente
-    motivo_consulta: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    circunstancias_aparicion: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
+    motivo_consulta: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    circunstancias_aparicion: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
     auxSintoma: this.fb.control('Cansacio', [Validators.maxLength(50)]),
     sintomas: this.fb.array([]),
-    descripcion_fisica: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    demanda_tratamiento: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    area_escolar: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    area_laboral: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    acontecimientos_significativos: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    desarrollo_psicosexual: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    familiograma: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    area_familiar_relacion: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    mapeo_familiar: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    impresiones_diagnositcas_familia: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    hipotesis_familiar: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    examen_mental: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    indicaciones_diagnosticas: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
+    descripcion_fisica: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    demanda_tratamiento: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    area_escolar: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    area_laboral: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    acontecimientos_significativos: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    desarrollo_psicosexual: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    familiograma: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    area_familiar_relacion: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    mapeo_familiar: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    impresiones_diagnositcas_familia: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    hipotesis_familiar: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    examen_mental: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    indicaciones_diagnosticas: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
     //DCM Y CIE
     auxEje: this.fb.control('E1', [Validators.maxLength(20)]),
     auxDcm: this.fb.control('CC2', [Validators.maxLength(10)]),
@@ -94,18 +98,18 @@ export class CreacionComponent implements OnInit{
     auxTp: this.fb.control(false, [Validators.required]),
     auxTg: this.fb.control(false, [Validators.required]),
     auxOtra: this.fb.control(false, [Validators.required]),
-    auxFundamento: this.fb.control('Ingrese un dato', [Validators.maxLength(600), Validators.required]),
+    auxFundamento: this.fb.control('Ingrese un dato', [Validators.maxLength(1000), Validators.required]),
     modalidad_terapeutica: this.fb.array([]),
 
-    foco_terapeutico: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    objetivo_terapeutico: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    estrategias_terapeuticas: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
-    pronostico_terapeutico: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
+    foco_terapeutico: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    objetivo_terapeutico: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    estrategias_terapeuticas: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
+    pronostico_terapeutico: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
 
 
     //Notas clinicas
     auxNotaClinica_fecha: this.fb.control('Ingrese un dato', [Validators.maxLength(50)]),
-    auxNotaClinica_nota: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(600)]),
+    auxNotaClinica_nota: this.fb.control('Ingrese un dato', [Validators.required, Validators.maxLength(1000)]),
     nota_clinica: this.fb.array([]),
 
     //Citas
@@ -181,7 +185,7 @@ export class CreacionComponent implements OnInit{
   }
 
   //Agrega un nuevo item (formGroup) a un ArrayFormControl
-  addItemToArray(auxControlNames: Array<string>, formControlName: string, keys: Array<string>) {
+  addItemToArray(auxControlNames: Array<string>, formControlName: string, keys: Array<string>,showTableAuxName?:string) {
 
     const newData: Array<string> = [];
     auxControlNames.forEach(data => {
@@ -209,10 +213,27 @@ export class CreacionComponent implements OnInit{
       this.expediente.get(control)?.setValue('')
     })
 
+    console.log('showTableAuxName',showTableAuxName);
+    
+    if(showTableAuxName){
+      switch (showTableAuxName) {
+        case 'mostrarSintomas':
+          this.expediente.controls.mostrarSintomas.enable()
+          break;
+        case 'mostrarIndicacionesDcmCIe':
+          this.expediente.controls.mostrarIndicacionesDcmCIe.enable()
+          break;
+      
+        default:
+          break;
+      }
+    }
+
+
   }
 
   //Elimina de un FormArrayControl el item en la posición indeicada
-  deleteItemFromArray(index: number, formControl: string) {
+  deleteItemFromArray(index: number, formControl: string,showArrayAux?:string) {
     //Show confirm dialog for delete an item
     Swal.fire({
       title: '¿Desea eliminar el dato?',
@@ -225,6 +246,17 @@ export class CreacionComponent implements OnInit{
       if (result.isConfirmed) {
         const formControlAsArray = this.expediente.get(formControl) as FormArray
         formControlAsArray.removeAt(index)
+        if(formControlAsArray.length == 0 && showArrayAux){
+          
+          console.log('showArrayAux',showArrayAux);
+          
+            let auxShowArray_control = this.expediente.get(showArrayAux)
+            console.log(auxShowArray_control);
+            
+            auxShowArray_control.disable()
+            auxShowArray_control.setValue(false)
+          
+        }
         Swal.fire('Eliminado!', '', 'success')
       } else if (result.isDenied) {
       }
@@ -320,7 +352,8 @@ export class CreacionComponent implements OnInit{
 
   //Setea el fvalor del formControl correspondiente a true
   ModalidadTerapeuticaSetValue(control: string) {
-    this.expediente.get(control)?.setValue(true)
+    let actualValue = this.expediente.get(control)?.value
+    this.expediente.get(control)?.setValue(!actualValue)
   }
 
   //Crea el formGroup que se insertara dentro del FormArrayControl modalidad_terapeutica
