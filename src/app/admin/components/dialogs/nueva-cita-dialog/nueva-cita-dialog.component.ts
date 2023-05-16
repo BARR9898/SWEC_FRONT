@@ -43,7 +43,7 @@ export class NuevaCitaDialogComponent implements OnInit {
         console.log('res cita nueva',res);
         
         if (res.result && !res.data.message) {
-          Swal.fire('Cita Guardad','Cita registrada con exito','success')
+          Swal.fire('Cita Guardada','Cita registrada con exito','success')
             .then(() => {
               this.dialogRef.close();
 
