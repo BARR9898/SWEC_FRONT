@@ -24,7 +24,7 @@
       <div class="col-3">
         <mat-form-field appearance="fill">
           <mat-label>Estatus</mat-label>
-          <mat-select [(ngModel)]="filtro.asistencia" value="false" >
+          <mat-select [(ngModel)]="filtro.asistencia">
             <mat-option *ngFor="let estatus of estatusArray" [value]="estatus.value">
               {{estatus.description}}
             </mat-option>
@@ -58,7 +58,7 @@
                   <td>{{cita.fecha}}</td>
                   <td *ngIf="cita.asistencia == true" class="asistencia_status_indicador">Asistió</td>
                   <td *ngIf="cita.asistencia == false" class="asistencia_status_indicador">Faltó</td>
-                  <td *ngIf="cita.asistencia == null" class="asistencia_status_indicador" >Pendiente</td>
+                  <td *ngIf="cita.asistencia == -1" class="asistencia_status_indicador" >Pendiente</td>
                   <td>
                     <button mat-mini-fab  class="bg-primary" [routerLink]="['/expedientes/main/',cita.expediente_id]">
                       <mat-icon class="text-white">visibility</mat-icon>

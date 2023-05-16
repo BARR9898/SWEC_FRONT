@@ -24,19 +24,19 @@ export class AgendaComponent implements OnInit{
   estatusArray = [
     {
       description: 'Pendientes',
-      value: false
+      value: 'pendientes'
     },
     {
       description: 'Sin Asistencia',
-      value: null
+      value: 'sin asistencia'
     },
     {
       description: 'Con Asistencia',
-      value: true
+      value: 'con asistencia'
     },
     {
       description: 'Todos',
-      value: ''
+      value: 'todas'
     }
   ]
 
