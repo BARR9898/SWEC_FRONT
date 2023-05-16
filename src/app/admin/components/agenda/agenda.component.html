@@ -5,7 +5,7 @@
     </div>
 
     <div class="row d-flex justify-content-around" style="width: 100%;">
-      <div class="col-3">
+      <div class="col-12 col-md-3">
         <mat-form-field appearance="fill">
           <mat-label>Desde</mat-label>
           <input matInput [matDatepicker]="picker" [(ngModel)]="filtro.desde">
@@ -13,7 +13,7 @@
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="col-3">
+      <div class="col-12 col-md-3">
         <mat-form-field appearance="fill">
           <mat-label>Hasta</mat-label>
           <input matInput [matDatepicker]="picker1" [(ngModel)]="filtro.hasta">
@@ -21,7 +21,7 @@
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="col-3">
+      <div class="col-12 col-md-3">
         <mat-form-field appearance="fill">
           <mat-label>Estatus</mat-label>
           <mat-select [(ngModel)]="filtro.asistencia">
@@ -31,7 +31,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-1 d-flex justify-content-center align-items-center">
+      <div class="col-12 col-md-1 d-flex justify-content-center align-items-center">
         <button mat-fab id="searchCitas" (click)="searchCitas()" >
           <mat-icon>search</mat-icon>
         </button>
@@ -79,9 +79,11 @@
             </table>
           </div>
     </div>
+
     <div class="col-12 d-flex justify-content-center align-items-center mt-4" *ngIf="proximas_citas.length == 0">
       <h2 id="noCitas-title">No existen citas registradas</h2>
     </div>
+
     <div class="col-12 d-flex justify-content-center align-items-center justify-content-md-start mt-4">
       <h2 id="indicador-citas-faltantes">{{proximas_citas.length}} citas restantes</h2>
     </div>
