@@ -31,7 +31,6 @@ export class VerNotaDialogComponent implements OnInit {
     getNoteData(){
       this.notasService.getNota(this.data.nota_id)
       .subscribe((res:any) => {
-        console.log('note id', res);
         if (res.result) {
             this.nota.nota = res.data[0].nota
             this.nota.fecha_creacion = res.data[0].fecha_creacion

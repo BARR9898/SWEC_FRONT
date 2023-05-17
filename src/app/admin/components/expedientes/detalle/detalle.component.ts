@@ -113,15 +113,13 @@ export class DetalleComponent implements OnInit {
   getExpedientData(){
     this.activatedRoute.params.subscribe((params: Params) => {
       this._id = this.activatedRoute.snapshot.paramMap.get('id')
-      console.log(this._id)
+   
       this.expedientesServices.obtenerExpediente(this._id)
         .subscribe((expedientGeted:any) => {
-          console.log('expedientGeted',expedientGeted);
-          console.log('id',this._id);
+    
           
           
           this.expediente = expedientGeted.data
-          console.log(this.expediente);
 
           this.asignValuesToFormControls()
           //this.asignNotasClinicasToFormArray()
@@ -198,11 +196,9 @@ export class DetalleComponent implements OnInit {
   save(){
 
     let expedient_updated = this.prepareExpedientToSend()
-    console.log('expediente actualizado',expedient_updated);
 
     this.expedientesServices.actualizarExpediente(this._id,expedient_updated)
     .subscribe((res:any) =>{
-      console.log(res);
       if(res.result){
         this.showDialog('Cambios guardados!','success')
         this.getExpedientData()
@@ -385,7 +381,6 @@ export class DetalleComponent implements OnInit {
 
   }
 
-  console.log('expediente ready to send',expedient);
 
 
   return expedient
@@ -512,7 +507,6 @@ export class DetalleComponent implements OnInit {
   }
 
   confirmCita(index:number){
-    console.log(index);
 
     //Show confirm dialog for delete an item
     Swal.fire({

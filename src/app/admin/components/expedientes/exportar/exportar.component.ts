@@ -27,11 +27,9 @@ export class ExportarComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params: Params) => {
       this._id = this.activatedRoute.snapshot.paramMap.get('id')
-      console.log(this._id)
       this.expedientesServices.obtenerExpediente(this._id)
         .subscribe(expedientGeted => {
           this.expediente = expedientGeted
-          console.log(this.expediente);
 
           this.test()
 
@@ -164,7 +162,6 @@ export class ExportarComponent implements OnInit {
       }
       sintomas_created.push(newSintoma)
     })
-    console.log(sintomas_created);
 
     return sintomas_created
   }

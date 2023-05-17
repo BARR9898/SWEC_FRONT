@@ -40,7 +40,6 @@ export class NuevaCitaDialogComponent implements OnInit {
     
     this.citasService.createCita(data)
       .subscribe((res:any) => {
-        console.log('res cita nueva',res);
         
         if (res.result && !res.data.message) {
           Swal.fire('Cita Guardada','Cita registrada con exito','success')

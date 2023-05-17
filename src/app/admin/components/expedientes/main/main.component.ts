@@ -87,7 +87,6 @@ export class MainComponent implements OnInit {
         data.status = false
         this.citasService.updateCita(id,data)
         .subscribe((res:any)=> {
-          console.log('res',res);
 
           if (res.result) {
             
@@ -130,11 +129,9 @@ export class MainComponent implements OnInit {
       hasta: this.citas_hasta
     }
 
-    console.log('filters',filters);
     
     this.citasService.getCitas(this.paciente_id,filters)
     .subscribe((res:any) => {
-      console.log('res',res);
       
       this.citas = res.data
       this.citas.forEach((cita:any)=> {
@@ -149,7 +146,6 @@ export class MainComponent implements OnInit {
 
       
     }) 
-    console.log('filters',filters);
     
   }
 
@@ -183,7 +179,6 @@ export class MainComponent implements OnInit {
   getData(){
     this.activatedRoute.params.subscribe((params: Params) => {
       this.expediente_id = this.activatedRoute.snapshot.paramMap.get('id')
-      console.log(this.expediente_id)
       this.expedienteService.obtenerExpediente(this.expediente_id)
         .subscribe((expedientGeted:any) => {          
           this.expediente = expedientGeted.data
@@ -235,11 +230,9 @@ export class MainComponent implements OnInit {
       hasta: this.notas_hasta
     }
 
-    console.log('filters',filters);
     
     this.notasService.getNotas(this.expediente_id,filters)
     .subscribe((res:any) => {
-      console.log('res notas',res);
       
       this.notas = res.data
       this.notas.forEach((nota:any) => {
@@ -251,7 +244,6 @@ export class MainComponent implements OnInit {
 
       
     }) 
-    console.log('filters',filters);
     
   }
 
@@ -276,7 +268,6 @@ export class MainComponent implements OnInit {
     this.citasService.getCitas(this.paciente_id,filtros)
     .subscribe((res:any) => {
         this.citas = res.data
-        console.log(this.citas);
         
         this.citas.forEach((cita:any)=> {
           let date = cita.fecha
@@ -289,11 +280,9 @@ export class MainComponent implements OnInit {
   }
 
   getNotas(filtros:any){
-    console.log('f',filtros);
     
     this.notasService.getNotas(this.expediente_id,filtros)
     .subscribe((res:any) => {
-      console.log('res notas',res);
       
       if (res.result) {
         this.notas = res.data
@@ -320,7 +309,6 @@ export class MainComponent implements OnInit {
   }
 
   export(nota:any){
-    console.log('no',nota);
     
     let data =  {
       paciente: `${this.expediente.paciente.nombre} ${this.expediente.paciente.apellido_paterno} ${this.expediente.paciente.apellido_materno}`,
@@ -328,7 +316,6 @@ export class MainComponent implements OnInit {
       fecha: nota.fecha_creacion_formateada,
       nota: nota.nota
     }
-    console.log('data nota',data);
     
     this.exportatService.notaClinica(data)
   }

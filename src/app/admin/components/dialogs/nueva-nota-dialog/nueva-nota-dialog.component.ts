@@ -45,7 +45,7 @@ export class NuevaNotaDialogComponent {
 
     this.notasService.createNota(data)
     .subscribe((res:any) => {
-      console.log('res new note',res);
+    
       
       if (res.result) {
           Swal.fire('Nota Creada','La nota se a creado con exito','success')

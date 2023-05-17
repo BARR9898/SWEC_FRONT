@@ -44,7 +44,6 @@ export class CreacionComponent implements OnInit{
 
   ngOnInit(): void {
 
-    console.log('hola');
     
     this.expedienteService.getNextId()
     .subscribe((res:any) => {
@@ -140,12 +139,10 @@ export class CreacionComponent implements OnInit{
     }
 
     let expediente_ready_to_send = this.prepareExpedientToSend()
-    console.log('expedient to send',expediente_ready_to_send);
     
     
     this.expedienteService.crearExpediente(expediente_ready_to_send)
     .subscribe((res:any) => {
-      console.log(res);
 
       if (res.result) {
         Swal.fire({
@@ -213,7 +210,6 @@ export class CreacionComponent implements OnInit{
       this.expediente.get(control)?.setValue('')
     })
 
-    console.log('showTableAuxName',showTableAuxName);
     
     if(showTableAuxName){
       switch (showTableAuxName) {
@@ -248,10 +244,8 @@ export class CreacionComponent implements OnInit{
         formControlAsArray.removeAt(index)
         if(formControlAsArray.length == 0 && showArrayAux){
           
-          console.log('showArrayAux',showArrayAux);
           
             let auxShowArray_control = this.expediente.get(showArrayAux)
-            console.log(auxShowArray_control);
             
             auxShowArray_control.disable()
             auxShowArray_control.setValue(false)

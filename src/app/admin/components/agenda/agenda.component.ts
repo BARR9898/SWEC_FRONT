@@ -61,7 +61,6 @@ export class AgendaComponent implements OnInit{
     this.citasService.getAllCitas_agenda(filtros)
     .subscribe((res:any) => {
       if (res.result) {
-        console.log(res);
         this.proximas_citas = res.data
         this.proximas_citas.forEach((cita:any) => {
           cita.fecha = moment(cita.fecha).format('YYYY-MM-DD h:mm:ss')
@@ -128,14 +127,12 @@ export class AgendaComponent implements OnInit{
       filters.hasta = moment(this.filtro.hasta).format('YYYY-MM-DD 23:59:59')
     }
 
-    console.log('f',filters);
     
     
 
     this.citasService.getAllCitas_agenda(filters)
     .subscribe((res:any) => {
       if(res.result){
-        console.log('res',res);
         this.proximas_citas = res.data
         this.proximas_citas.forEach((cita) => {
           cita.fecha =  moment(cita.fecha).format('YYYY-MM-DD h:mm:ss')
