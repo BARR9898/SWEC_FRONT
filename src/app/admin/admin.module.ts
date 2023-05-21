@@ -14,6 +14,9 @@ import { MainComponent } from './components/expedientes/main/main.component';
 import { NuevaCitaDialogComponent } from './components/dialogs/nueva-cita-dialog/nueva-cita-dialog.component';
 import { NuevaNotaDialogComponent } from './components/dialogs/nueva-nota-dialog/nueva-nota-dialog.component';
 import { VerNotaDialogComponent } from './components/dialogs/ver-nota-dialog/ver-nota-dialog.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from "@angular/material/form-field";
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -26,13 +29,17 @@ import { VerNotaDialogComponent } from './components/dialogs/ver-nota-dialog/ver
     MainComponent,
     NuevaCitaDialogComponent,
     NuevaNotaDialogComponent,
-    VerNotaDialogComponent
+    VerNotaDialogComponent,
+    ResetPasswordComponent,
+
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
+    MatInputModule,
+    MatFormFieldModule
   ],
   entryComponents: [NuevaCitaDialogComponent]
 })

@@ -31,6 +31,16 @@ export class AuthService {
   logout(){
     this.tokenService.removeToken();
   }
+  
+  verifyUserExist(email:string){
+    let data = {
+      email: email
+    }
+    return this.http.post(`${this.apiUrl}/api/auth/reset-password`,data)
+  }
 
+  resetPassword(data:any){
+    return this.http.post(`${this.apiUrl}/api/auth/set-password`,data)
+  }
 
 }

@@ -5,6 +5,7 @@ import { LayoutComponent } from './admin/components/layout/layout.component';
 import { LoginComponent } from './admin/components/login/login.component';
 import { AuthGuard } from './admin/guards/auth.guard';
 import { RedirectGuard } from './admin/guards/redirect.guard';
+import { ResetPasswordComponent } from './admin/components/reset-password/reset-password.component';
 const routes: Routes = [
   {
     path: '',
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'restore-password',
+    component: ResetPasswordComponent
   }
 ];
 
