@@ -9,6 +9,7 @@ import { ExportarComponent } from './components/expedientes/exportar/exportar.co
 import { AgendaComponent } from './components/agenda/agenda.component';
 import { DetalleNotaComponent } from './components/notas/detalle-nota/detalle-nota.component';
 import { MainComponent } from './components/expedientes/main/main.component';
+import { TerapeutasComponent } from './components/terapeutas/terapeutas.component';
 const routes: Routes = [
   {
     canActivate: [AuthGuard],
@@ -42,9 +43,14 @@ const routes: Routes = [
   },
   {
     canActivate: [AuthGuard],
+    path: 'terapeutas',
+    component: TerapeutasComponent
+  },
+  {
+    canActivate: [AuthGuard],
     path: '',
     component: AgendaComponent
-  },
+  }
 ];
 
 @NgModule({

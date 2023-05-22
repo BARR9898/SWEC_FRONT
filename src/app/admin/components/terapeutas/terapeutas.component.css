@@ -1,0 +1,15 @@
+.row{
+    width: 100%;
+}
+
+mat-card {
+    width: 100%;
+}
+
+table{
+    width: 100%;
+}
+
+th,td{
+    text-align: center;
+}

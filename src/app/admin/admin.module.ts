@@ -17,6 +17,9 @@ import { VerNotaDialogComponent } from './components/dialogs/ver-nota-dialog/ver
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { TerapeutasComponent } from './components/terapeutas/terapeutas.component';
+import { NuevoTerapeutaComponent } from './components/dialogs/terapeutas/nuevo-terapeuta/nuevo-terapeuta.component';
+import { EditarTerapeutaComponent } from './components/dialogs/terapeutas/editar-terapeuta/editar-terapeuta.component';
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -31,6 +34,9 @@ import { MatFormFieldModule } from "@angular/material/form-field";
     NuevaNotaDialogComponent,
     VerNotaDialogComponent,
     ResetPasswordComponent,
+    TerapeutasComponent,
+    NuevoTerapeutaComponent,
+    EditarTerapeutaComponent,
 
   ],
   imports: [

@@ -1,0 +1,43 @@
+
+<div class="row d-flex justify-content-center align-items-center p-2 mb-2 mt-2">
+    <button mat-raised-button (click)="openDialogNewTerapeuta('500','500')">
+        Nuevo terapeuta
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+
+<div class="row d-flex justify-content-center align-items-center" *ngIf="terapeutas">
+    <div class="col-8">
+        <mat-card>
+            <mat-card-title class="d-flex justify-content-center align-items-center p-2">Terapeutas</mat-card-title>
+            <mat-card-content>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apelliido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr  *ngFor="let terapeuta of terapeutas; index as i">
+                            <td>{{terapeuta.nombre}}</td>
+                            <td>{{terapeuta.apellido_paterno}}</td>
+                            <td>{{terapeuta.apellido_materno}}</td>
+                            <td>
+                                <button mat-fab>
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                            </td>
+                            <td>
+                                <button mat-fab><mat-icon>delete</mat-icon></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
