@@ -1,6 +1,6 @@
 
-<div class="row d-flex justify-content-center align-items-center p-2 mb-2 mt-2">
-    <button mat-raised-button (click)="openDialogNewTerapeuta('500','500')">
+<div class="row d-flex justify-content-center align-items-center p-2 mb-2 mt-2" *ngIf="terapeutas.length ==  0">
+    <button mat-raised-button (click)="openDialogNewTerapeuta('500','500')" id="nuevoTerapeuta">
         Nuevo terapeuta
         <mat-icon>add</mat-icon>
     </button>
@@ -18,7 +18,6 @@
                             <th>Apelliido Paterno</th>
                             <th>Apellido Materno</th>
                             <th>Editar</th>
-                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,12 +26,9 @@
                             <td>{{terapeuta.apellido_paterno}}</td>
                             <td>{{terapeuta.apellido_materno}}</td>
                             <td>
-                                <button mat-fab>
+                                <button mat-fab  class="editButton" (click)="openDialogUpdateTerapeuta('500','500',terapeuta.id)" >
                                     <mat-icon>edit</mat-icon>
                                 </button>
-                            </td>
-                            <td>
-                                <button mat-fab><mat-icon>delete</mat-icon></button>
                             </td>
                         </tr>
                     </tbody>

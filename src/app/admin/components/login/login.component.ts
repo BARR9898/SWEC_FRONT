@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { TokenService } from '../../services/token.service';
+import { TerapeutasService } from '../../services/terapeutas';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,7 +12,7 @@ import { TokenService } from '../../services/token.service';
 })
 export class LoginComponent {
 
-  constructor (private fb:FormBuilder,private authService:AuthService,private router:Router, private tokenService:TokenService) {
+  constructor (private fb:FormBuilder,private authService:AuthService,private router:Router, private tokenService:TokenService,private terapeutasService:TerapeutasService) {
 
   }
 
@@ -43,6 +44,8 @@ export class LoginComponent {
         next: res => {
           this.status = 'success'
           this.router.navigate(['/admin']);
+          this.evaluateIfTerapeutExist()
+          
         },error: () => {
           this.status = 'failed';
           Swal.fire({
@@ -55,6 +58,30 @@ export class LoginComponent {
         }
       });
   }
+
+  evaluateIfTerapeutExist(){
+    this.terapeutasService.getTerapeutas()
+      .subscribe((res:any) => {
+        if (res.result) {
+          if(res.data.length == 0){
+            Swal.fire({
+              title: 'Dese agregar el terapeuta?',
+              showDenyButton: true,
+              confirmButtonText: 'Si',
+              denyButtonText: `Despues`,
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                this.router.navigate(['/admin/terapeutas'])
+              } else if (result.isDenied) {
+                Swal.fire('Aviso', 'Para poder crear expedientes es necesario dar  de  alta al terapeuta', 'warning')
+              }
+            })
+          }
+        }
+      })
+  }
+
 
 
 

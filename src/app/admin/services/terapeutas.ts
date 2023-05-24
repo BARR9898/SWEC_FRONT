@@ -22,5 +22,13 @@ export class TerapeutasService {
     return this.http.post(`${this.apiUrl}/api/terapeutas`,data,{context:checkToken()})
   }
 
+  public updateTerapeuta(data:any){
+    return this.http.put(`${this.apiUrl}/api/terapeutas/${data.id}`,data,{context:checkToken()})
+  }
+
+  public getTerapeuta(id:number){
+    return this.http.get(`${this.apiUrl}/api/terapeutas/${id}`,{context:checkToken()})
+  }
+
 
 }

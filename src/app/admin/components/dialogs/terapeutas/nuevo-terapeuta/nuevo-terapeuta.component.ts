@@ -33,13 +33,22 @@ export class NuevoTerapeutaComponent {
 
     }
 
-    this.treapeutaService.insertTerapeut(data).subscribe((res:any) => {
-      console.log('res',res);
-      
+    this.treapeutaService.insertTerapeut(data).subscribe((res:any) => {      
       if (res.result) {
-        
+        Swal.fire('Terapeuta registrado','Terapeuta registrado con exito','success')
+          .then((res:any) => {
+            this.dialogRef.close()
+          })
+      }else if(res.result == false   && res.message ){
+        Swal.fire('Aviso',res.message,'warning')
       }
     })
   }
 
+  cerrarDialog(){
+    this.dialogRef.close()
+  }
+
 }
+
+

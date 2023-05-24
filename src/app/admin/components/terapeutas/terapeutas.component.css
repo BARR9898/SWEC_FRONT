@@ -13,3 +13,23 @@ table{
 th,td{
     text-align: center;
 }
+
+.deleteButton{
+    background-color: red;
+    color: whitesmoke;
+}
+
+.editButton{
+    background-color: #023e8a;
+    color: whitesmoke;
+}
+
+#nuevoTerapeuta{
+    background-color: #023e8a;
+    color: whitesmoke;
+}
+
+.dialogButton{
+    background-color: #023e8a;
+    color: whitesmoke;
+}

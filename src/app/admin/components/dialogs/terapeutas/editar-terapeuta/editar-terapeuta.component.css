@@ -1,0 +1,13 @@
+mat-form-field{
+    width: 100%;
+}
+
+mat-card{
+    height: 100%;
+    width: 100%;
+}
+
+button{
+    background-color: #023e8a!important;
+    color: whitesmoke!important;
+}

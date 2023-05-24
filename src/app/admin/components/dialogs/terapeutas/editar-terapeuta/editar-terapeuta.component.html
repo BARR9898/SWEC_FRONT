@@ -1,1 +1,41 @@
-<p>editar-terapeuta works!</p>
+
+<h1 mat-dialog-title class="d-flex justify-content-center align-items-center">Editar Terapeuta</h1>
+<div mat-dialog-content>
+    <mat-card>
+        <mat-card-title class="d-flex justify-content-center mt-2 mb-2 p-2">Ingrese los nuevos datos</mat-card-title>
+        <mat-card-content>
+            <div class="row d-flex justify-content-center">
+                <div class="col-8">
+                    <mat-form-field>
+                        <mat-label>Nombre</mat-label>
+                        <input matInput [formControl]="nombre">
+                        <mat-error *ngIf="nombre.hasError('required')">El campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-8">
+                    <mat-form-field>
+                        <mat-label>Apellido Paterno</mat-label>
+                        <input matInput [formControl]="apellido_materno">
+                        <mat-error *ngIf="apellido_materno.hasError('required')">El campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-8">
+                    <mat-form-field>
+                        <mat-label>Apellido Materno</mat-label>
+                        <input matInput  [formControl]="apellido_paterno">
+                        <mat-error *ngIf="apellido_paterno.hasError('required')">El campo es requerido</mat-error>
+
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions  class="d-flex justify-content-around mt-2 mb-2 p-2">
+
+        </mat-card-actions>
+    </mat-card>
+</div>
+<div mat-dialog-actions class="d-flex  justify-content-around align-items-center">
+    <button mat-raised-button (click)="cerrarDialog()">Cancelar</button>
+    <button mat-raised-button [disabled]="apellido_paterno.invalid || apellido_materno.invalid  ||  nombre.invalid " (click)="registerTerapeut()">Actualizar</button>
+  
+  </div>

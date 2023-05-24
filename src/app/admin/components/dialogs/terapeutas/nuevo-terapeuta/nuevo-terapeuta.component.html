@@ -35,7 +35,7 @@
     </mat-card>
 </div>
 <div mat-dialog-actions class="d-flex  justify-content-around align-items-center">
-    <button mat-raised-button>Cancelar</button>
+    <button mat-raised-button (click)="cerrarDialog()">Cancelar</button>
     <button mat-raised-button [disabled]="apellido_paterno.invalid || apellido_materno.invalid  ||  nombre.invalid " (click)="registerTerapeut()">Registrar</button>
   
   </div>
