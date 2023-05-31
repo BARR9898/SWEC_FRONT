@@ -8,7 +8,8 @@ import { TokenService } from 'src/app/admin/services/token.service';
 import { Token } from '@angular/compiler';
 import { TerapeutasService } from 'src/app/admin/services/terapeutas';
 import Swal from 'sweetalert2';
-
+import { enviroment } from 'src/app/enviroments/enviroment';
+import { getCookie, getCookies } from 'typescript-cookie';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -16,6 +17,16 @@ import Swal from 'sweetalert2';
 })
 export class SidenavComponent {
 
+
+  user =  {
+    id: getCookie('user_id'),
+    rol: getCookie('user_rol'),
+    nombre: getCookie('user_name'),
+    apellido_paterno: getCookie('user_lastname')
+
+
+  } 
+  
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),

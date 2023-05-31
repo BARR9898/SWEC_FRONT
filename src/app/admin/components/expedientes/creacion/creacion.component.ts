@@ -6,6 +6,7 @@ import { ExpedientesService } from 'src/app/admin/services/expedientes.service';
 
 
 import { Router } from '@angular/router';
+import { UserDataService } from 'src/app/admin/services/user-data.service';
 @Component({
   selector: 'app-creacion',
   templateUrl: './creacion.component.html',
@@ -16,7 +17,7 @@ import { Router } from '@angular/router';
 export class CreacionComponent implements OnInit{
 
 
-  constructor(private fb: FormBuilder, private expedienteService: ExpedientesService, private routerService: Router) {
+  constructor(private fb: FormBuilder, private expedienteService: ExpedientesService, private routerService: Router, private userDataService:UserDataService) {
     fb = fb;
   }
 
@@ -41,6 +42,8 @@ export class CreacionComponent implements OnInit{
     }
   ]
   expedient_id = 0;
+
+  user_data  = this.userDataService.getUserData()
 
   ngOnInit(): void {
 
@@ -140,14 +143,19 @@ export class CreacionComponent implements OnInit{
 
     let expediente_ready_to_send = this.prepareExpedientToSend()
     
+    let filtros =  {
+      user_id : this.user_data.id
+    }
     
-    this.expedienteService.crearExpediente(expediente_ready_to_send)
+    this.expedienteService.crearExpediente(expediente_ready_to_send,filtros)
     .subscribe((res:any) => {
 
+      console.log('create expedient response',res);
+      
       if (res.result) {
         Swal.fire({
           icon: 'success',
-          title: 'Expediente guardado con éxito!',
+          title: res.message,
           showConfirmButton: false,
           timer: 2500
         })
@@ -158,7 +166,7 @@ export class CreacionComponent implements OnInit{
 
       Swal.fire({
         icon: 'error',
-        title: 'Algo salio mal!',
+        title: res.message,
         showConfirmButton: false,
         timer: 2500
       })

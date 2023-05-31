@@ -5,6 +5,9 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { TokenService } from '../../services/token.service';
 import { TerapeutasService } from '../../services/terapeutas';
+import { enviroment } from 'src/app/enviroments/enviroment';
+import { UserDataService } from '../../services/user-data.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,7 +15,7 @@ import { TerapeutasService } from '../../services/terapeutas';
 })
 export class LoginComponent {
 
-  constructor (private fb:FormBuilder,private authService:AuthService,private router:Router, private tokenService:TokenService,private terapeutasService:TerapeutasService) {
+  constructor (private fb:FormBuilder,private authService:AuthService,private router:Router, private tokenService:TokenService,private terapeutasService:TerapeutasService,private userDataService:UserDataService) {
 
   }
 
@@ -41,8 +44,9 @@ export class LoginComponent {
     let password = this.user.controls.password.value!
     this.authService.login(email,password)
       .subscribe({
-        next: res => {
+        next: (res:any) => {
           this.status = 'success'
+          this.userDataService.setUserData(res.user)
           this.router.navigate(['/admin']);
           this.evaluateIfTerapeutExist()
           

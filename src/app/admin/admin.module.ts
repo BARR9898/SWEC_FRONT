@@ -20,6 +20,9 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { TerapeutasComponent } from './components/terapeutas/terapeutas.component';
 import { NuevoTerapeutaComponent } from './components/dialogs/terapeutas/nuevo-terapeuta/nuevo-terapeuta.component';
 import { EditarTerapeutaComponent } from './components/dialogs/terapeutas/editar-terapeuta/editar-terapeuta.component';
+import { UsuariosComponent } from './components/usuarios/usuarios.component';
+import { NuevoUsuarioComponent } from './components/dialogs/usuarios/nuevo-usuario/nuevo-usuario.component';
+import { EditarUsuariosComponent } from './components/dialogs/usuarios/editar-usuarios/editar-usuarios.component';
 @NgModule({
   declarations: [
     LayoutComponent,
@@ -37,6 +40,9 @@ import { EditarTerapeutaComponent } from './components/dialogs/terapeutas/editar
     TerapeutasComponent,
     NuevoTerapeutaComponent,
     EditarTerapeutaComponent,
+    UsuariosComponent,
+    NuevoUsuarioComponent,
+    EditarUsuariosComponent,
 
   ],
   imports: [

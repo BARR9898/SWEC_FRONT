@@ -4,6 +4,7 @@ import { enviroment } from 'src/app/enviroments/enviroment';
 import { switchMap,tap } from 'rxjs';
 import { TokenService } from './token.service';
 import { ResponseLogin } from '../models/auth';
+import { getCookie,setCookie,removeCookie } from 'typescript-cookie';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,6 @@ export class AuthService {
     })
     .pipe(
       tap(response => {
-      
-        
         this.tokenService.saveToken(response.token)
       })
     )
@@ -30,6 +29,7 @@ export class AuthService {
 
   logout(){
     this.tokenService.removeToken();
+    enviroment.user =  null
   }
   
   verifyUserExist(email:string){

@@ -2,37 +2,74 @@
   <mat-sidenav #drawer class="sidenav" fixedInViewport
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      opened="false">
+      opened="false" >
     <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list>
+
+        <div class="row d-flex align-items-center mt-2">
+          <div class="col-12 d-flex justify-content-center align-items-center">
+            <img src="" alt="" srcset="" id="profileImage">
+          </div>
+          <div class="col-12 d-flex justify-content-center align-items-center"><p><b>{{user.nombre}} {{user.apellido_paterno}}</b> </p></div>
+        </div>
+
+
+    <!--MENU SUPERUSUARIO-->
+    <mat-nav-list *ngIf=" user.rol == 'Superusuario' ">
       <a mat-list-item routerLink="./agenda">
         <div class="row d-flex align-items-center ml-2 ">
-          <div class="col-6 d-flex justify-content-center align-items-center">Agenda</div>
-          <div class="col-4 d-flex justify-content-center align-items-center">
+          <div class="col-7 d-flex justify-content-start align-items-center">Agenda</div>
+          <div class="col-3 d-flex justify-content-center align-items-center">
+            <mat-icon>book</mat-icon>
+          </div>
+        </div>
+      </a>
+      <a mat-list-item routerLink="./expedientes/lista">
+        <div class="row d-flex align-items-center ml-2">
+          <div class="col-7 d-flex  align-items-center">Expedientes</div>
+          <div class="col-3 d-flex justify-content-center align-items-center">
+            <mat-icon>description</mat-icon>
+          </div>
+        </div>
+      </a>
+      <a mat-list-item routerLink="./usuarios">
+        <div class="row d-flex align-items-center ml-2">
+          <div class="col-7 d-flex  align-items-center">Usuarios</div>
+          <div class="col-3 d-flex justify-content-center align-items-center">
+            <mat-icon>groups</mat-icon>
+          </div>
+        </div>
+      </a>
+      <a mat-list-item (click)="logOut()">
+        <div class="row d-flex align-items-center ml-2">
+          <div class="col-7 d-flex  align-items-center">Cerrar Sesión</div>
+          <div class="col-3 d-flex justify-content-center align-items-center">
+            <mat-icon>logout</mat-icon>
+          </div>
+        </div>
+      </a>
+    </mat-nav-list>
+    <!--MENU ADMINISTRADOR-->
+    <mat-nav-list *ngIf=" user.rol == 'Administrador' ">
+      <a mat-list-item routerLink="./agenda">
+        <div class="row d-flex align-items-center ml-2 ">
+          <div class="col-7 d-flex justify-content-center align-items-center">Agenda</div>
+          <div class="col-3 d-flex justify-content-center align-items-center">
             <mat-icon>book</mat-icon>
           </div>
         </div>
     </a>
       <a mat-list-item routerLink="./expedientes/lista">
         <div class="row d-flex align-items-center ml-2">
-          <div class="col-6 d-flex  align-items-center">Expedientes</div>
-          <div class="col-4 d-flex justify-content-center align-items-center">
+          <div class="col-7 d-flex  align-items-center">Expedientes</div>
+          <div class="col-3 d-flex justify-content-center align-items-center">
             <mat-icon>description</mat-icon>
           </div>
         </div>
       </a>
-      <a mat-list-item routerLink="./terapeutas">
-        <div class="row d-flex align-items-center ml-2">
-          <div class="col-6 d-flex  align-items-center">Terapeutas</div>
-          <div class="col-4 d-flex justify-content-center align-items-center">
-            <mat-icon>person</mat-icon>
-          </div>
-        </div>
-      </a>
       <a mat-list-item (click)="logOut()">
-        <div class="row d-flex align-items-center ml-2">
-          <div class="col-8 d-flex  align-items-center">Cerrar Sesión</div>
-          <div class="col-4 d-flex justify-content-center align-items-center">
+        <div class="row d-flex align-items-center ml-1">
+          <div class="col-7 d-flex  align-items-center">Cerrar Sesión</div>
+          <div class="col-3 d-flex justify-content-center align-items-center">
             <mat-icon>logout</mat-icon>
           </div>
         </div>

@@ -231,9 +231,11 @@ export class ExportarService {
     
     let expediente = this.expediente
     
+    console.log('expediente',expediente);
+    
     let sintomas = this.crearEstructuraSintomas(expediente.expediente.sintomas)
     let impresiones_diagnosticas = this.crearEstructuraImpresionesDiagnosticas(expediente.expediente.impresiones_diagnosticas)
-    let modalidad_terapeutica = this.crearEstructuraModalidadTerapeutica(expediente.expediente.modalida_terapeutica)
+    let modalidad_terapeutica = this.crearEstructuraModalidadTerapeutica(expediente.expediente.modalidad_terapeutica)
     
     
     let fecha = moment(new Date()).format('YYYY-MM-DD h:mm:ss')

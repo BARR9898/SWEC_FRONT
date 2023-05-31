@@ -1,0 +1,32 @@
+mat-card{
+    width: 100%!important;
+}
+
+.row{
+    width: 100%;
+}
+
+table{
+    width: 100%;
+}
+
+th,
+td{
+    text-align: center;
+}
+
+.deleteButton{
+    background-color: red;
+    color: whitesmoke;
+}
+
+.editButton{
+    background-color: #023e8a;
+    color: whitesmoke;
+}
+
+#createUser{
+    
+    background-color: #063778;
+    color: whitesmoke;
+}

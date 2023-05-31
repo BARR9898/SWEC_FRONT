@@ -6,6 +6,9 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ExportarService } from 'src/app/admin/services/exportar.service';
 import moment from 'moment';
+import { enviroment } from 'src/app/enviroments/enviroment';
+import { UserDataService } from 'src/app/admin/services/user-data.service';
+import { Res } from 'src/app/admin/interfaces/res';
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
@@ -13,13 +16,15 @@ import moment from 'moment';
 })
 export class ListaComponent implements OnInit{
 
-  constructor(private expedientesService:ExpedientesService, private routerServices:Router, private exportarcionService:ExportarService){
+  constructor(private expedientesService:ExpedientesService, private routerServices:Router, private exportarcionService:ExportarService,private userDataService:UserDataService){
 
   }
 
   expedientes:any;
+  user_data = this.userDataService.getUserData() 
 
   filtros = {
+    user_id: this.user_data.id,
     nombre: '',
     apellido_paterno:  '',
     apellido_materno:  ''
@@ -43,14 +48,23 @@ export class ListaComponent implements OnInit{
     }).then((result) => {
       if (result.isConfirmed) {
         this.expedientesService.elminiarExpediente(id)
-        .subscribe(res => {
-          Swal.fire(
-            'Elimnado!',
-            'El expediente a sido eliminado.',
-            'success'
-          ).then(() => {
-            this.getExpedientData()
-          })
+        .subscribe((res:Res) => {
+          if (res.result) {
+            Swal.fire(
+              'Elimnado!',
+              res.message,
+              'success'
+            ).then(() => {
+              this.getExpedientData()
+            })
+          }else{
+            Swal.fire(
+              'Error',
+              res.message,
+              'error'
+            )
+          }
+
         })
 
       }

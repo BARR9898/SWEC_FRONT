@@ -1,3 +1,4 @@
 export const enviroment = {
-  API_URL: 'http://localhost:3002'
+  API_URL: 'http://localhost:3002',
+  user: null
 }
