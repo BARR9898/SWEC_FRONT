@@ -56,7 +56,7 @@ export class AgendaComponent implements OnInit{
     let filtros = {
       desde: moment(new Date()).format('YYYY-MM-DD 00:00:00'),
       hasta: moment(new Date()).format('YYYY-MM-DD 23:59:59')
-
+      
     }
     this.citasService.getAllCitas_agenda(filtros)
     .subscribe((res:any) => {
