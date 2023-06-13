@@ -46,7 +46,7 @@ export class LoginComponent {
       .subscribe({
         next: (res:any) => {
           this.status = 'success'
-          this.userDataService.setUserData(res.user)
+          this.userDataService.setUserData(res.data.user)
           this.router.navigate(['/admin']);
           this.evaluateIfTerapeutExist()
           

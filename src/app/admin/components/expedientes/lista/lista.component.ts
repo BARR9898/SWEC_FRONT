@@ -9,6 +9,7 @@ import moment from 'moment';
 import { enviroment } from 'src/app/enviroments/enviroment';
 import { UserDataService } from 'src/app/admin/services/user-data.service';
 import { Res } from 'src/app/admin/interfaces/res';
+import { FiltroInterface } from 'src/app/admin/interfaces/filtros';
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
@@ -23,11 +24,14 @@ export class ListaComponent implements OnInit{
   expedientes:any;
   user_data = this.userDataService.getUserData() 
 
-  filtros = {
-    user_id: this.user_data.id,
+  filtros:FiltroInterface = {
+    id_usuario: this.user_data.id,
     nombre: '',
     apellido_paterno:  '',
-    apellido_materno:  ''
+    apellido_materno:  '',
+    estatus:'',
+    fecha_fin:'',
+    fecha_inicio: ''
   }
 
   ngOnInit(): void {

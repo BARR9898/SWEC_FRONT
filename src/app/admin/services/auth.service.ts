@@ -16,13 +16,13 @@ export class AuthService {
   constructor(private http:HttpClient,private tokenService:TokenService) { }
 
   login(email:string,password:string){
-    return this.http.post<ResponseLogin>(`${this.apiUrl}/api/auth/login`,{
+    return this.http.post<any>(`${this.apiUrl}/api/auth/login`,{
       email,
       password
     })
     .pipe(
       tap(response => {
-        this.tokenService.saveToken(response.token)
+        this.tokenService.saveToken(response.data.token)
       })
     )
   }

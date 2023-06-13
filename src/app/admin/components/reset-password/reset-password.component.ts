@@ -26,12 +26,10 @@ export class ResetPasswordComponent {
     }
     this.authServices.verifyUserExist(this.correo.value)
       .subscribe((res:any) => {
-        console.log('res',res);
-
         if (res.result) {
-          console.log('res',res);
           this.userIsRegisted = true
          this.userData = res.data
+         
  
         }else{
           Swal.fire('Usuario no registrado','El correo no  esta registrad','warning')
@@ -42,10 +40,11 @@ export class ResetPasswordComponent {
 
   resetPassword(){
     let data = {
-      email:this.userData.email,
-      userId: this.userData.id,
-      newPassword: this.password.value
+      user_id: `${this.userData.id}`,
+      new_password: this.password.value
     }
+    console.log('data',data);
+
     this.authServices.resetPassword(data)
     .subscribe((res:any) =>  {
       if (res.result) {
