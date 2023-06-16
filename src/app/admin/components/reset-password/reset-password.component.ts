@@ -32,7 +32,7 @@ export class ResetPasswordComponent {
          
  
         }else{
-          Swal.fire('Usuario no registrado','El correo no  esta registrad','warning')
+          Swal.fire('Algo salio mal',res.message,'warning')
         }
         
       })

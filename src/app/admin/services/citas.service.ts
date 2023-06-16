@@ -18,7 +18,7 @@ export class CitasService {
   
   public getCitas(id_paciente:number,filtros?:any){
     filtros as HttpParams
-    return this.http.get(`${this.apiUrl}/api/citas/all/${id_paciente}`,{context:checkToken(),params:filtros})
+    return this.http.get(`${this.apiUrl}/api/citas/all`,{context:checkToken(),params:filtros})
   }
 
   public createCita(data:any){

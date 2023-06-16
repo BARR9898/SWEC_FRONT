@@ -18,18 +18,34 @@ export class NuevoUsuarioComponent {
 
      }
 
+     roles = [
+      {
+        descripcion: 'Seleccione un rol'
+      },
+      {
+        descripcion: 'Superusuario'
+      },
+      {
+        descripcion: 'Administrador'
+      }
+     ]
 
      email  = this.fb.control('',[Validators.required,Validators.email])
      nombre  = this.fb.control('',[Validators.required])
      password  = this.fb.control('',[Validators.required,Validators.minLength(5)])
-
+     apellido_materno  = this.fb.control('',[Validators.required,Validators.minLength(5)])
+     apellido_paterno  = this.fb.control('',[Validators.required,Validators.minLength(5)])
+     rol = this.fb.control(this.roles[0].descripcion,[Validators.required])
    
+
      registerUser(){
        let  data = {
          name: this.nombre.value,
+         lastname: this.apellido_paterno.value,
+         second_lastname: this.apellido_materno.value,
          email: this.email.value,  
          password: this.password.value,
-         rol: 'Administrador'
+         rol: this.rol.value
        }
    
        this.usuariosService.createUsuario(data).subscribe((res:any) => {      

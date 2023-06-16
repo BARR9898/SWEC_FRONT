@@ -44,13 +44,32 @@ export class LoginComponent {
     let password = this.user.controls.password.value!
     this.authService.login(email,password)
       .subscribe({
-        next: (res:any) => {
-          this.status = 'success'
-          this.userDataService.setUserData(res.data.user)
-          this.router.navigate(['/admin']);
-          this.evaluateIfTerapeutExist()
+        next: (res:any) => {          
+          if ((res.result == false) && (res.message == 'USUARIO INACTIVO')) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Usuario Inactivo',
+              showConfirmButton: true,
+              timer: 3000
+            })
+          }else if((res.result == false) && (res.message == 'PASSWORD INCORRECT')){
+            Swal.fire({
+              icon: 'error',
+              title: 'Usuario o contraseña invalidos!',
+              showConfirmButton: true,
+              timer: 3000
+            })
+          }else{
+            this.status = 'success'
+            this.userDataService.setUserData(res.data.user)
+            this.router.navigate(['/admin']);
+          }
+
+
+
           
-        },error: () => {
+        },
+        error: (res:any) => {          
           this.status = 'failed';
           Swal.fire({
             icon: 'error',
@@ -63,28 +82,7 @@ export class LoginComponent {
       });
   }
 
-  evaluateIfTerapeutExist(){
-    this.terapeutasService.getTerapeutas()
-      .subscribe((res:any) => {
-        if (res.result) {
-          if(res.data.length == 0){
-            Swal.fire({
-              title: 'Dese agregar el terapeuta?',
-              showDenyButton: true,
-              confirmButtonText: 'Si',
-              denyButtonText: `Despues`,
-            }).then((result) => {
-              /* Read more about isConfirmed, isDenied below */
-              if (result.isConfirmed) {
-                this.router.navigate(['/admin/terapeutas'])
-              } else if (result.isDenied) {
-                Swal.fire('Aviso', 'Para poder crear expedientes es necesario dar  de  alta al terapeuta', 'warning')
-              }
-            })
-          }
-        }
-      })
-  }
+
 
 
 

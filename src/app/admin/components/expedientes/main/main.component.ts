@@ -12,6 +12,8 @@ import { NotasService } from 'src/app/admin/services/notas.service';
 import { NuevaNotaDialogComponent } from '../../dialogs/nueva-nota-dialog/nueva-nota-dialog.component';
 import { VerNotaDialogComponent } from '../../dialogs/ver-nota-dialog/ver-nota-dialog.component';
 import { ExportarService } from 'src/app/admin/services/exportar.service';
+import { enviroment } from 'src/app/enviroments/enviroment';
+import { UserDataService } from 'src/app/admin/services/user-data.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -30,7 +32,8 @@ export class MainComponent implements OnInit {
     public dialog: MatDialog,
     private fb:FormBuilder,
     private notasService:NotasService,
-    private exportatService:ExportarService
+    private exportatService:ExportarService,
+    private userDataService:UserDataService
   ){}
 
   paciente_id:any = null
@@ -69,11 +72,12 @@ export class MainComponent implements OnInit {
   changeStatusCita(id:any,action:string,data:any){
     switch (action) {
       case 'confirm':
-        data.status = true
+        data.estatus = true
         this.citasService.updateCita(id,data)
         .subscribe((res:any) => {
           if (res.result) {
-
+            console.log('changeStatusCita res',res);
+            
             Swal.fire('Cita confirmada','La cita esta confirmada','success')
               .then( () => {
                 this.getData()
@@ -84,7 +88,7 @@ export class MainComponent implements OnInit {
         })
         break;
       case 'cancel':
-        data.status = false
+        data.estatus = false
         this.citasService.updateCita(id,data)
         .subscribe((res:any)=> {
 
@@ -125,8 +129,9 @@ export class MainComponent implements OnInit {
 
 
     let filters = {
-      desde: this.citas_desde,
-      hasta: this.citas_hasta
+      fecha_inicio: this.citas_desde,
+      fecha_fin: this.citas_hasta,
+      id_usuario: this.userDataService.getUserData().id
     }
 
     
@@ -177,23 +182,31 @@ export class MainComponent implements OnInit {
   }
 
   getData(){
+
+
     this.activatedRoute.params.subscribe((params: Params) => {
       this.expediente_id = this.activatedRoute.snapshot.paramMap.get('id')
       this.expedienteService.obtenerExpediente(this.expediente_id)
-        .subscribe((expedientGeted:any) => {          
-          this.expediente = expedientGeted.data
+        .subscribe((expedientGeted:any) => {      
+              
+          this.expediente = expedientGeted[0]
+          console.log("expediente",this.expediente);
+
           this.paciente_id = this.expediente.paciente.id
+
           let filtros = {
-            desde: '',
-            hasta:''
+            fecha_inicio: '',
+            fecha_fin:'',
+            id_usuario: this.userDataService.getUserData().id
           }
+          
 
           this.getCitas(filtros)
 
           let filtros_notas = {
-            desde:'',
-            hasta:''
-
+            fecha_inicio: '',
+            fecha_fin:'',
+            id_usuario: this.userDataService.getUserData().id
           }
 
           this.getNotas(filtros_notas)
@@ -226,8 +239,8 @@ export class MainComponent implements OnInit {
 
 
     let filters = {
-      desde: this.notas_desde,
-      hasta: this.notas_hasta
+      fecha_inicio: this.notas_desde,
+      fecha_fin: this.notas_hasta,
     }
 
     
@@ -265,10 +278,14 @@ export class MainComponent implements OnInit {
 
 
   getCitas(filtros:any){
+
+
     this.citasService.getCitas(this.paciente_id,filtros)
     .subscribe((res:any) => {
+      console.log('entra');
+      console.log('citas',res);
+      
         this.citas = res.data
-        
         this.citas.forEach((cita:any)=> {
           let date = cita.fecha
           cita.fecha_formated = `${new Date(date).toLocaleDateString('es-MX')} ${new Date(date).toLocaleTimeString('es-MX')}`

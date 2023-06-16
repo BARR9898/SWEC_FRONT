@@ -26,27 +26,57 @@ export class EditarUsuariosComponent implements OnInit{
    email  = this.fb.control('',[Validators.required,Validators.email])
    nombre  = this.fb.control('',[Validators.required])
    password  = this.fb.control('',[Validators.required,Validators.minLength(5)])
+   apellido_paterno =  this.fb.control('',[Validators.required,Validators.minLength(5)])
+   apellido_materno =  this.fb.control('',[Validators.required,Validators.minLength(5)])
+   rol =  this.fb.control('',[Validators.required])
+   estatus =  this.fb.control('',[Validators.required])
    user_id =  this.data.id
    
- 
+   roles = [
+    {
+      descripcion: 'Seleccione un rol'
+    },
+    {
+      descripcion: 'Superusuario'
+    },
+    {
+      descripcion: 'Administrador'
+    }
+   ]
+
+   estatus_array = [
+    {
+      value: 1,
+      descripcion: 'Activo'
+    },
+    {
+      value: 0,
+      descripcion: 'Inactivo'
+    }
+   ]
    registerUser(){
+
      let  data = {
        name: this.nombre.value,
+       lastname: this.apellido_materno.value,
+       second_lastname: this.apellido_paterno.value,
        email: this.email.value,  
-       password: this.password.value,
-       rol: 'Administrador'
+       rol: this.rol.value,
+       estatus: this.estatus.value
      }
  
-     this.usuariosService.updateUsuario(this.user_id,data).subscribe((res:any) => {      
+     this.usuariosService.updateUsuario(this.user_id,data).subscribe((res:any) => { 
+      console.log('updateUsuario',res);     
        if (res.result) {
-         Swal.fire('Terapeuta creado','Terapeuta creado con exito','success')
+         Swal.fire('Terapeuta actualizado','Terapeuta actualizado con exito','success')
            .then((res:any) => {
              this.dialogRef.close()
            })
-       }else if(res.result == false   && res.message ){
+       }else if(res.result == false && res.message ){
          Swal.fire('Aviso',res.message,'warning')
        }
      })
+
    }
  
    cerrarDialog(){
@@ -60,8 +90,13 @@ export class EditarUsuariosComponent implements OnInit{
         console.log(res);
         
         if (res.result) {
-            this.email.setValue(res.data[0].usuario)
+            this.email.setValue(res.data[0].correo)
             this.nombre.setValue(res.data[0].nombre)
+            this.apellido_materno.setValue(res.data[0].apellido_materno)
+            this.apellido_paterno.setValue(res.data[0].apellido_paterno)
+            this.rol.setValue(res.data[0].rol)
+            this.estatus.setValue(res.data[0].estatus)
+
         }
       })
    }

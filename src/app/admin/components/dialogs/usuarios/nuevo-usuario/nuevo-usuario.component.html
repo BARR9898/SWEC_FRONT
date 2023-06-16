@@ -13,6 +13,32 @@
                 </div>
                 <div class="col-8">
                     <mat-form-field>
+                        <mat-label>Apellido Paterno</mat-label>
+                        <input matInput [formControl]="apellido_paterno">
+                        <mat-error *ngIf="nombre.hasError('required')">El campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-8">
+                    <mat-form-field>
+                        <mat-label>Apellido Materno</mat-label>
+                        <input matInput [formControl]="apellido_materno">
+                        <mat-error *ngIf="nombre.hasError('required')">El campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-8">
+                    <mat-form-field > 
+                        <mat-label>Rol</mat-label>
+                        <mat-select [formControl]="rol">
+                          <mat-option *ngFor="let rol of roles" [value]="rol.descripcion">
+                            {{rol.descripcion}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                </div>
+
+                <div class="col-8">
+                    <mat-form-field>
                         <mat-label>Correo</mat-label>
                         <input matInput [formControl]="email" type="email">
                         <mat-error *ngIf="email.hasError('required')">El campo es requerido</mat-error>

@@ -117,9 +117,11 @@ export class DetalleComponent implements OnInit {
       this.expedientesServices.obtenerExpediente(this._id)
         .subscribe((expedientGeted:any) => {
     
+      
           
-          
-          this.expediente = expedientGeted.data
+          this.expediente = expedientGeted[0]
+          console.log('this.expediente',this.expediente);
+
 
           this.asignValuesToFormControls()
           //this.asignNotasClinicasToFormArray()

@@ -92,7 +92,7 @@ export class CreacionComponent implements OnInit{
     auxEje: this.fb.control('', [Validators.maxLength(20)]),
     auxDcm: this.fb.control('', [Validators.maxLength(10)]),
     auxCie: this.fb.control('', [Validators.maxLength(10)]),
-    auxTranstorno: this.fb.control('', [Validators.maxLength(50)]),
+    auxTranstorno: this.fb.control('', [Validators.maxLength(100)]),
     impresiones_diagnostics_dcm_cie: this.fb.array([]),
     //Modalidad terapeutica
     auxTi: this.fb.control(false, [Validators.required]),
@@ -142,9 +142,12 @@ export class CreacionComponent implements OnInit{
     }
 
     let expediente_ready_to_send = this.prepareExpedientToSend()
+
+    console.log(`Expediente ready to send`,expediente_ready_to_send);
+    
     
     let filtros =  {
-      user_id : this.user_data.id
+      id_usuario : this.user_data.id
     }
     
     this.expedienteService.crearExpediente(expediente_ready_to_send,filtros)
@@ -319,18 +322,18 @@ export class CreacionComponent implements OnInit{
       },
       expediente: {
         motivo_de_consulta: this.expediente.controls.motivo_consulta.value,
-        circunstancias_aparicion: this.expediente.controls.circunstancias_aparicion.value,
+        circunstancias_de_aparicion: this.expediente.controls.circunstancias_aparicion.value,
         sintomas: sintomasAsArray,
         descripcion_fisica: this.expediente.controls.descripcion_fisica.value,
-        demanda_tratamiento: this.expediente.controls.demanda_tratamiento.value,
+        demanda_de_tratamiento: this.expediente.controls.demanda_tratamiento.value,
         area_escolar: this.expediente.controls.area_escolar.value,
         area_laboral: this.expediente.controls.area_laboral.value,
         acontecimientos_significativos: this.expediente.controls.acontecimientos_significativos.value,
         desarrollo_psicosexual: this.expediente.controls.desarrollo_psicosexual.value,
         familiograma: this.expediente.controls.familiograma.value,
-        area_familiar_relacion: this.expediente.controls.area_familiar_relacion.value,
+        area_de_relacion_y_familiar: this.expediente.controls.area_familiar_relacion.value,
         mapeo_familiar: this.expediente.controls.mapeo_familiar.value,
-        impresiones_diagnosticas_familia: this.expediente.controls.impresiones_diagnositcas_familia.value,
+        impresion_diagnostica_de_familia: this.expediente.controls.impresiones_diagnositcas_familia.value,
         hipotesis_familiar: this.expediente.controls.hipotesis_familiar.value,
         examen_mental: this.expediente.controls.examen_mental.value,
         indicaciones_diagnosticas: this.expediente.controls.indicaciones_diagnosticas.value,

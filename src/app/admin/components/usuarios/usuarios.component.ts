@@ -55,29 +55,27 @@ export class UsuariosComponent  implements OnInit {
 
 
   deleteUser(id:number){
-    this.usuariosService.deleteUsuario(id)
-      .subscribe((res:any) => {
-        if (res.result) {
-
-          Swal.fire({
-            title: 'Desea eliminar el usuario?',
-            showDenyButton: true,
-            confirmButtonText: 'Eliminar',
-            denyButtonText: `Cancelar`,
-          }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {
-              Swal.fire('Usuario eliminado','Usuario eliminado con exito','success')
-                .then(() => {
-                  this.getUsers()
-                })
-            } else if (result.isDenied) {
-              return
-            }
-          })
-
-        }
-      })
+    Swal.fire({
+      title: 'Desea eliminar el usuario?',
+      showDenyButton: true,
+      confirmButtonText: 'Eliminar',
+      denyButtonText: `Cancelar`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.usuariosService.deleteUsuario(id)
+        .subscribe((res:any) => {          
+          if (res.result) {
+            Swal.fire('Usuario eliminado','Usuario eliminado con exito','success')
+            .then(() => {
+              this.getUsers()
+            })
+          }
+        })
+      } else if (result.isDenied) {
+        return
+      }
+    })
   }
 
 

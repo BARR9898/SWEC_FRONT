@@ -13,22 +13,49 @@
                 </div>
                 <div class="col-8">
                     <mat-form-field>
+                        <mat-label>Apellido Paterno</mat-label>
+                        <input matInput [formControl]="apellido_paterno">
+                        <mat-error *ngIf="nombre.hasError('required')">El campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-8">
+                    <mat-form-field>
+                        <mat-label>Apellido Materno</mat-label>
+                        <input matInput [formControl]="apellido_materno">
+                        <mat-error *ngIf="nombre.hasError('required')">El campo es requerido</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-8">
+                    <mat-form-field > 
+                        <mat-label>Rol</mat-label>
+                        <mat-select [formControl]="rol">
+                          <mat-option *ngFor="let rol of roles" [value]="rol.descripcion">
+                            {{rol.descripcion}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                </div>
+                <div class="col-8">
+                    <mat-form-field > 
+                        <mat-label>Estatus</mat-label>
+                        <mat-select [formControl]="estatus">
+                          <mat-option *ngFor="let estatus of estatus_array" [value]="estatus.value">
+                            {{estatus.descripcion}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                </div>
+                <div class="col-8">
+                    <mat-form-field>
                         <mat-label>Correo</mat-label>
                         <input matInput [formControl]="email" type="email">
                         <mat-error *ngIf="email.hasError('required')">El campo es requerido</mat-error>
                         <mat-error *ngIf="email.hasError('email')">Ingrese un correo valido</mat-error>
 
                     </mat-form-field>
-                </div>
-                <div class="col-8">
-                    <mat-form-field>
-                        <mat-label>Password</mat-label>
-                        <input matInput [formControl]="password" type="text">
-                        <mat-error *ngIf="password.hasError('required')">El campo es requerido</mat-error>
-                        <mat-error *ngIf="password.hasError('minlength')">La contrasenia debe tener minimo 5 caracteres</mat-error>
-
-                    </mat-form-field>
-                </div>   
+                </div> 
  
             </div>
         </mat-card-content>
@@ -36,6 +63,6 @@
 </div>
 <div mat-dialog-actions class="d-flex  justify-content-around align-items-center">
     <button mat-raised-button (click)="cerrarDialog()">Cancelar</button>
-    <button mat-raised-button [disabled]="nombre.invalid || email.invalid || password.invalid" (click)="registerUser()">Registrar</button>
+    <button mat-raised-button [disabled]="nombre.invalid || email.invalid || apellido_materno.invalid || apellido_paterno.invalid || rol.invalid" (click)="registerUser()">Registrar</button>
   
   </div>

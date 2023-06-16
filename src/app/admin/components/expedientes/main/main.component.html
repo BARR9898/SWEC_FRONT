@@ -149,8 +149,8 @@
                                   <tr *ngFor="let cita of citas; index as i" >
                                     <td>{{cita.id}}</td>
                                     <td>{{cita.fecha_formated}}</td>
-                                    <td *ngIf="cita.status">Confirmada</td>
-                                    <td *ngIf="!cita.status">Cancelada</td>
+                                    <td *ngIf="cita.estatus">Confirmada</td>
+                                    <td *ngIf="!cita.estatus">Cancelada</td>
                                     <td>
                                         <button mat-mini-fab class="confirmButton" (click)="changeStatusCita(cita.id,'confirm',cita)">
                                             <mat-icon>done</mat-icon>

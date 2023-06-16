@@ -40,13 +40,11 @@ export class NuevaNotaDialogComponent {
     let data = {
       fecha: moment(new Date()).format('YYYY-MM-DD h:mm:ss'),
       nota: this.notaForm.controls.nota.value,
-      id_paciente: this.data.id_paciente
+      id_expediente: this.data.expediente_id
     }
 
     this.notasService.createNota(data)
-    .subscribe((res:any) => {
-    
-      
+    .subscribe((res:any) => {      
       if (res.result) {
           Swal.fire('Nota Creada','La nota se a creado con exito','success')
           .then(() => {

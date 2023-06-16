@@ -15,6 +15,7 @@
                             <th>Nombre</th>
                             <th>Usuario</th>
                             <th>Rol</th>
+                            <th>Estatus</th>
                             <th>Editar</th>
                             <th>Elimiinar</th>
                         </tr>
@@ -22,8 +23,10 @@
                     <tbody>
                         <tr *ngFor="let usuario of usuarios; index as i">
                             <th>{{usuario.nombre}}</th>
-                            <th>{{usuario.usuario}}</th>
+                            <th>{{usuario.correo}}</th>
                             <th>{{usuario.rol}}</th>
+                            <th *ngIf="usuario.estatus">Activo</th>
+                            <th *ngIf="!usuario.estatus">Inactivo</th>
                             <th>
                                 <button mat-mini-fab class="editButton" (click)="showDialogEditUser('500','500',usuario.id)">
                                     <mat-icon>edit</mat-icon>

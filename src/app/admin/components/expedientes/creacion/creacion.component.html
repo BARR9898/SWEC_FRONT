@@ -543,8 +543,8 @@
           </mat-form-field>
           <mat-form-field appearance="fill" class="col-12 col-md-2">
             <mat-label>Transtorno</mat-label>
-            <input matInput placeholder="Cie" formControlName="auxTranstorno" maxlength="10">
-            <mat-hint>{{getWrotenValueLength('auxTranstorno')}} / 10</mat-hint>
+            <input matInput placeholder="Cie" formControlName="auxTranstorno" maxlength="100">
+            <mat-hint>{{getWrotenValueLength('auxTranstorno')}} / 100</mat-hint>
             <mat-error *ngIf="hasError('auxTranstorno','required')">
               El campo es requerido
             </mat-error>
